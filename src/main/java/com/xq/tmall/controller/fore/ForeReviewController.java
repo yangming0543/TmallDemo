@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -119,12 +118,12 @@ public class ForeReviewController extends BaseController {
             return "redirect:/order/0/10";
         }
         logger.info("整合评论信息");
-        Review review = new Review()
-                .setReview_product(orderItem.getProductOrderItem_product())
-                .setReview_content(new String(review_content.getBytes("ISO-8859-1"), "UTF-8"))
-                .setReview_createDate(new Date())
-                .setReview_user(user)
-                .setReview_orderItem(orderItem);
+        Review review = new Review();
+        review.setReview_product(orderItem.getProductOrderItem_product());
+        review.setReview_content(new String(review_content.getBytes("ISO-8859-1"), "UTF-8"));
+        review.setReview_createDate(new Date());
+        review.setReview_user(user);
+        review.setReview_orderItem(orderItem);
         logger.info("添加评论");
         Boolean yn = reviewService.add(review);
         if (!yn) {

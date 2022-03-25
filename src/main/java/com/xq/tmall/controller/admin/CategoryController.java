@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +72,9 @@ public class CategoryController extends BaseController {
         logger.info("获取category_id为{}的分类信息", cid);
         Category category = categoryService.get(cid);
         logger.info("获取分类子信息-属性列表");
-        category.setPropertyList(propertyService.getList(new Property().setProperty_category(category), null));
+        Property property = new Property();
+        property.setProperty_category(category);
+        category.setPropertyList(propertyService.getList(property, null));
         map.put("category", category);
 
         logger.info("转到后台管理-分类详情页-ajax方式");
@@ -100,9 +101,9 @@ public class CategoryController extends BaseController {
                               @RequestParam String category_image_src/* 分类图片路径 */) {
         JSONObject jsonObject = new JSONObject();
         logger.info("整合分类信息");
-        Category category = new Category()
-                .setCategory_name(category_name)
-                .setCategory_image_src(category_image_src.substring(category_image_src.lastIndexOf("/") + 1));
+        Category category = new Category();
+        category.setCategory_name(category_name);
+        category.setCategory_image_src(category_image_src.substring(category_image_src.lastIndexOf("/") + 1));
         logger.info("添加分类信息");
         boolean yn = categoryService.add(category);
         if (yn) {
@@ -127,10 +128,10 @@ public class CategoryController extends BaseController {
                                  @PathVariable("category_id") Integer category_id/* 分类ID */) {
         JSONObject jsonObject = new JSONObject();
         logger.info("整合分类信息");
-        Category category = new Category()
-                .setCategory_id(category_id)
-                .setCategory_name(category_name)
-                .setCategory_image_src(category_image_src.substring(category_image_src.lastIndexOf("/") + 1));
+        Category category = new Category();
+        category.setCategory_id(category_id);
+        category.setCategory_name(category_name);
+        category.setCategory_image_src(category_image_src.substring(category_image_src.lastIndexOf("/") + 1));
         logger.info("更新分类信息，分类ID值为：{}", category_id);
         boolean yn = categoryService.update(category);
         if (yn) {
