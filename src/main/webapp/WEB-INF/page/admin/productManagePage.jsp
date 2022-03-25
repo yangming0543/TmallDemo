@@ -187,14 +187,16 @@
 
         //删除产品子界面
         function delChildPage(obj) {
-            let  url = "product/del/"+$(obj).parents("tr").find(".product_id").text();
-            $.ajax({
-                url: url,
-                type: "get",
-                traditional: true,
-                success: function (data) {
-                    if (data.success) {
-                        $("#btn-ok,#btn-close").unbind("click").click(function () {
+            let url = "product/del/" + $(obj).parents("tr").find(".product_id").text();
+            $(".modal-body").text("您确定要删除该产品吗？");
+            $('#modalDiv').modal();
+            $("#btn-ok").unbind("click").click(function () {
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    traditional: true,
+                    success: function (data) {
+                        if (data.success) {
                             $('#modalDiv').modal("hide");
                             //清除数据
                             dataList.product_name = null;
@@ -208,18 +210,15 @@
                             getData($(this), "admin/product/0/10", null);
                             //清除排序样式
                             var table = $("#table_product_list");
-                            table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
-                            table.find("th.data_info").attr("data-sort","asc");
-                        });
-                        $(".modal-body").text("删除成功！");
-                        $('#modalDiv').modal();
-                    } else {
-                        $(".modal-body").text("删除失败！");
+                            table.find("span.orderByDesc,span.orderByAsc").css("opacity", "0");
+                            table.find("th.data_info").attr("data-sort", "asc");
+                        } else {
+                            $(".modal-body").text("删除失败！");
+                        }
                     }
-                }
+                });
             });
         }
-
         //获取页码数据
         function getPage(index) {
             getData($(this), "admin/product/" + index + "/10", dataList);
@@ -361,7 +360,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">提示</h4>
             </div>
-            <div class="modal-body">保存成功</div>
+            <div class="modal-body">您确定要删除产品吗？</div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary" id="btn-ok">确定</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-close">关闭</button>
@@ -371,5 +370,6 @@
     </div>
     <%-- /.modal %--%>
 </div>
+
 </body>
 </html>
