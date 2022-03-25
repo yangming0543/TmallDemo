@@ -3812,28 +3812,29 @@ CREATE TABLE `category`  (
   `category_id` int(10) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别名称',
   `category_image_src` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类别图片',
+  `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除标识(1删除 0未删除）',
   PRIMARY KEY (`category_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '类别表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (1, '女装 /大衣', '65d4300d-a44a-4ce6-a344-81fedfcc7bf8.jpg');
-INSERT INTO `category` VALUES (2, '男装 /运动户外', 'ba33100c-bfe6-4ab2-ae1f-9d1c66863122.jpg');
-INSERT INTO `category` VALUES (3, '女鞋 /男鞋 /箱包', '4dc606ab-adf8-4398-a63c-0f900a08d906.jpg');
-INSERT INTO `category` VALUES (4, '美妆 /个人护理', '817a9e79-d4d4-401a-95dc-a69a2d597a32.jpg');
-INSERT INTO `category` VALUES (5, '腕表 /眼镜 /珠宝饰品', '3a7105fa-d756-4d11-97f3-3b1548190c7d.jpg');
-INSERT INTO `category` VALUES (6, '手机 /数码 /电脑办公', '610c7837-844b-46f9-a70b-7103e5e1ed3d.jpg');
-INSERT INTO `category` VALUES (7, '母婴玩具', '994f2ffc-b6f3-4bb5-b1ea-bfd885d900e9.jpg');
-INSERT INTO `category` VALUES (8, '零食 /茶酒 /进口食品', 'b04b76b5-af79-48a6-a802-1a91a8327b5c.jpg');
-INSERT INTO `category` VALUES (9, '生鲜水果', '0b341c64-eaab-4e63-a518-758fa969c36d.jpg');
-INSERT INTO `category` VALUES (10, '大家电 /生活电器', 'd983b737-27b4-4ff7-bb8d-6654e72869e2.jpg');
-INSERT INTO `category` VALUES (11, '家居建材', '7171f8b1-7fef-4b95-9477-34cd726ecc76.jpg');
-INSERT INTO `category` VALUES (12, '汽车 /配件 /用品', '27512309-957f-4065-b022-7956075e9de0.jpg');
-INSERT INTO `category` VALUES (13, '家纺 /家饰 /鲜花', 'e9b80ef3-7a74-4ee9-aba1-61f5506f6dd9.jpg');
-INSERT INTO `category` VALUES (14, '医药保健', '0029c7ee-6c66-4b3a-887b-475ef3a6bdee.jpg');
-INSERT INTO `category` VALUES (15, '厨具 /收纳 /宠物', 'da6f2676-68fc-411c-87d7-490db6b25b31.jpg');
-INSERT INTO `category` VALUES (16, '图书音像', '4601eb3f-2a7a-45d2-809d-8d0ba2260aed.jpg');
+INSERT INTO `category` VALUES (1, '女装 /大衣', '65d4300d-a44a-4ce6-a344-81fedfcc7bf8.jpg', '0');
+INSERT INTO `category` VALUES (2, '男装 /运动户外', 'ba33100c-bfe6-4ab2-ae1f-9d1c66863122.jpg', '0');
+INSERT INTO `category` VALUES (3, '女鞋 /男鞋 /箱包', '4dc606ab-adf8-4398-a63c-0f900a08d906.jpg', '0');
+INSERT INTO `category` VALUES (4, '美妆 /个人护理', '817a9e79-d4d4-401a-95dc-a69a2d597a32.jpg', '0');
+INSERT INTO `category` VALUES (5, '腕表 /眼镜 /珠宝饰品', '3a7105fa-d756-4d11-97f3-3b1548190c7d.jpg', '0');
+INSERT INTO `category` VALUES (6, '手机 /数码 /电脑办公', '610c7837-844b-46f9-a70b-7103e5e1ed3d.jpg', '0');
+INSERT INTO `category` VALUES (7, '母婴玩具', '994f2ffc-b6f3-4bb5-b1ea-bfd885d900e9.jpg', '0');
+INSERT INTO `category` VALUES (8, '零食 /茶酒 /进口食品', 'b04b76b5-af79-48a6-a802-1a91a8327b5c.jpg', '0');
+INSERT INTO `category` VALUES (9, '生鲜水果', '0b341c64-eaab-4e63-a518-758fa969c36d.jpg', '0');
+INSERT INTO `category` VALUES (10, '大家电 /生活电器', 'd983b737-27b4-4ff7-bb8d-6654e72869e2.jpg', '0');
+INSERT INTO `category` VALUES (11, '家居建材', '7171f8b1-7fef-4b95-9477-34cd726ecc76.jpg', '0');
+INSERT INTO `category` VALUES (12, '汽车 /配件 /用品', '27512309-957f-4065-b022-7956075e9de0.jpg', '0');
+INSERT INTO `category` VALUES (13, '家纺 /家饰 /鲜花', 'e9b80ef3-7a74-4ee9-aba1-61f5506f6dd9.jpg', '0');
+INSERT INTO `category` VALUES (14, '医药保健', '0029c7ee-6c66-4b3a-887b-475ef3a6bdee.jpg', '0');
+INSERT INTO `category` VALUES (15, '厨具 /收纳 /宠物', 'da6f2676-68fc-411c-87d7-490db6b25b31.jpg', '0');
+INSERT INTO `category` VALUES (16, '图书音像', '4601eb3f-2a7a-45d2-809d-8d0ba2260aed.jpg', '0');
 
 -- ----------------------------
 -- Table structure for product

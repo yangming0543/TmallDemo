@@ -12,6 +12,7 @@ public class Category {
     private Integer category_id;
     private String category_name;
     private String category_image_src;
+    private Integer del_flag;
     //产品列表
     private List<Product> productList;
     //产品二维集合

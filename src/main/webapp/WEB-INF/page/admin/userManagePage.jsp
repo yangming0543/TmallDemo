@@ -139,7 +139,7 @@
         }
 
 
-        //删除产品子界面
+        //删除用户
         function delUserChildPage(obj) {
             let url = "admin/user/del/" + $(obj).parents("tr").find(".user_id").text();
             $(".modal-body").text("您确定要删除该用户吗？");

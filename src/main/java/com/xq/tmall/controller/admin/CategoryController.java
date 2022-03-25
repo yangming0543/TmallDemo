@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Category;
 import com.xq.tmall.entity.Property;
+import com.xq.tmall.entity.User;
 import com.xq.tmall.service.CategoryService;
 import com.xq.tmall.service.LastIDService;
 import com.xq.tmall.service.PropertyService;
@@ -199,6 +200,25 @@ public class CategoryController extends BaseController {
             object.put("success", false);
         }
 
+        return object.toJSONString();
+    }
+
+    //按ID删除分类并返回最新结果-ajax
+    @ResponseBody
+    @RequestMapping(value = "admin/category/del/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public String deleteProductById(@PathVariable Integer id) {
+        JSONObject object = new JSONObject();
+        Category category = categoryService.get(id);
+        category.setDel_flag(1);
+        boolean yn = categoryService.update(category);
+        if (yn) {
+            logger.info("删除成功！");
+            object.put("success", true);
+        } else {
+            logger.warn("删除失败！事务回滚");
+            object.put("success", false);
+            throw new RuntimeException();
+        }
         return object.toJSONString();
     }
 }
