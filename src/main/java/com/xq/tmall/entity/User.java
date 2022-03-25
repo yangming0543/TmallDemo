@@ -24,6 +24,7 @@ public class User {
     private Address user_address;
     private Address user_homeplace;
     private String user_profile_picture_src;
+    private Integer del_flag;
     private List<Review> reviewList;
     private List<ProductOrderItem> productOrderItemList;
     private List<ProductOrder> productOrderList;

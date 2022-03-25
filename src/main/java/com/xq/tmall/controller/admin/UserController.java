@@ -191,4 +191,24 @@ public class UserController extends BaseController {
 
         return object.toJSONString();
     }
+
+    //按ID删除用户并返回最新结果-ajax
+    @ResponseBody
+    @RequestMapping(value = "admin/user/del/{id}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    public String deleteProductById(@PathVariable Integer id) {
+        JSONObject object = new JSONObject();
+        User user = userService.get(id);
+        user.setDel_flag(1);
+        boolean yn = userService.update(user);
+        if (yn) {
+            logger.info("删除成功！");
+            object.put("success", true);
+        } else {
+            logger.warn("删除失败！事务回滚");
+            object.put("success", false);
+            throw new RuntimeException();
+        }
+        return object.toJSONString();
+    }
+
 }
