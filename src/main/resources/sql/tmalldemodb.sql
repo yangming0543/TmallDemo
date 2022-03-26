@@ -6449,7 +6449,7 @@ CREATE TABLE `review`  (
   `review_createdate` datetime(0) NOT NULL COMMENT '创建日期',
   `review_user_id` int(10) NOT NULL COMMENT '关联用户id',
   `review_product_id` int(10) NOT NULL COMMENT '关联产品id',
-  `review_orderItem_id` int(10) NOT NULL COMMENT '关联订单i详细id',
+  `review_orderItem_id` int(10) NOT NULL COMMENT '关联订单详细id',
   PRIMARY KEY (`review_id`) USING BTREE,
   INDEX `review_user_id`(`review_user_id`) USING BTREE,
   INDEX `review_product_id`(`review_product_id`) USING BTREE,

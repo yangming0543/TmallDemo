@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -164,7 +165,8 @@ public class ProductController extends BaseController {
         product.setProduct_sale_price(product_sale_price);
         product.setProduct_price(product_price);
         product.setProduct_isEnabled(product_isEnabled);
-        product.setProduct_create_date(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        product.setProduct_create_date(time.format(new Date()));
         logger.info("添加产品信息");
         boolean yn = productService.add(product);
         if (!yn) {
@@ -281,7 +283,8 @@ public class ProductController extends BaseController {
         product.setProduct_sale_price(product_sale_price);
         product.setProduct_price(product_price);
         product.setProduct_isEnabled(product_isEnabled);
-        product.setProduct_create_date(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        product.setProduct_create_date(time.format(new Date()));
         logger.info("更新产品信息，产品ID值为：{}", product_id);
         boolean yn = productService.update(product);
         if (!yn) {

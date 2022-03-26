@@ -16,10 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 后台管理-订单页
@@ -126,7 +124,8 @@ public class OrderController extends BaseController {
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(Integer.valueOf(order_id));
         productOrder.setProductOrder_status((byte) 2);
-        productOrder.setProductOrder_delivery_date(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        productOrder.setProductOrder_delivery_date(time.format(new Date()));
         logger.info("更新订单信息，订单ID值为：{}", order_id);
         boolean yn = productOrderService.update(productOrder);
         if (yn) {

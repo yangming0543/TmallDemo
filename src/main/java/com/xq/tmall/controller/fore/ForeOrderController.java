@@ -655,7 +655,8 @@ public class ForeOrderController extends BaseController {
         logger.info("更新订单信息");
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(order.getProductOrder_id());
-        productOrder.setProductOrder_pay_date(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        productOrder.setProductOrder_pay_date(time.format(new Date()));
         productOrder.setProductOrder_status((byte) 1);
 
         boolean yn = productOrderService.update(productOrder);
@@ -697,7 +698,8 @@ public class ForeOrderController extends BaseController {
         logger.info("更新订单信息");
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(order.getProductOrder_id());
-        productOrder.setProductOrder_delivery_date(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        productOrder.setProductOrder_delivery_date(time.format(new Date()));
         productOrder.setProductOrder_status((byte) 2);
 
         productOrderService.update(productOrder);
@@ -744,7 +746,8 @@ public class ForeOrderController extends BaseController {
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(order.getProductOrder_id());
         productOrder.setProductOrder_status((byte) 3);
-        productOrder.setProductOrder_confirm_date(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        productOrder.setProductOrder_confirm_date(time.format(new Date()));
 
         boolean yn = productOrderService.update(productOrder);
         if (yn) {
@@ -930,7 +933,8 @@ public class ForeOrderController extends BaseController {
         productOrder.setProductOrder_mobile(productOrder_mobile);
         productOrder.setProductOrder_receiver(productOrder_receiver);
         productOrder.setProductOrder_detail_address(productOrder_detail_address);
-        productOrder.setProductOrder_pay_date(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        productOrder.setProductOrder_pay_date(time.format(new Date()));
         productOrder.setProductOrder_code(productOrder_code.toString());
         Boolean yn = productOrderService.add(productOrder);
         if (!yn) {
@@ -1053,7 +1057,8 @@ public class ForeOrderController extends BaseController {
         productOrder.setProductOrder_mobile(productOrder_mobile);
         productOrder.setProductOrder_receiver(productOrder_receiver);
         productOrder.setProductOrder_detail_address(productOrder_detail_address);
-        productOrder.setProductOrder_pay_date(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        productOrder.setProductOrder_pay_date(time.format(new Date()));
         productOrder.setProductOrder_code(productOrder_code.toString());
         Boolean yn = productOrderService.add(productOrder);
         if (!yn) {

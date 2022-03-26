@@ -55,7 +55,7 @@ public class ForeRegisterController extends BaseController {
             @RequestParam(value = "user_gender") String user_gender  /*用户性别*/,
             @RequestParam(value = "user_birthday") String user_birthday /*用户生日*/,
             @RequestParam(value = "user_address") String user_address  /*用户所在地 */
-    ) throws ParseException {
+    ) {
         logger.info("验证用户名是否存在");
         User user1 = new User();
         user1.setUser_name(user_name);
@@ -73,7 +73,7 @@ public class ForeRegisterController extends BaseController {
         user.setUser_nickname(user_nickname);
         user.setUser_password(user_password);
         user.setUser_gender(Byte.valueOf(user_gender));
-        user.setUser_birthday(new SimpleDateFormat("yyyy-MM-dd").parse(user_birthday));
+        user.setUser_birthday(user_birthday);
         Address address = new Address();
         address.setAddress_areaId(user_address);
         user.setUser_address(address);

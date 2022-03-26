@@ -1,20 +1,32 @@
 package com.xq.tmall.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
 
 /**
- * 回复
+ * 评论
  */
 @Data
 public class Review {
     private Integer review_id;
+    /**
+     * 内容
+     */
     private String review_content;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date review_createDate;
+    /**
+     * 创建日期
+     */
+    private String review_createDate;
+    /**
+     * 关联用户
+     */
     private User review_user;
+    /**
+     * 关联产品
+     */
     private Product review_product;
+    /**
+     * 关联订单详细
+     */
     private ProductOrderItem review_orderItem;
 }

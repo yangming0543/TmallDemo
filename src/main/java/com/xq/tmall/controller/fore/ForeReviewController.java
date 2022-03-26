@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -121,7 +123,8 @@ public class ForeReviewController extends BaseController {
         Review review = new Review();
         review.setReview_product(orderItem.getProductOrderItem_product());
         review.setReview_content(new String(review_content.getBytes("ISO-8859-1"), "UTF-8"));
-        review.setReview_createDate(new Date());
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
+        review.setReview_createDate(time.format(new Date()));
         review.setReview_user(user);
         review.setReview_orderItem(orderItem);
         logger.info("添加评论");

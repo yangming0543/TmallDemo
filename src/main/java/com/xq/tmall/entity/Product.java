@@ -1,23 +1,42 @@
 package com.xq.tmall.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
+
 /**
- * 商品
+ * 产品
  */
 @Data
 public class Product {
     private Integer product_id;
+    /**
+     * 产品名称
+     */
     private String product_name;
+    /**
+     * 产品标题
+     */
     private String product_title;
+    /**
+     * 原价
+     */
     private Double product_price;
+    /**
+     * 促销价
+     */
     private Double product_sale_price;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date product_create_date;
+    /**
+     * 创建日期
+     */
+    private String product_create_date;
+    /**
+     * 类别id
+     */
     private Category product_category;
+    /**
+     * 是否可用
+     */
     private Byte product_isEnabled;
     private List<PropertyValue> propertyValueList;
     private List<ProductImage> singleProductImageList;

@@ -119,7 +119,7 @@ public class ForeUserController extends BaseController {
         userUpdate.setUser_nickname(new String(user_nickname.getBytes("ISO8859-1"), "UTF-8"));
         userUpdate.setUser_realname(new String(user_realname.getBytes("ISO8859-1"), "UTF-8"));
         userUpdate.setUser_gender(Byte.valueOf(user_gender));
-        userUpdate.setUser_birthday(new SimpleDateFormat("yyyy-MM-dd").parse(user_birthday));
+        userUpdate.setUser_birthday(user_birthday);
         Address address = new Address();
         address.setAddress_areaId(user_address);
         userUpdate.setUser_address(address);
