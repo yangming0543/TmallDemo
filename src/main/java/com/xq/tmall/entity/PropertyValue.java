@@ -4,7 +4,7 @@ package com.xq.tmall.entity;
 import lombok.Data;
 
 /**
- * 产品属性管理
+ * 产品属性
  */
 @Data
 public class PropertyValue {

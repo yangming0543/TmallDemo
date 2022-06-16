@@ -2,6 +2,7 @@ package com.xq.tmall.controller.fore;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
 import com.xq.tmall.service.*;
@@ -22,6 +23,9 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 前台天猫-订单
+ */
 @Controller
 public class ForeOrderController extends BaseController {
     @Autowired
@@ -79,30 +83,31 @@ public class ForeOrderController extends BaseController {
 
         //订单总数量
         Integer orderCount = 0;
-        if (productOrderList.size() > 0) {
+        if (CollectionUtils.isNotEmpty(productOrderList)) {
             orderCount = productOrderService.getTotal(productOrder, status_array);
             logger.info("获取订单项信息及对应的产品信息");
-            for (ProductOrder order : productOrderList) {
-                List<ProductOrderItem> productOrderItemList = productOrderItemService.getListByOrderId(order.getProductOrder_id(), null);
-                if (productOrderItemList != null) {
-                    for (ProductOrderItem productOrderItem : productOrderItemList) {
-                        Integer product_id = productOrderItem.getProductOrderItem_product().getProduct_id();
-                        Product product = productService.get(product_id);
-                        product.setSingleProductImageList(productImageService.getList(product_id, (byte) 0, new PageUtil(0, 1)));
-                        productOrderItem.setProductOrderItem_product(product);
-                        if (order.getProductOrder_status() == 3) {
-                            productOrderItem.setIsReview(reviewService.getTotalByOrderItemId(productOrderItem.getProductOrderItem_id()) > 0);
+            if (CollectionUtils.isNotEmpty(productOrderList)) {
+                for (ProductOrder order : productOrderList) {
+                    List<ProductOrderItem> productOrderItemList = productOrderItemService.getListByOrderId(order.getProductOrder_id(), null);
+                    if (CollectionUtils.isNotEmpty(productOrderItemList)){
+                        for (ProductOrderItem productOrderItem : productOrderItemList) {
+                            Integer product_id = productOrderItem.getProductOrderItem_product().getProduct_id();
+                            Product product = productService.get(product_id);
+                            product.setSingleProductImageList(productImageService.getList(product_id, (byte) 0, new PageUtil(0, 1)));
+                            productOrderItem.setProductOrderItem_product(product);
+                            if (order.getProductOrder_status() == 3) {
+                                productOrderItem.setIsReview(reviewService.getTotalByOrderItemId(productOrderItem.getProductOrderItem_id()) > 0);
+                            }
                         }
                     }
+                    order.setProductOrderItemList(productOrderItemList);
                 }
-                order.setProductOrderItemList(productOrderItemList);
             }
         }
         pageUtil.setTotal(orderCount);
 
         logger.info("获取产品分类列表信息");
         List<Category> categoryList = categoryService.getList(null, new PageUtil(0, 5));
-
         map.put("pageUtil", pageUtil);
         map.put("productOrderList", productOrderList);
         map.put("categoryList", categoryList);
@@ -582,7 +587,7 @@ public class ForeOrderController extends BaseController {
         logger.info("获取用户购物车信息");
         List<ProductOrderItem> orderItemList = productOrderItemService.getListByUserId(Integer.valueOf(userId.toString()), null);
         Integer orderItemTotal = 0;
-        if (orderItemList.size() > 0) {
+        if (CollectionUtils.isNotEmpty(orderItemList)) {
             logger.info("获取用户购物车的商品总数");
             orderItemTotal = productOrderItemService.getTotalByUserId(Integer.valueOf(userId.toString()));
             logger.info("获取用户购物车内的商品信息");
@@ -822,7 +827,7 @@ public class ForeOrderController extends BaseController {
 
         JSONObject orderItemString = JSON.parseObject(orderItemMap);
         Set<String> orderItemIDSet = orderItemString.keySet();
-        if (orderItemIDSet.size() > 0) {
+        if (CollectionUtils.isNotEmpty(orderItemIDSet)) {
             logger.info("更新产品订单项数量");
             for (String key : orderItemIDSet) {
                 ProductOrderItem productOrderItem = productOrderItemService.get(Integer.valueOf(key));
@@ -984,7 +989,7 @@ public class ForeOrderController extends BaseController {
         JSONObject orderItemMap = JSONObject.parseObject(orderItemJSON);
         Set<String> orderItem_id = orderItemMap.keySet();
         List<ProductOrderItem> productOrderItemList = new ArrayList<>(3);
-        if (orderItem_id.size() > 0) {
+        if (CollectionUtils.isNotEmpty(orderItem_id)) {
             for (String id : orderItem_id) {
                 ProductOrderItem orderItem = productOrderItemService.get(Integer.valueOf(id));
                 if (orderItem == null || !orderItem.getProductOrderItem_user().getUser_id().equals(userId)) {
@@ -1108,21 +1113,23 @@ public class ForeOrderController extends BaseController {
         ProductOrderItem productOrderItem = new ProductOrderItem();
         logger.info("检查用户的购物车项");
         List<ProductOrderItem> orderItemList = productOrderItemService.getListByUserId(Integer.valueOf(userId.toString()), null);
-        for (ProductOrderItem orderItem : orderItemList) {
-            if (orderItem.getProductOrderItem_product().getProduct_id().equals(product_id)) {
-                logger.info("找到已有的产品，进行数量追加");
-                int number = orderItem.getProductOrderItem_number();
-                number += 1;
-                productOrderItem.setProductOrderItem_id(orderItem.getProductOrderItem_id());
-                productOrderItem.setProductOrderItem_number((short) number);
-                productOrderItem.setProductOrderItem_price(number * product.getProduct_sale_price());
-                boolean yn = productOrderItemService.update(productOrderItem);
-                if (yn) {
-                    object.put("success", true);
-                } else {
-                    object.put("success", false);
+        if(CollectionUtils.isNotEmpty(orderItemList)) {
+            for (ProductOrderItem orderItem : orderItemList) {
+                if (orderItem.getProductOrderItem_product().getProduct_id().equals(product_id)) {
+                    logger.info("找到已有的产品，进行数量追加");
+                    int number = orderItem.getProductOrderItem_number();
+                    number += 1;
+                    productOrderItem.setProductOrderItem_id(orderItem.getProductOrderItem_id());
+                    productOrderItem.setProductOrderItem_number((short) number);
+                    productOrderItem.setProductOrderItem_price(number * product.getProduct_sale_price());
+                    boolean yn = productOrderItemService.update(productOrderItem);
+                    if (yn) {
+                        object.put("success", true);
+                    } else {
+                        object.put("success", false);
+                    }
+                    return object.toJSONString();
                 }
-                return object.toJSONString();
             }
         }
         logger.info("封装订单项对象");

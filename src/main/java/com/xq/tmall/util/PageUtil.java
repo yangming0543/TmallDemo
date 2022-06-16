@@ -1,5 +1,8 @@
 package com.xq.tmall.util;
 
+/**
+ * 分页工具类
+ */
 public final class PageUtil {
     private Integer index;
     private Integer count;

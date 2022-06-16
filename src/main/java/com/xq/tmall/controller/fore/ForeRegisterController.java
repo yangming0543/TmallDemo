@@ -18,6 +18,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 前台天猫-用户注册
+ */
 @Controller
 public class ForeRegisterController extends BaseController {
     @Autowired

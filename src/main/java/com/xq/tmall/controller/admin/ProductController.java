@@ -3,6 +3,7 @@ package com.xq.tmall.controller.admin;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
 import com.xq.tmall.service.*;
@@ -179,7 +180,7 @@ public class ProductController extends BaseController {
 
         JSONObject object = JSON.parseObject(propertyJson);
         Set<String> propertyIdSet = object.keySet();
-        if (propertyIdSet.size() > 0) {
+        if (CollectionUtils.isNotEmpty(propertyIdSet)) {
             logger.info("整合产品子信息-产品属性");
             List<PropertyValue> propertyValueList = new ArrayList<>(5);
             for (String key : propertyIdSet) {
@@ -296,7 +297,7 @@ public class ProductController extends BaseController {
 
         JSONObject object = JSON.parseObject(propertyAddJson);
         Set<String> propertyIdSet = object.keySet();
-        if (propertyIdSet.size() > 0) {
+        if (CollectionUtils.isNotEmpty(propertyIdSet)) {
             logger.info("整合产品子信息-需要添加的产品属性");
             List<PropertyValue> propertyValueList = new ArrayList<>(5);
             for (String key : propertyIdSet) {
@@ -322,7 +323,7 @@ public class ProductController extends BaseController {
 
         object = JSON.parseObject(propertyUpdateJson);
         propertyIdSet = object.keySet();
-        if (propertyIdSet.size() > 0) {
+        if (CollectionUtils.isNotEmpty(propertyIdSet)) {
             logger.info("整合产品子信息-需要更新的产品属性");
             List<PropertyValue> propertyValueList = new ArrayList<>(5);
             for (String key : propertyIdSet) {

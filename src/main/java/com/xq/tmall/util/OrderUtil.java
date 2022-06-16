@@ -1,5 +1,8 @@
 package com.xq.tmall.util;
 
+/**
+ * 排序工具类
+ */
 public final class OrderUtil {
     //排序字段
     private String orderBy;

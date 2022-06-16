@@ -3,7 +3,7 @@ package com.xq.tmall.entity;
 import lombok.Data;
 
 /**
- * 产品订单详细
+ * 产品订单项
  */
 @Data
 public class ProductOrderItem {

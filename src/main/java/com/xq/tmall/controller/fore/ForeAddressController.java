@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 前台天猫-地址
+ */
 @Controller
 public class ForeAddressController extends BaseController {
     @Autowired

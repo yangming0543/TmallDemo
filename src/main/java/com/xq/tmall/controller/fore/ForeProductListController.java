@@ -21,7 +21,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * 前台天猫-产品搜索列表
+ */
 @Controller
 public class ForeProductListController extends BaseController {
     @Autowired

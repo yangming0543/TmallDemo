@@ -50,7 +50,16 @@ public class User {
      * 删除标识(1删除 0未删除）
      */
     private Integer del_flag;
+    /**
+     * 评论
+     */
     private List<Review> reviewList;
+    /**
+     * 产品订单项
+     */
     private List<ProductOrderItem> productOrderItemList;
+    /**
+     * 产品订单
+     */
     private List<ProductOrder> productOrderList;
 }

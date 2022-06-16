@@ -54,5 +54,8 @@ public class ProductOrder {
      * 用户
      */
     private User productOrder_user;
+    /**
+     * 产品订单项
+     */
     private List<ProductOrderItem> productOrderItemList;
 }

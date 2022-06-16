@@ -18,5 +18,8 @@ public class Property {
      * 关联类别
      */
     private Category property_category;
+    /**
+     * 产品属性
+     */
     private List<PropertyValue> propertyValueList;
 }

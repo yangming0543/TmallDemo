@@ -38,15 +38,37 @@ public class Product {
      * 是否可用
      */
     private Byte product_isEnabled;
+    /**
+     * 产品属性管理
+     */
     private List<PropertyValue> propertyValueList;
+    /**
+     * 单一产品图片
+     */
     private List<ProductImage> singleProductImageList;
+    /**
+     * 详细产品图片
+     */
     private List<ProductImage> detailProductImageList;
+    /**
+     * 评论
+     */
     private List<Review> reviewList;
+    /**
+     * 产品订单项
+     */
     private List<ProductOrderItem> productOrderItemList;
-    //销量数
+    /**
+     * 销量数
+     */
     private Integer product_sale_count;
-    //评价数
+    /**
+     * 评论数
+     */
     private Integer product_review_count;
+    /**
+     *产品出售
+     */
     public Object setProduct_sale_co;
 
 }

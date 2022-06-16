@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * 前台天猫-评论添加
+ */
 @Controller
 public class ForeReviewController extends BaseController {
     @Autowired

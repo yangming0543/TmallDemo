@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * 前台天猫-用户
+ */
 @Controller
 public class ForeUserController extends BaseController {
     @Autowired
@@ -100,7 +103,7 @@ public class ForeUserController extends BaseController {
                              @RequestParam(value = "user_address") String user_address  /*用户所在地 */,
                              @RequestParam(value = "user_profile_picture_src", required = false) String user_profile_picture_src /* 用户头像*/,
                              @RequestParam(value = "user_password") String user_password/* 用户密码 */
-    ) throws ParseException, UnsupportedEncodingException {
+    ) throws UnsupportedEncodingException {
         logger.info("检查用户是否登录");
         Object userId = checkUser(session);
         if (userId != null) {
