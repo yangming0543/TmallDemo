@@ -77,8 +77,8 @@ public class ForeRegisterController extends BaseController {
         Address address = new Address();
         address.setAddress_areaId(user_address);
         user.setUser_address(address);
-        address.setAddress_areaId("130000");
         user.setUser_homeplace(address);
+        user.setUser_realname(user_name);
         user.setDel_flag(0);
         logger.info("用户注册");
         if (userService.add(user)) {
