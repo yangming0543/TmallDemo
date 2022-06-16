@@ -79,6 +79,7 @@ public class ForeRegisterController extends BaseController {
         user.setUser_address(address);
         address.setAddress_areaId("130000");
         user.setUser_homeplace(address);
+        user.setDel_flag(0);
         logger.info("用户注册");
         if (userService.add(user)) {
             logger.info("注册成功");
