@@ -148,7 +148,7 @@
 
     <select id="getTotalByDate" resultType="com.xq.tmall.entity.OrderGroup">
         SELECT
-        productOrder_pay_date,count(productOrder_id) as productOrder_count ,productOrder_status from productOrder
+        any_value(productOrder_pay_date) as productOrder_pay_date,any_value(count(productOrder_id)) as productOrder_count ,any_value(productOrder_status) as productOrder_status from productOrder
         <where>
             productOrder_pay_date BETWEEN #{beginDate} AND #{endDate}
         </where>
