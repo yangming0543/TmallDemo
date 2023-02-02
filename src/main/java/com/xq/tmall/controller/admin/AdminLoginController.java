@@ -4,12 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Admin;
 import com.xq.tmall.service.AdminService;
+import com.xq.tmall.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,48 +21,46 @@ public class AdminLoginController extends BaseController {
 
     //转到后台管理-登录页
     @RequestMapping("admin/login")
-    public String goToPage(){
-        logger.info("转到后台管理-登录页");
+    public String goToPage() {
+        //转到后台管理-登录页
         return "admin/loginPage";
     }
 
     //登陆验证-ajax
     @ResponseBody
-    @RequestMapping(value = "admin/login/doLogin",method = RequestMethod.POST,produces = "application/json;charset=utf-8")
+    @PostMapping(value = "admin/login/doLogin", produces = "application/json;charset=utf-8")
     public String checkLogin(HttpSession session, @RequestParam String username, @RequestParam String password) {
-        logger.info("管理员登录验证");
-        Integer admin = adminService.login(username,password);
+        //管理员登录验证
+        Integer admin = adminService.login(username, password);
 
         JSONObject object = new JSONObject();
-        if(admin == null){
-            logger.info("登录验证失败");
-            object.put("success",false);
+        if (admin == null) {
+            //登录验证失败
+            object.put(Constants.SUCCESS, false);
         } else {
-            logger.info("登录验证成功，管理员ID传入会话");
-            session.setAttribute("adminId",admin);
-            object.put("success",true);
+            //登录验证成功，管理员ID传入会话
+            session.setAttribute(Constants.ADMIN_ID, admin);
+            object.put(Constants.SUCCESS, true);
         }
 
-        return object.toJSONString();
+        return String.valueOf(object);
     }
 
     //获取管理员头像路径-ajax
     @ResponseBody
-    @RequestMapping(value = "admin/login/profile_picture",method = RequestMethod.GET,produces = "application/json;charset=utf-8")
-    public String getAdminProfilePicture(@RequestParam String username){
-        logger.info("根据用户名获取管理员头像路径");
-        Admin admin = adminService.get(username,null);
-
+    @GetMapping(value = "admin/login/profile_picture", produces = "application/json;charset=utf-8")
+    public String getAdminProfilePicture(@RequestParam String username) {
+        //根据用户名获取管理员头像路径
+        Admin admin = adminService.get(username, null);
         JSONObject object = new JSONObject();
-        if(admin == null){
-            logger.info("未找到头像路径");
-            object.put("success",false);
+        if (admin == null) {
+            //未找到头像路径
+            object.put(Constants.SUCCESS, false);
         } else {
-            logger.info("成功获取头像路径");
-            object.put("success",true);
-            object.put("srcString",admin.getAdmin_profile_picture_src());
+            //成功获取头像路径
+            object.put(Constants.SUCCESS, true);
+            object.put("srcString", admin.getAdmin_profile_picture_src());
         }
-
-        return object.toJSONString();
+        return String.valueOf(object);
     }
 }

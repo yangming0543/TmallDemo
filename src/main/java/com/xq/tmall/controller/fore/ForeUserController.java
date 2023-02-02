@@ -1,6 +1,7 @@
 package com.xq.tmall.controller.fore;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Address;
 import com.xq.tmall.entity.User;
@@ -8,19 +9,16 @@ import com.xq.tmall.service.AddressService;
 import com.xq.tmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -36,21 +34,21 @@ public class ForeUserController extends BaseController {
     private UserService userService;
 
     //转到前台天猫-用户详情页
-    @RequestMapping(value = "userDetails", method = RequestMethod.GET)
+    @GetMapping(value = "userDetails")
     public String goToUserDetail(HttpSession session, Map<String, Object> map) {
-        logger.info("检查用户是否登录");
+        //检查用户是否登录
         Object userId = checkUser(session);
         if (userId != null) {
-            logger.info("获取用户信息");
+            //获取用户信息
             User user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
 
-            logger.info("获取用户所在地区级地址");
+            //获取用户所在地区级地址
             String districtAddressId = user.getUser_address().getAddress_areaId();
             Address districtAddress = addressService.get(districtAddressId);
-            logger.info("获取市级地址信息");
+            //获取市级地址信息
             Address cityAddress = addressService.get(districtAddress.getAddress_regionId().getAddress_areaId());
-            logger.info("获取其他地址信息");
+            //获取其他地址信息
             List<Address> addressList = addressService.getRoot();
             List<Address> cityList = addressService.getList(null, cityAddress.getAddress_regionId().getAddress_areaId());
             List<Address> districtList = addressService.getList(null, cityAddress.getAddress_areaId());
@@ -69,20 +67,23 @@ public class ForeUserController extends BaseController {
 
     //前台天猫-用户更换头像
     @ResponseBody
-    @RequestMapping(value = "user/uploadUserHeadImage", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @PostMapping(value = "user/uploadUserHeadImage", produces = "application/json;charset=utf-8")
     public String uploadUserHeadImage(@RequestParam MultipartFile file, HttpSession session
     ) {
         String originalFileName = file.getOriginalFilename();
-        logger.info("获取图片原始文件名：{}", originalFileName);
+        if (StringUtils.isEmpty(originalFileName)) {
+            throw new RuntimeException("上传失败！");
+        }
+        //获取图片原始文件名：{}, originalFileName
         String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
         String fileName = UUID.randomUUID() + extension;
         String filePath = session.getServletContext().getRealPath("/") + "res/images/item/userProfilePicture/" + fileName;
-        logger.info("文件上传路径：{}", filePath);
+        //文件上传路径：{}, filePath
         JSONObject jsonObject = new JSONObject();
         try {
-            logger.info("文件上传中...");
+            //文件上传中...
             file.transferTo(new File(filePath));
-            logger.info("文件上传成功！");
+            //文件上传成功！
             jsonObject.put("success", true);
             jsonObject.put("fileName", fileName);
         } catch (IOException e) {
@@ -90,11 +91,11 @@ public class ForeUserController extends BaseController {
             e.printStackTrace();
             jsonObject.put("success", false);
         }
-        return jsonObject.toJSONString();
+        return String.valueOf(jsonObject);
     }
 
     //前台天猫-用户详情更新
-    @RequestMapping(value = "user/update", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @PostMapping(value = "user/update", produces = "application/json;charset=utf-8")
     public String userUpdate(HttpSession session, Map<String, Object> map,
                              @RequestParam(value = "user_nickname") String user_nickname  /*用户昵称 */,
                              @RequestParam(value = "user_realname") String user_realname  /*真实姓名*/,
@@ -104,16 +105,16 @@ public class ForeUserController extends BaseController {
                              @RequestParam(value = "user_profile_picture_src", required = false) String user_profile_picture_src /* 用户头像*/,
                              @RequestParam(value = "user_password") String user_password/* 用户密码 */
     ) throws UnsupportedEncodingException {
-        logger.info("检查用户是否登录");
+        //检查用户是否登录
         Object userId = checkUser(session);
         if (userId != null) {
-            logger.info("获取用户信息");
+            //获取用户信息
             User user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
             return "redirect:/login";
         }
-        logger.info("创建用户对象");
+        //创建用户对象
         if (user_profile_picture_src != null && "".equals(user_profile_picture_src)) {
             user_profile_picture_src = null;
         }
@@ -128,9 +129,9 @@ public class ForeUserController extends BaseController {
         userUpdate.setUser_address(address);
         userUpdate.setUser_profile_picture_src(user_profile_picture_src);
         userUpdate.setUser_password(user_password);
-        logger.info("执行修改");
+        //执行修改
         if (userService.update(userUpdate)) {
-            logger.info("修改成功!跳转到用户详情页面");
+            //修改成功!跳转到用户详情页面
             return "redirect:/userDetails";
         }
         throw new RuntimeException();

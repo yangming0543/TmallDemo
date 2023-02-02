@@ -4,14 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Address;
 import com.xq.tmall.service.AddressService;
+import com.xq.tmall.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -24,20 +23,20 @@ public class ForeAddressController extends BaseController {
 
     //根据address_areaId获取地址信息-ajax
     @ResponseBody
-    @RequestMapping(value = "address/{areaId}", method = RequestMethod.GET, produces = "application/json;charset=utf-8")
+    @GetMapping(value = "address/{areaId}", produces = "application/json;charset=utf-8")
     protected String getAddressByAreaId(@PathVariable String areaId) {
         JSONObject object = new JSONObject();
-        logger.info("获取AreaId为{}的地址信息");
+        //获取AreaId为{}的地址信息
         List<Address> addressList = addressService.getList(null, areaId);
-        if (addressList == null || addressList.size() <= 0) {
-            object.put("success", false);
-            return object.toJSONString();
+        if (addressList.isEmpty()) {
+            object.put(Constants.SUCCESS, false);
+            return String.valueOf(object);
         }
-        logger.info("获取该地址可能的子地址信息");
+        //获取该地址可能的子地址信息
         List<Address> childAddressList = addressService.getList(null, addressList.get(0).getAddress_areaId());
-        object.put("success", true);
+        object.put(Constants.SUCCESS, true);
         object.put("addressList", addressList);
         object.put("childAddressList", childAddressList);
-        return object.toJSONString();
+        return String.valueOf(object);
     }
 }
