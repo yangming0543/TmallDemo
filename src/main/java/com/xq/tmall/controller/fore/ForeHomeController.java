@@ -88,7 +88,7 @@ public class ForeHomeController extends BaseController {
         JSONObject object = new JSONObject();
         if (category_id == null) {
             object.put(Constants.SUCCESS, false);
-            return object.toJSONString();
+            return String.valueOf(object);
         }
         //获取分类ID为{}的产品标题数据, category_id
         Category category1 = new Category();

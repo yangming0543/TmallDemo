@@ -66,7 +66,7 @@ public class ForeRegisterController extends BaseController {
             JSONObject object = new JSONObject();
             object.put("success", false);
             object.put("msg", "用户名已存在，请重新输入！");
-            return object.toJSONString();
+            return String.valueOf(object);
         }
         //创建用户对象
         User user = new User();
@@ -86,7 +86,7 @@ public class ForeRegisterController extends BaseController {
             //注册成功
             JSONObject object = new JSONObject();
             object.put("success", true);
-            return object.toJSONString();
+            return String.valueOf(object);
         } else {
             throw new RuntimeException();
         }

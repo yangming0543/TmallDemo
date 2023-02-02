@@ -113,7 +113,7 @@ public class AccountController extends BaseController {
                 //原密码错误，返回错误信息
                 jsonObject.put(Constants.SUCCESS, false);
                 jsonObject.put("message", "原密码输入有误！");
-                return jsonObject.toJSONString();
+                return String.valueOf(jsonObject);
             }
         }
         if (StringUtils.isNotEmpty(admin_profile_picture_src)) {
