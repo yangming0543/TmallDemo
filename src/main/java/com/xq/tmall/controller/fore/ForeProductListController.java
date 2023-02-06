@@ -77,7 +77,7 @@ public class ForeProductListController extends BaseController {
         //分页工具
         PageUtil pageUtil = new PageUtil(0, 20);
         if (product_name != null) {
-            product_name = new String(product_name.getBytes("ISO8859-1"), "UTF-8");
+            //product_name = new String(product_name.getBytes("ISO8859-1"), "UTF-8");
             product_name_split = product_name.split(" ");
             //提取的关键词有{}, Arrays.toString(product_name_split)
             product.setProduct_name(product_name);
@@ -154,7 +154,7 @@ public class ForeProductListController extends BaseController {
         //分页工具
         PageUtil pageUtil = new PageUtil(0, 20);
         if (product_name != null) {
-            product_name = new String(product_name.getBytes("ISO8859-1"), "UTF-8");
+            //product_name = new String(product_name.getBytes("ISO8859-1"), "UTF-8");
             product_name_split = product_name.split(" ");
             //提取的关键词有{}, Arrays.toString(product_name_split)
             product.setProduct_name(product_name);
