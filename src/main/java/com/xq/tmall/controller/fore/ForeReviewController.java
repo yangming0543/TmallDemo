@@ -126,7 +126,8 @@ public class ForeReviewController extends BaseController {
         //整合评论信息
         Review review = new Review();
         review.setReview_product(orderItem.getProductOrderItem_product());
-        review.setReview_content(new String(review_content.getBytes("ISO-8859-1"), "UTF-8"));
+        //review.setReview_content(new String(review_content.getBytes("ISO-8859-1"), "UTF-8"));
+        review.setReview_content(review_content);
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
         review.setReview_createDate(time.format(new Date()));
         review.setReview_user(user);
