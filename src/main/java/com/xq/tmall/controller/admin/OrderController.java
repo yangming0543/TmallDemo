@@ -2,6 +2,7 @@ package com.xq.tmall.controller.admin;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Address;
 import com.xq.tmall.entity.Product;
@@ -93,7 +94,7 @@ public class OrderController extends BaseController {
         order.setProductOrder_user(userService.get(order.getProductOrder_user().getUser_id()));
         //获取订单详情-订单项信息
         List<ProductOrderItem> productOrderItemList = productOrderItemService.getListByOrderId(oid, null);
-        if (productOrderItemList != null) {
+        if (CollectionUtils.isNotEmpty(productOrderItemList)) {
             //获取订单详情-订单项对应的产品信息
             for (ProductOrderItem productOrderItem : productOrderItemList) {
                 Integer productId = productOrderItem.getProductOrderItem_product().getProduct_id();

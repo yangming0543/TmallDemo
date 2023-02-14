@@ -32,8 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getList(String category_name, PageUtil pageUtil) {
-        List<Category> li = categoryMapper.select(category_name, pageUtil);
-        return li;
+        return categoryMapper.select(category_name, pageUtil);
     }
 
     @Override

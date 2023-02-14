@@ -75,6 +75,7 @@ public class ForeRegisterController extends BaseController {
         user.setUser_password(user_password);
         user.setUser_gender(Byte.valueOf(user_gender));
         user.setUser_birthday(user_birthday);
+        //地址对象
         Address address = new Address();
         address.setAddress_areaId(user_address);
         user.setUser_address(address);
