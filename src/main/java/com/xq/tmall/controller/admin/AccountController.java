@@ -22,13 +22,13 @@ import java.util.UUID;
 /**
  * 后台管理-账户页
  */
-@Controller("/admin")
+@Controller
 public class AccountController extends BaseController {
     @Autowired
     private AdminService adminService;
 
     //转到后台管理-账户页-ajax
-    @GetMapping(value = "/account")
+    @GetMapping(value = "/admin/account")
     public String goToPage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
         Object adminId = checkAdmin(session);
@@ -44,7 +44,7 @@ public class AccountController extends BaseController {
     }
 
     //退出当前账号
-    @GetMapping(value = "/account/logout")
+    @GetMapping(value = "/admin/account/logout")
     public String logout(HttpSession session) {
         Object o = session.getAttribute(Constants.ADMIN_ID);
         if (o == null) {
@@ -59,7 +59,7 @@ public class AccountController extends BaseController {
 
     //管理员头像上传
     @ResponseBody
-    @PostMapping(value = "/uploadAdminHeadImage", produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/admin/uploadAdminHeadImage", produces = "application/json;charset=UTF-8")
     public String uploadAdminHeadImage(@RequestParam MultipartFile file, HttpSession session) {
         String originalFileName = file.getOriginalFilename();
         if (StringUtils.isEmpty(originalFileName)) {
@@ -87,7 +87,7 @@ public class AccountController extends BaseController {
     //更新管理员信息
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @ResponseBody
-    @PutMapping(value = "/account/{admin_id}", produces = "application/json;charset=UTF-8")
+    @PutMapping(value = "/admin/account/{admin_id}", produces = "application/json;charset=UTF-8")
     public String updateAdmin(HttpSession session, @RequestParam String admin_nickname/*管理员昵称*/,
                               @RequestParam(required = false) String admin_password/*管理员当前密码*/,
                               @RequestParam(required = false) String admin_newPassword/*管理员新密码*/,
