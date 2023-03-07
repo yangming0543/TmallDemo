@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface PropertyValueMapper {
     /**
      * 新增产品属性
+     *
      * @param propertyValue
      * @return
      */
@@ -17,6 +19,7 @@ public interface PropertyValueMapper {
 
     /**
      * 批量新增产品属性
+     *
      * @param propertyValueList
      * @return
      */
@@ -24,6 +27,7 @@ public interface PropertyValueMapper {
 
     /**
      * 修改产品属性
+     *
      * @param propertyValue
      * @return
      */
@@ -31,13 +35,23 @@ public interface PropertyValueMapper {
 
     /**
      * 批量删除产品属性
+     *
      * @param propertyValue_id_list
      * @return
      */
     Integer deleteList(@Param("propertyValue_id_list") Integer[] propertyValue_id_list);
 
     /**
+     * 删除对应产品属性
+     *
+     * @param id
+     * @return
+     */
+    Integer deleteOne(@Param("id") Integer id);
+
+    /**
      * 查询产品属性列表
+     *
      * @param propertyValue
      * @param pageUtil
      * @return
@@ -46,6 +60,7 @@ public interface PropertyValueMapper {
 
     /**
      * 查询单条产品属性
+     *
      * @param propertyValue_id
      * @return
      */
@@ -53,6 +68,7 @@ public interface PropertyValueMapper {
 
     /**
      * 查询产品属性总数
+     *
      * @param propertyValue
      * @return
      */

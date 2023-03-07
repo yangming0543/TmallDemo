@@ -7,10 +7,12 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface ProductMapper {
     /**
      * 新增产品
+     *
      * @param product
      * @return
      */
@@ -18,23 +20,34 @@ public interface ProductMapper {
 
     /**
      * 修改产品
+     *
      * @param product
      * @return
      */
     Integer updateOne(@Param("product") Product product);
 
     /**
+     * 删除产品
+     *
+     * @param id
+     * @return
+     */
+    Integer deleteOne(@Param("id")Integer id);
+
+    /**
      * 查询列表
+     *
      * @param product
      * @param product_isEnabled_array
      * @param orderUtil
      * @param pageUtil
      * @return
      */
-    List<Product> select(@Param("product") Product product,@Param("product_isEnabled_array") Byte[] product_isEnabled_array, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
+    List<Product> select(@Param("product") Product product, @Param("product_isEnabled_array") Byte[] product_isEnabled_array, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 查询产品标题列表
+     *
      * @param product
      * @param pageUtil
      * @return
@@ -43,6 +56,7 @@ public interface ProductMapper {
 
     /**
      * 查询单条产品
+     *
      * @param product_Id
      * @return
      */
@@ -50,14 +64,16 @@ public interface ProductMapper {
 
     /**
      * 查询产品总数
+     *
      * @param product
      * @param product_isEnabled_array
      * @return
      */
-    Integer selectTotal(@Param("product") Product product,@Param("product_isEnabled_array") Byte[] product_isEnabled_array);
+    Integer selectTotal(@Param("product") Product product, @Param("product_isEnabled_array") Byte[] product_isEnabled_array);
 
     /**
      * 获取组合商品列表
+     *
      * @param product
      * @param bytes
      * @param orderUtil
@@ -69,6 +85,7 @@ public interface ProductMapper {
 
     /**
      * 按组合条件获取产品总数量
+     *
      * @param product
      * @param product_isEnabled_array
      * @param product_name_split

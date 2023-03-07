@@ -11,7 +11,7 @@ public interface PropertyValueService {
     boolean addList(List<PropertyValue> propertyValueList);
     boolean update(PropertyValue propertyValue);
     boolean deleteList(Integer[] propertyValue_id_list);
-
+    boolean delete(Integer id);
     List<PropertyValue> getList(PropertyValue propertyValue, PageUtil pageUtil);
     PropertyValue get(Integer propertyValue_id);
     Integer getTotal(PropertyValue propertyValue);

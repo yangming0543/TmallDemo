@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -104,7 +103,7 @@ public class ForeUserController extends BaseController {
                              @RequestParam(value = "user_address") String user_address  /*用户所在地 */,
                              @RequestParam(value = "user_profile_picture_src", required = false) String user_profile_picture_src /* 用户头像*/,
                              @RequestParam(value = "user_password") String user_password/* 用户密码 */
-    ) throws UnsupportedEncodingException {
+    ) {
         //检查用户是否登录
         Object userId = checkUser(session);
         if (userId != null) {
@@ -120,8 +119,6 @@ public class ForeUserController extends BaseController {
         }
         User userUpdate = new User();
         userUpdate.setUser_id(Integer.parseInt(userId.toString()));
-        //userUpdate.setUser_nickname(new String(user_nickname.getBytes("ISO8859-1"), "UTF-8"));
-        //userUpdate.setUser_realname(new String(user_realname.getBytes("ISO8859-1"), "UTF-8"));
         userUpdate.setUser_nickname(user_nickname);
         userUpdate.setUser_realname(user_realname);
         userUpdate.setUser_gender(Byte.valueOf(user_gender));

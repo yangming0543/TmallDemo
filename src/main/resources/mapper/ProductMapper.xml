@@ -44,6 +44,13 @@
             product_id = #{product.product_id}
         </where>
     </update>
+
+    <delete id="deleteOne" parameterType="java.lang.Integer">
+        DELETE FROM product
+        <where>
+            product_id =#{id}
+        </where>
+    </delete>
     <select id="select" resultMap="productMap">
         SELECT product_id,product_name,product_title,product_price,product_sale_price,date_format(product_create_date,'%Y-%m-%d %H:%i:%s') as product_create_date,product_isEnabled,product_category_id
         <if test="orderUtil != null">

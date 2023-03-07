@@ -40,7 +40,10 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     public boolean deleteList(Integer[] propertyValue_id_list) {
         return propertyValueMapper.deleteList(propertyValue_id_list) > 0;
     }
-
+    @Override
+    public boolean delete(Integer id) {
+        return propertyValueMapper.deleteOne(id) > 0;
+    }
     @Override
     public List<PropertyValue> getList(PropertyValue propertyValue, PageUtil pageUtil) {
         return propertyValueMapper.select(propertyValue, pageUtil);

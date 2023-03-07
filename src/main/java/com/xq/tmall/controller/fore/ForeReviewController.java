@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -90,7 +89,7 @@ public class ForeReviewController extends BaseController {
     @PostMapping(value = "review")
     public String addReview(HttpSession session, Map<String, Object> map,
                             @RequestParam Integer orderItem_id,
-                            @RequestParam String review_content) throws UnsupportedEncodingException {
+                            @RequestParam String review_content) {
         //检查用户是否登录
         Object userId = checkUser(session);
         User user;
@@ -127,7 +126,6 @@ public class ForeReviewController extends BaseController {
         //整合评论信息
         Review review = new Review();
         review.setReview_product(orderItem.getProductOrderItem_product());
-        //review.setReview_content(new String(review_content.getBytes("ISO-8859-1"), "UTF-8"));
         review.setReview_content(review_content);
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
         review.setReview_createDate(time.format(new Date()));

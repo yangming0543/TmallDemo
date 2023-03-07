@@ -136,7 +136,7 @@
                             //显示产品数据
                             let centent="<tr><td><input type='checkbox' class='cbx_select' id='cbx_product_select_" + product_id + "'><label for='cbx_product_select_" + product_id + "'></label></td><td title='"+product_name+"'>" + product_name + "</td><td title='"+product_title+"'>" + product_title + "</td><td title='"+product_price+"'>" + product_price + "</td><td title='"+product_sale_price+"'>" + product_sale_price + "</td><td title='"+product_create_date+"'>" + product_create_date + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td>" +
                                 "<td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span>";
-                            if (data.productList[i].product_isEnabled != 1) {
+                            if (data.productList[i].product_isEnabled == 1) {
                                 centent+="&nbsp;&nbsp;<span class='td_special' title='删除产品'><a href='javascript:void(0);' onclick='delChildPage(this)'>删除</a></span>";
                             }
                             centent+="</td><td hidden><span class='product_id'>" + product_id + "</span></td></tr>";
@@ -212,6 +212,7 @@
                             var table = $("#table_product_list");
                             table.find("span.orderByDesc,span.orderByAsc").css("opacity", "0");
                             table.find("th.data_info").attr("data-sort", "asc");
+                            $(".modal-body").text("删除成功！");
                         } else {
                             $(".modal-body").text("删除失败！");
                         }
@@ -340,7 +341,7 @@
                 </td>
                 <td><span class="td_special" title="查看产品详情"><a href="javascript:void(0)" onclick="getChildPage(this)">详情</a></span>&nbsp;&nbsp;
                     <c:choose>
-                        <c:when test="${product.product_isEnabled!=1}"> <span class="td_special" title="删除产品"><a href="javascript:void(0)" onclick="delChildPage(this)">删除</a></span></c:when>
+                        <c:when test="${product.product_isEnabled==1}"> <span class="td_special" title="删除产品"><a href="javascript:void(0)" onclick="delChildPage(this)">删除</a></span></c:when>
                     </c:choose>
                 </td>
                 <td hidden><span class="product_id">${product.product_id}</span></td>

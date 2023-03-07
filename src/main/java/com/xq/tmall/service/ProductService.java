@@ -10,6 +10,7 @@ public interface ProductService {
     boolean add(Product product);
     boolean update(Product product);
 
+    boolean delete(Integer id);
     List<Product> getList(Product product, Byte[] product_isEnabled_array, OrderUtil orderUtil, PageUtil pageUtil);
 
     List<Product> getTitle(Product product, PageUtil pageUtil);

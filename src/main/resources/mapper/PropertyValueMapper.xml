@@ -41,6 +41,12 @@
             propertyValue_id = #{propertyValue.propertyValue_id}
         </where>
     </update>
+    <delete id="deleteOne" parameterType="java.lang.Integer">
+        DELETE FROM propertyValue
+        <where>
+            propertyvalue_product_id =#{id}
+        </where>
+    </delete>
     <delete id="deleteList" parameterType="java.util.ArrayList">
         DELETE FROM propertyValue
         <where>
