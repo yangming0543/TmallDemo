@@ -26,7 +26,7 @@ import com.alibaba.druid.pool.DruidDataSource;
  * @description:Druid监控数据源
  */
 @Configuration
-@PropertySource(value = "classpath:application-dev.yml")
+@PropertySource(value = "classpath:application.yml")
 public class DruidConfiguration {
 
 	@Bean
