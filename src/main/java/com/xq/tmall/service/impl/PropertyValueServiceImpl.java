@@ -16,7 +16,6 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     @Autowired
     private PropertyValueMapper propertyValueMapper;
 
-
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean add(PropertyValue propertyValue) {
