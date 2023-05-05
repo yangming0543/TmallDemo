@@ -126,7 +126,7 @@ public class AccountController extends BaseController {
         if (yn) {
             //更新成功！
             jsonObject.put(Constants.SUCCESS, true);
-            session.removeAttribute("adminId");
+            session.removeAttribute(Constants.ADMIN_ID);
             session.invalidate();
             logger.info("登录信息已清除");
         } else {
