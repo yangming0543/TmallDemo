@@ -521,9 +521,10 @@ public class ProductController extends BaseController {
     @GetMapping(value = "product/del/{id}", produces = "application/json;charset=utf-8")
     public String deleteProductById(@PathVariable Integer id) {
         JSONObject object = new JSONObject();
-        boolean delete = propertyValueService.delete(id);
+        //删除产品属性
+        propertyValueService.delete(id);
         boolean yn = productService.delete(id);
-        if (delete && yn) {
+        if (yn) {
             //删除成功！
             object.put(Constants.SUCCESS, true);
         } else {

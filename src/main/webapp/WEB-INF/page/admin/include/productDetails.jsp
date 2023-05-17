@@ -400,7 +400,7 @@
                             $('#modalDiv').modal("hide");
                             setTimeout(function () {
                                 //ajax请求页面
-                                ajaxUtil.getPage("product/" + data.product_id, null, true);
+                                ajaxUtil.getPage("product",null);
                             }, 170);
                         });
                         $(".modal-body").text("保存成功！");

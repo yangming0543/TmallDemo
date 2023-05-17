@@ -212,7 +212,6 @@
                             var table = $("#table_product_list");
                             table.find("span.orderByDesc,span.orderByAsc").css("opacity", "0");
                             table.find("th.data_info").attr("data-sort", "asc");
-                            $(".modal-body").text("删除成功！");
                         } else {
                             $(".modal-body").text("删除失败！");
                         }
