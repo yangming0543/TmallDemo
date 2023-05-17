@@ -4,12 +4,10 @@
         "mybatis-3-mapper.dtd">
 <mapper namespace="com.xq.tmall.dao.CategoryMapper">
     <insert id="insertOne" parameterType="com.xq.tmall.entity.Category">
-        INSERT category (category_id,category_name,category_image_src,del_flag)
+        INSERT category (category_name,category_image_src)
             VALUES (
-            null,
             #{category.category_name},
-            #{category.category_image_src},
-            #{category.del_flag})
+            #{category.category_image_src})
     </insert>
     <update id="updateOne" parameterType="com.xq.tmall.entity.Category">
         UPDATE category

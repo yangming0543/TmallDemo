@@ -171,7 +171,7 @@
                             $('#modalDiv').modal("hide");
                             setTimeout(function () {
                                 //ajax请求页面
-                                ajaxUtil.getPage("category/" + data.category_id, null, true);
+                                ajaxUtil.getPage("category",null);
                             }, 170);
                         });
                         $(".modal-body").text("保存成功！");
