@@ -22,10 +22,8 @@
     </resultMap>
 
     <insert id="insertOne" parameterType="com.xq.tmall.entity.User">
-        INSERT INTO user(user_id,user_name,user_nickname,user_password,user_realname,user_gender,user_birthday,user_profile_picture_src,del_flag,user_address,user_homeplace)
-            VALUES (
-            null,
-            #{user.user_name},
+        INSERT INTO user(user_name,user_nickname,user_password,user_realname,user_gender,user_birthday,user_profile_picture_src,del_flag,user_address,user_homeplace)
+            VALUES (#{user.user_name},
             #{user.user_nickname},
             #{user.user_password},
             #{user.user_realname},

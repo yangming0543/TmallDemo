@@ -12,18 +12,15 @@
     </resultMap>
 
     <insert id="insertOne" parameterType="com.xq.tmall.entity.Property">
-        INSERT property (property_id,property_name,property_category_id)
-            VALUES(
-            null,
-            #{property.property_name},
+        INSERT property (property_name,property_category_id)
+            VALUES(#{property.property_name},
             #{property.property_category_id})
     </insert>
     <insert id="insertList" parameterType="list">
-        INSERT property (property_id,property_name,property_category_id)
+        INSERT property (property_name,property_category_id)
         VALUES
         <foreach collection="property_list" index="index" item="property" separator=",">
-            (null,
-            #{property.property_name},
+            (#{property.property_name},
             #{property.property_category_id})
         </foreach>
     </insert>

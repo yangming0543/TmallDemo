@@ -4,11 +4,8 @@
         "mybatis-3-mapper.dtd">
 <mapper namespace="com.xq.tmall.dao.AdminMapper">
     <insert id="insertOne" parameterType="com.xq.tmall.entity.Admin">
-        INSERT admin(admin_id,admin_name,admin_nickname,admin_password,admin_profile_picture_src)
-            VALUES (
-            null,
-            #{admin.admin_id},
-            #{admin.admin_name},
+        INSERT admin(admin_name,admin_nickname,admin_password,admin_profile_picture_src)
+            VALUES (#{admin.admin_name},
             #{admin.admin_nickname},
             #{admin.admin_password},
             #{admin.admin_profile_picture_src})

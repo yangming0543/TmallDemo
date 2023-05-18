@@ -19,10 +19,8 @@
     </resultMap>
 
     <insert id="insertOne" parameterType="com.xq.tmall.entity.Review">
-        INSERT review (review_id,review_content,review_createDate,review_user_id,review_product_id,review_orderItem_id)
-            VALUES (
-            null,
-            #{review.review_content},
+        INSERT review (review_content,review_createDate,review_user_id,review_product_id,review_orderItem_id)
+            VALUES (#{review.review_content},
             #{review.review_createDate},
         #{review.review_user.user_id},
         #{review.review_product.product_id},

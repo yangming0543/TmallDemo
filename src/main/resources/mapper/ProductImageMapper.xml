@@ -13,19 +13,16 @@
     </resultMap>
 
     <insert id="insertOne" parameterType="com.xq.tmall.entity.ProductImage">
-        INSERT productImage (productImage_id,productImage_type,productImage_src,productImage_product_id)
-            VALUES (
-            null,
-            #{productImage.productImage_type},
+        INSERT productImage (productImage_type,productImage_src,productImage_product_id)
+            VALUES (#{productImage.productImage_type},
             #{productImage.productImage_src},
             #{productImage.productImage_product.product_id})
     </insert>
     <insert id="insertList" parameterType="list">
-        INSERT productImage (productImage_id,productImage_type,productImage_src,productImage_product_id)
+        INSERT productImage (productImage_type,productImage_src,productImage_product_id)
         VALUES
         <foreach collection="productImage_list" item="productImage" index="index" separator=",">
-            (null,
-            #{productImage.productImage_type},
+            (#{productImage.productImage_type},
             #{productImage.productImage_src},
             #{productImage.productImage_product.product_id})
         </foreach>
