@@ -5,7 +5,7 @@
 
 后端页面兼容IE10及以上现代浏览器，Chrome,Edge,Firebox等浏览器表现效果最佳。
 
-# 部署方式
+# 部署方式(master-基础版本，feature1.0-较新版本)
 1.项目使用IntelliJ IDEA开发，请使用IntelliJ IDEA的版本控制检出功能，输入“https://gitee.com/HaiTao87/TmallDemo.git”拉取项目即可。
 2.项目数据库master分之为MySQL 5.7版本，feature分之为MySQL 8.0及以上版本，请在码云附件上下载SQL文件或者在resources下的sql文件夹中下载sql，并导入到数据库中。
 3.使用IDEA打开项目后，在maven面板刷新项目，下载依赖包。（项目jdk为1.8）
