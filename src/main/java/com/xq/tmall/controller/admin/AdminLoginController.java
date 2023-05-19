@@ -24,7 +24,7 @@ public class AdminLoginController extends BaseController {
 
     //转到后台管理-登录页
     @ApiOperation(value = "转到后台管理-登录页", notes = "转到后台管理-登录页")
-    @RequestMapping("admin/login")
+    @GetMapping("admin/login")
     public String goToPage() {
         //转到后台管理-登录页
         return "admin/loginPage";

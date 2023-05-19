@@ -101,7 +101,6 @@ public class AdminHomeController extends BaseController {
     }
 
     //获取图表的JSON数据
-    @ApiOperation(value = "获取图表的JSON数据", notes = "获取图表的JSON数据")
     private JSONObject getChartData(Date beginDate, Date endDate) throws ParseException {
         JSONObject jsonObject = new JSONObject();
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);

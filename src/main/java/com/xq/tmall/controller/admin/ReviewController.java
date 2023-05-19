@@ -32,7 +32,6 @@ public class ReviewController extends BaseController {
     @Autowired
     private ReviewService reviewService;
 
-
     //转到后台管理-评论页-ajax
     @ApiOperation(value = "转到后台管理-评论页", notes = "转到后台管理-评论页")
     @GetMapping(value = "admin/review")
