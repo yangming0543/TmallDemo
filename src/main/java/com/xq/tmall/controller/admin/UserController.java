@@ -12,6 +12,8 @@ import com.xq.tmall.service.*;
 import com.xq.tmall.util.Constants;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,7 @@ import java.util.Stack;
 /**
  * 后台管理-用户页
  */
+@Api(tags = "后台管理-用户页")
 @Controller
 public class UserController extends BaseController {
     @Autowired
@@ -43,6 +46,7 @@ public class UserController extends BaseController {
     private ProductImageService productImageService;
 
     //转到后台管理-用户页-ajax
+    @ApiOperation(value = "转到后台管理-用户页", notes = "转到后台管理-用户页")
     @GetMapping(value = "admin/user")
     public String goUserManagePage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
@@ -68,6 +72,7 @@ public class UserController extends BaseController {
 
 
     //转到后台管理-用户详情页-ajax
+    @ApiOperation(value = "转到后台管理-用户详情页", notes = "转到后台管理-用户详情页")
     @GetMapping(value = "admin/user/{uid}")
     public String getUserById(HttpSession session, Map<String, Object> map, @PathVariable Integer uid/* 用户ID */) {
         //检查管理员权限
@@ -142,6 +147,7 @@ public class UserController extends BaseController {
     }
 
     //按条件查询用户-ajax
+    @ApiOperation(value = "按条件查询用户", notes = "按条件查询用户")
     @ResponseBody
     @GetMapping(value = "admin/user/{index}/{count}", produces = "application/json;charset=UTF-8")
     public String getUserBySearch(@RequestParam(required = false) String user_name/* 用户名称 */,
@@ -190,6 +196,7 @@ public class UserController extends BaseController {
     }
 
     //按ID删除用户并返回最新结果-ajax
+    @ApiOperation(value = "按ID删除用户并返回最新结果", notes = "按ID删除用户并返回最新结果")
     @ResponseBody
     @GetMapping(value = "admin/user/del/{id}", produces = "application/json;charset=utf-8")
     public String deleteProductById(@PathVariable Integer id) {

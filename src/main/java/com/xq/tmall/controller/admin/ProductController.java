@@ -10,6 +10,8 @@ import com.xq.tmall.service.*;
 import com.xq.tmall.util.Constants;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,7 @@ import java.util.*;
 /**
  * 后台管理-产品页
  */
+@Api(tags = "后台管理-产品页")
 @Controller
 public class ProductController extends BaseController {
     @Autowired
@@ -43,6 +46,7 @@ public class ProductController extends BaseController {
     public static final String URL = "admin/include/loginMessage";
 
     //转到后台管理-产品页-ajax
+    @ApiOperation(value = "转到后台管理-产品页", notes = "转到后台管理-产品页")
     @GetMapping(value = "admin/product")
     public String goToPage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
@@ -69,6 +73,7 @@ public class ProductController extends BaseController {
     }
 
     //转到后台管理-产品详情页-ajax
+    @ApiOperation(value = "转到后台管理-产品详情页", notes = "转到后台管理-产品详情页")
     @GetMapping(value = "admin/product/{pid}")
     public String goToDetailsPage(HttpSession session, Map<String, Object> map, @PathVariable Integer pid/* 产品ID */) {
         //检查管理员权限
@@ -122,6 +127,7 @@ public class ProductController extends BaseController {
     }
 
     //转到后台管理-产品添加页-ajax
+    @ApiOperation(value = "转到后台管理-产品添加页", notes = "转到后台管理-产品添加页")
     @GetMapping(value = "admin/product/new")
     public String goToAddPage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
@@ -143,6 +149,7 @@ public class ProductController extends BaseController {
     }
 
     //添加产品信息-ajax.
+    @ApiOperation(value = "添加产品信息", notes = "添加产品信息")
     @ResponseBody
     @PostMapping(value = "admin/product", produces = "application/json;charset=utf-8")
     public String addProduct(@RequestParam String product_name/* 产品名称 */,
@@ -256,6 +263,7 @@ public class ProductController extends BaseController {
     }
 
     //更新产品信息-ajax
+    @ApiOperation(value = "更新产品信息", notes = "更新产品信息")
     @ResponseBody
     @PutMapping(value = "admin/product/{product_id}", produces = "application/json;charset=utf-8")
     public String updateProduct(@RequestParam String product_name/* 产品名称 */,
@@ -392,6 +400,7 @@ public class ProductController extends BaseController {
     }
 
     //按条件查询产品-ajax
+    @ApiOperation(value = "按条件查询产品", notes = "按条件查询产品")
     @ResponseBody
     @GetMapping(value = "admin/product/{index}/{count}", produces = "application/json;charset=utf-8")
     public String getProductBySearch(@RequestParam(required = false) String product_name/* 产品名称 */,
@@ -447,6 +456,7 @@ public class ProductController extends BaseController {
     }
 
     //按类型ID查询属性-ajax
+    @ApiOperation(value = "按类型ID查询属性", notes = "按类型ID查询属性")
     @ResponseBody
     @GetMapping(value = "admin/property/type/{property_category_id}", produces = "application/json;charset=utf-8")
     public String getPropertyByCategoryId(@PathVariable Integer property_category_id/* 属性所属类型ID*/) {
@@ -465,6 +475,7 @@ public class ProductController extends BaseController {
     }
 
     //按ID删除产品图片并返回最新结果-ajax
+    @ApiOperation(value = "按ID删除产品图片并返回最新结果", notes = "按ID删除产品图片并返回最新结果")
     @ResponseBody
     @DeleteMapping(value = "admin/productImage/{productImage_id}", produces = "application/json;charset=utf-8")
     public String deleteProductImageById(@PathVariable Integer productImage_id/* 产品图片ID */) {
@@ -483,6 +494,7 @@ public class ProductController extends BaseController {
     }
 
     //上传产品图片-ajax
+    @ApiOperation(value = "上传产品图片", notes = "上传产品图片")
     @ResponseBody
     @PostMapping(value = "admin/uploadProductImage", produces = "application/json;charset=utf-8")
     public String uploadProductImage(@RequestParam MultipartFile file, @RequestParam String imageType, HttpSession session) {
@@ -517,6 +529,7 @@ public class ProductController extends BaseController {
     }
 
     //按ID删除产品并返回最新结果-ajax
+    @ApiOperation(value = "按ID删除产品并返回最新结果", notes = "按ID删除产品并返回最新结果")
     @ResponseBody
     @GetMapping(value = "product/del/{id}", produces = "application/json;charset=utf-8")
     public String deleteProductById(@PathVariable Integer id) {

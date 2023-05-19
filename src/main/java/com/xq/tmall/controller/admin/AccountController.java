@@ -6,6 +6,8 @@ import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Admin;
 import com.xq.tmall.service.AdminService;
 import com.xq.tmall.util.Constants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
@@ -22,12 +24,14 @@ import java.util.UUID;
 /**
  * 后台管理-账户页
  */
+@Api(tags = "后台管理-账户页")
 @Controller
 public class AccountController extends BaseController {
     @Autowired
     private AdminService adminService;
 
     //转到后台管理-账户页-ajax
+    @ApiOperation(value = "转到后台管理-账户页", notes = "转到后台管理-账户页")
     @GetMapping(value = "/admin/account")
     public String goToPage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
@@ -44,6 +48,7 @@ public class AccountController extends BaseController {
     }
 
     //退出当前账号
+    @ApiOperation(value = "退出当前账号", notes = "退出当前账号")
     @GetMapping(value = "/admin/account/logout")
     public String logout(HttpSession session) {
         Object o = session.getAttribute(Constants.ADMIN_ID);
@@ -58,6 +63,7 @@ public class AccountController extends BaseController {
     }
 
     //管理员头像上传
+    @ApiOperation(value = "管理员头像上传", notes = "管理员头像上传")
     @ResponseBody
     @PostMapping(value = "/admin/uploadAdminHeadImage", produces = "application/json;charset=UTF-8")
     public String uploadAdminHeadImage(@RequestParam MultipartFile file, HttpSession session) {
@@ -85,6 +91,7 @@ public class AccountController extends BaseController {
     }
 
     //更新管理员信息
+    @ApiOperation(value = "更新管理员信息", notes = "更新管理员信息")
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @ResponseBody
     @PutMapping(value = "/admin/account/{admin_id}", produces = "application/json;charset=UTF-8")

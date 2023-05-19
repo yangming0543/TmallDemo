@@ -7,6 +7,8 @@ import com.xq.tmall.entity.Review;
 import com.xq.tmall.service.ReviewService;
 import com.xq.tmall.util.Constants;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +26,7 @@ import java.util.Map;
 /**
  * 后台管理-评论页
  */
+@Api(tags = "后台管理-评论页")
 @Controller
 public class ReviewController extends BaseController {
     @Autowired
@@ -31,6 +34,7 @@ public class ReviewController extends BaseController {
 
 
     //转到后台管理-评论页-ajax
+    @ApiOperation(value = "转到后台管理-评论页", notes = "转到后台管理-评论页")
     @GetMapping(value = "admin/review")
     public String goToPage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
@@ -55,6 +59,7 @@ public class ReviewController extends BaseController {
     }
 
     //转到后台管理-评论详情页-ajax
+    @ApiOperation(value = "转到后台管理-评论详情页", notes = "转到后台管理-评论详情页")
     @GetMapping(value = "admin/review/{cid}")
     public String goToDetailsPage(HttpSession session, Map<String, Object> map, @PathVariable Integer cid/* 评论ID */) {
         //检查管理员权限
@@ -72,6 +77,7 @@ public class ReviewController extends BaseController {
 
 
     //按条件查询评论-ajax
+    @ApiOperation(value = "按条件查询评论", notes = "按条件查询评论")
     @ResponseBody
     @GetMapping(value = "admin/review/{index}/{count}", produces = "application/json;charset=utf-8")
     public String getreviewBySearch(@RequestParam(required = false) String review_content/* 评论名称 */,
@@ -103,6 +109,7 @@ public class ReviewController extends BaseController {
     }
 
     //按ID删除评论并返回最新结果-ajax
+    @ApiOperation(value = "按ID删除评论并返回最新结果", notes = "按ID删除评论并返回最新结果")
     @ResponseBody
     @GetMapping(value = "admin/review/del/{id}", produces = "application/json;charset=utf-8")
     public String deleteProductById(@PathVariable Integer id) {

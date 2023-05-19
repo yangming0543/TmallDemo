@@ -11,6 +11,8 @@ import com.xq.tmall.service.LastIDService;
 import com.xq.tmall.service.PropertyService;
 import com.xq.tmall.util.Constants;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,7 @@ import java.util.UUID;
 /**
  * 后台管理-分类页
  */
+@Api(tags = "后台管理-分类页")
 @Controller
 public class CategoryController extends BaseController {
     @Autowired
@@ -39,6 +42,7 @@ public class CategoryController extends BaseController {
     private PropertyService propertyService;
 
     //转到后台管理-分类页-ajax
+    @ApiOperation(value = "转到后台管理-分类页", notes = "转到后台管理-分类页")
     @GetMapping(value = "admin/category")
     public String goToPage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
@@ -61,6 +65,7 @@ public class CategoryController extends BaseController {
     }
 
     //转到后台管理-分类详情页-ajax
+    @ApiOperation(value = "转到后台管理-分类详情页", notes = "转到后台管理-分类详情页")
     @GetMapping(value = "admin/category/{cid}")
     public String goToDetailsPage(HttpSession session, Map<String, Object> map, @PathVariable Integer cid/* 分类ID */) {
         //检查管理员权限
@@ -80,6 +85,7 @@ public class CategoryController extends BaseController {
     }
 
     //转到后台管理-分类添加页-ajax
+    @ApiOperation(value = "转到后台管理-分类添加页", notes = "转到后台管理-分类添加页")
     @GetMapping(value = "admin/category/new")
     public String goToAddPage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
@@ -92,6 +98,7 @@ public class CategoryController extends BaseController {
     }
 
     //添加分类信息-ajax
+    @ApiOperation(value = "添加分类信息", notes = "添加分类信息")
     @ResponseBody
     @PostMapping(value = "admin/category", produces = "application/json;charset=utf-8")
     public String addCategory(@RequestParam String category_name/* 分类名称 */,
@@ -117,6 +124,7 @@ public class CategoryController extends BaseController {
     }
 
     //更新分类信息-ajax
+    @ApiOperation(value = "更新分类信息", notes = "更新分类信息")
     @ResponseBody
     @PutMapping(value = "admin/category/{category_id}", produces = "application/json;charset=utf-8")
     public String updateCategory(@RequestParam String category_name/* 分类名称 */,
@@ -144,6 +152,7 @@ public class CategoryController extends BaseController {
     }
 
     //按条件查询分类-ajax
+    @ApiOperation(value = "按条件查询分类", notes = "按条件查询分类")
     @ResponseBody
     @GetMapping(value = "admin/category/{index}/{count}", produces = "application/json;charset=utf-8")
     public String getCategoryBySearch(@RequestParam(required = false) String category_name/* 分类名称 */,
@@ -171,6 +180,7 @@ public class CategoryController extends BaseController {
     }
 
     // 上传分类图片-ajax
+    @ApiOperation(value = "上传分类图片", notes = "上传分类图片")
     @ResponseBody
     @PostMapping(value = "admin/uploadCategoryImage", produces = "application/json;charset=utf-8")
     public String uploadCategoryImage(@RequestParam MultipartFile file, HttpSession session) {
@@ -197,6 +207,7 @@ public class CategoryController extends BaseController {
     }
 
     //按ID删除分类并返回最新结果-ajax
+    @ApiOperation(value = "按ID删除分类并返回最新结果", notes = "按ID删除分类并返回最新结果")
     @ResponseBody
     @GetMapping(value = "admin/category/del/{id}", produces = "application/json;charset=utf-8")
     public String deleteProductById(@PathVariable Integer id) {

@@ -9,6 +9,8 @@ import com.xq.tmall.service.AdminService;
 import com.xq.tmall.service.ProductOrderService;
 import com.xq.tmall.service.ProductService;
 import com.xq.tmall.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,7 @@ import java.util.*;
 /**
  * 后台管理-主页
  */
+@Api(tags = "后台管理-主页")
 @Controller
 public class AdminHomeController extends BaseController {
     @Autowired
@@ -35,6 +38,7 @@ public class AdminHomeController extends BaseController {
     private UserService userService;
 
     //转到后台管理-主页
+    @ApiOperation(value = "转到后台管理-主页", notes = "转到后台管理-主页")
     @GetMapping(value = "admin")
     public String goToPage(HttpSession session, Map<String, Object> map) throws ParseException {
         //检查管理员权限
@@ -58,7 +62,8 @@ public class AdminHomeController extends BaseController {
         return "admin/homePage";
     }
 
-    //转到后台管理-主页-ajax
+    //转到后台管理-home主页-ajax
+    @ApiOperation(value = "转到后台管理-home主页", notes = "转到后台管理-home主页")
     @GetMapping(value = "admin/home")
     public String goToPageByAjax(HttpSession session, Map<String, Object> map) throws ParseException {
         //检查管理员权限
@@ -66,7 +71,6 @@ public class AdminHomeController extends BaseController {
         if (adminId == null) {
             return "admin/include/loginMessage";
         }
-
         //获取管理员信息
         Admin admin = adminService.get(null, Integer.parseInt(adminId.toString()));
         map.put("admin", admin);
@@ -84,6 +88,7 @@ public class AdminHomeController extends BaseController {
     }
 
     //按日期查询图表数据-ajax
+    @ApiOperation(value = "按日期查询图表数据", notes = "按日期查询图表数据")
     @ResponseBody
     @GetMapping(value = "admin/home/charts", produces = "application/json;charset=utf-8")
     public String getChartDataByDate(@RequestParam(required = false) String beginDate, @RequestParam(required = false) String endDate) throws ParseException {
@@ -96,6 +101,7 @@ public class AdminHomeController extends BaseController {
     }
 
     //获取图表的JSON数据
+    @ApiOperation(value = "获取图表的JSON数据", notes = "获取图表的JSON数据")
     private JSONObject getChartData(Date beginDate, Date endDate) throws ParseException {
         JSONObject jsonObject = new JSONObject();
         SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd", Locale.UK);

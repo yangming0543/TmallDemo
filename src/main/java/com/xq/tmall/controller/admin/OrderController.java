@@ -12,6 +12,8 @@ import com.xq.tmall.service.*;
 import com.xq.tmall.util.Constants;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,7 @@ import java.util.*;
 /**
  * 后台管理-订单页
  */
+@Api(tags = "后台管理-订单页")
 @Controller
 public class OrderController extends BaseController {
     @Autowired
@@ -39,6 +42,7 @@ public class OrderController extends BaseController {
     private ProductImageService productImageService;
 
     //转到后台管理-订单页-ajax
+    @ApiOperation(value = "转到后台管理-订单页", notes = "转到后台管理-订单页")
     @GetMapping(value = "admin/order")
     public String goToPage(HttpSession session, Map<String, Object> map) {
         //检查管理员权限
@@ -62,6 +66,7 @@ public class OrderController extends BaseController {
     }
 
     //转到后台管理-订单详情页-ajax
+    @ApiOperation(value = "转到后台管理-订单详情页", notes = "转到后台管理-订单详情页")
     @GetMapping(value = "admin/order/{oid}")
     public String goToDetailsPage(HttpSession session, Map<String, Object> map, @PathVariable Integer oid/* 订单ID */) {
         //检查管理员权限
@@ -114,6 +119,7 @@ public class OrderController extends BaseController {
     }
 
     //更新订单信息-ajax
+    @ApiOperation(value = "更新订单信息", notes = "更新订单信息")
     @ResponseBody
     @PutMapping(value = "admin/order/{order_id}", produces = "application/json;charset=UTF-8")
     public String updateOrder(@PathVariable("order_id") String order_id) {
@@ -138,7 +144,8 @@ public class OrderController extends BaseController {
         return String.valueOf(jsonObject);
     }
 
-    //按条件查询订单-ajax
+    //更新订单信息-ajax
+    @ApiOperation(value = "更新订单信息", notes = "更新订单信息")
     @ResponseBody
     @GetMapping(value = "admin/order/{index}/{count}", produces = "application/json;charset=UTF-8")
     public String getOrderBySearch(@RequestParam(required = false) String productOrder_code/* 订单号 */,
