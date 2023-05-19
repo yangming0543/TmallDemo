@@ -106,7 +106,7 @@ public class AccountController extends BaseController {
         if (StringUtils.isNotEmpty(admin_password) && StringUtils.isNotEmpty(admin_newPassword)) {
             //获取需要修改的管理员信息
             Admin admin = adminService.get(null, Integer.valueOf(adminId.toString()));
-            if (adminService.login(admin.getAdmin_name(), admin_password) != null) {
+            if (adminService.login(admin.getAdmin_name(), admin_password) >0) {
                 //原密码正确
                 putAdmin.setAdmin_password(admin_newPassword);
             } else {

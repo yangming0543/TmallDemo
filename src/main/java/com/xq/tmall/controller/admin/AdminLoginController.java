@@ -34,7 +34,7 @@ public class AdminLoginController extends BaseController {
         Integer admin = adminService.login(username, password);
 
         JSONObject object = new JSONObject();
-        if (admin == null) {
+        if (admin == 0) {
             //登录验证失败
             object.put(Constants.SUCCESS, false);
         } else {

@@ -44,9 +44,14 @@
         </where>
     </select>
     <select id="selectByLogin" resultType="int">
-        SELECT admin_id FROM admin
+        SELECT COUNT(admin_id) FROM admin
         <where>
-            admin_name = #{admin_name} and admin_password = #{admin_password}
+            <if test="admin_name != null">
+            and admin_name = #{admin_name}
+            </if>
+            <if test="admin_password != null">
+            and admin_password = #{admin_password}
+            </if>
         </where>
     </select>
     <select id="selectTotal" resultType="int">
