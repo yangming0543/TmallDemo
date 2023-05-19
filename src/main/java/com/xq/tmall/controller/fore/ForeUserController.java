@@ -7,6 +7,8 @@ import com.xq.tmall.entity.Address;
 import com.xq.tmall.entity.User;
 import com.xq.tmall.service.AddressService;
 import com.xq.tmall.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +27,7 @@ import java.util.UUID;
 /**
  * 前台天猫-用户
  */
+@Api(tags = "前台天猫-用户")
 @Controller
 public class ForeUserController extends BaseController {
     @Autowired
@@ -33,6 +36,7 @@ public class ForeUserController extends BaseController {
     private UserService userService;
 
     //转到前台天猫-用户详情页
+    @ApiOperation(value = "转到前台天猫-用户详情页", notes = "转到前台天猫-用户详情页")
     @GetMapping(value = "userDetails")
     public String goToUserDetail(HttpSession session, Map<String, Object> map) {
         //检查用户是否登录
@@ -65,6 +69,7 @@ public class ForeUserController extends BaseController {
     }
 
     //前台天猫-用户更换头像
+    @ApiOperation(value = "前台天猫-用户更换头像", notes = "前台天猫-用户更换头像")
     @ResponseBody
     @PostMapping(value = "user/uploadUserHeadImage", produces = "application/json;charset=utf-8")
     public String uploadUserHeadImage(@RequestParam MultipartFile file, HttpSession session
@@ -94,6 +99,7 @@ public class ForeUserController extends BaseController {
     }
 
     //前台天猫-用户详情更新
+    @ApiOperation(value = "前台天猫-用户详情更新", notes = "前台天猫-用户详情更新")
     @PostMapping(value = "user/update", produces = "application/json;charset=utf-8")
     public String userUpdate(HttpSession session, Map<String, Object> map,
                              @RequestParam(value = "user_nickname") String user_nickname  /*用户昵称 */,

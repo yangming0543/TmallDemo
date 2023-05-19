@@ -5,6 +5,8 @@ import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.User;
 import com.xq.tmall.service.UserService;
 import com.xq.tmall.util.Constants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +20,14 @@ import java.util.Map;
 /**
  * 前台天猫-登陆页
  */
+@Api(tags = "前台天猫-登陆页")
 @Controller
 public class ForeLoginController extends BaseController {
     @Autowired
     private UserService userService;
 
     //转到前台天猫-登录页
+    @ApiOperation(value = "转到前台天猫-登录页", notes = "转到前台天猫-登录页")
     @GetMapping(value = "login")
     public String goToPage(HttpSession session, Map<String, Object> map) {
         //转到前台天猫-登录页
@@ -31,6 +35,7 @@ public class ForeLoginController extends BaseController {
     }
 
     //登陆验证-ajax
+    @ApiOperation(value = "登陆验证", notes = "登陆验证")
     @ResponseBody
     @PostMapping(value = "login/doLogin", produces = "application/json;charset=utf-8")
     public String checkLogin(HttpSession session, @RequestParam String username, @RequestParam String password) {
@@ -50,6 +55,7 @@ public class ForeLoginController extends BaseController {
     }
 
     //退出当前账号
+    @ApiOperation(value = "退出当前账号", notes = "退出当前账号")
     @GetMapping(value = "login/logout")
     public String logout(HttpSession session) {
         Object o = session.getAttribute(Constants.USER_ID);

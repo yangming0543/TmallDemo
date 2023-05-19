@@ -6,6 +6,8 @@ import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
 import com.xq.tmall.service.*;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import java.util.Random;
 /**
  * 前台天猫-产品详情页
  */
+@Api(tags = "前台天猫-产品详情页")
 @Controller
 public class ForeProductDetailsController extends BaseController {
     @Autowired
@@ -42,6 +45,7 @@ public class ForeProductDetailsController extends BaseController {
     private ProductOrderItemService productOrderItemService;
 
     //转到前台天猫-产品详情页
+    @ApiOperation(value = "转到前台天猫-产品详情页", notes = "转到前台天猫-产品详情页")
     @GetMapping(value = "product/{pid}")
     public String goToPage(HttpSession session, Map<String, Object> map,
                            @PathVariable("pid") String pid /*产品ID*/) {
@@ -142,6 +146,7 @@ public class ForeProductDetailsController extends BaseController {
     }
 
     //按产品ID加载产品评论列表-ajax
+    @ApiOperation(value = "按产品ID加载产品评论列表", notes = "按产品ID加载产品评论列表")
     @Deprecated
     @ResponseBody
     @GetMapping(value = "review/{pid}", produces = "application/json;charset=utf-8")
@@ -159,6 +164,7 @@ public class ForeProductDetailsController extends BaseController {
     }
 
     //按产品ID加载产品属性列表-ajax
+    @ApiOperation(value = "按产品ID加载产品属性列表", notes = "按产品ID加载产品属性列表")
     @Deprecated
     @ResponseBody
     @GetMapping(value = "property/{pid}", produces = "application/json;charset=utf-8")
@@ -196,6 +202,7 @@ public class ForeProductDetailsController extends BaseController {
     }
 
     //加载猜你喜欢列表-ajax
+    @ApiOperation(value = "加载猜你喜欢列表", notes = "加载猜你喜欢列表")
     @ResponseBody
     @GetMapping(value = "guess/{cid}", produces = "application/json;charset=utf-8")
     public String guessYouLike(@PathVariable("cid") Integer cid, @RequestParam Integer guessNumber) {

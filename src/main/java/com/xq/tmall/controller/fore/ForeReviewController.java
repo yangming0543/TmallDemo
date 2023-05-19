@@ -6,6 +6,8 @@ import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
 import com.xq.tmall.service.*;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import java.util.Map;
 /**
  * 前台天猫-评论添加
  */
+@Api(tags = "前台天猫-评论添加")
 @Controller
 public class ForeReviewController extends BaseController {
     @Autowired
@@ -37,6 +40,7 @@ public class ForeReviewController extends BaseController {
     public static final String URL = "redirect:/order/0/10";
 
     //转到前台天猫-评论添加页
+    @ApiOperation(value = "转到前台天猫-评论添加页", notes = "转到前台天猫-评论添加页")
     @GetMapping(value = "review/{orderItem_id}")
     public String goToPage(HttpSession session, Map<String, Object> map,
                            @PathVariable("orderItem_id") Integer orderItem_id) {
@@ -86,6 +90,7 @@ public class ForeReviewController extends BaseController {
     }
 
     //添加一条评论
+    @ApiOperation(value = "添加一条评论", notes = "添加一条评论")
     @PostMapping(value = "review")
     public String addReview(HttpSession session, Map<String, Object> map,
                             @RequestParam Integer orderItem_id,
@@ -140,6 +145,7 @@ public class ForeReviewController extends BaseController {
     }
 
     //获取产品评论信息-ajax
+    @ApiOperation(value = "获取产品评论信息", notes = "获取产品评论信息")
     @ResponseBody
     @GetMapping(value = "review", produces = "application/json;charset=utf-8")
     public String getReviewInfo(@RequestParam("product_id") Integer product_id,

@@ -13,6 +13,8 @@ import com.xq.tmall.service.UserService;
 import com.xq.tmall.util.Constants;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import java.util.Map;
 /**
  * 前台天猫-主页
  */
+@Api(tags = "前台天猫-主页")
 @Controller
 public class ForeHomeController extends BaseController {
     @Autowired
@@ -39,6 +42,7 @@ public class ForeHomeController extends BaseController {
     private ProductImageService productImageService;
 
     //转到前台天猫-主页
+    @ApiOperation(value = "转到前台天猫-主页", notes = "转到前台天猫-主页")
     @GetMapping(value = "/")
     public String goToPage(HttpSession session, Map<String, Object> map) {
         //检查用户是否登录
@@ -76,12 +80,14 @@ public class ForeHomeController extends BaseController {
     }
 
     //转到前台天猫-错误页
+    @ApiOperation(value = "转到前台天猫-错误页", notes = "转到前台天猫-错误页")
     @GetMapping(value = "error")
     public String goToErrorPage() {
         return "fore/errorPage";
     }
 
     //获取主页分类下产品信息-ajax
+    @ApiOperation(value = "获取主页分类下产品信息", notes = "获取主页分类下产品信息")
     @ResponseBody
     @GetMapping(value = "product/nav/{category_id}", produces = "application/json;charset=utf-8")
     public String getProductByNav(@PathVariable("category_id") Integer category_id) {

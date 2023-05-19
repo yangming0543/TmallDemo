@@ -9,6 +9,8 @@ import com.xq.tmall.service.*;
 import com.xq.tmall.util.Constants;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,7 @@ import java.util.*;
 /**
  * 前台天猫-订单
  */
+@Api(tags = "前台天猫-订单")
 @Controller
 public class ForeOrderController extends BaseController {
     @Autowired
@@ -55,11 +58,13 @@ public class ForeOrderController extends BaseController {
 
 
     //转到前台天猫-订单列表页
+    @ApiOperation(value = "转到前台天猫-订单列表页", notes = "转到前台天猫-订单列表页")
     @GetMapping(value = "order")
     public String goToPageSimple() {
         return URL;
     }
 
+    @ApiOperation(value = "退出当前账号", notes = "退出当前账号")
     @GetMapping(value = "order/{index}/{count}")
     public String goToPage(HttpSession session, Map<String, Object> map,
                            @RequestParam(required = false) Byte status,
@@ -125,6 +130,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //转到前台天猫-订单建立页
+    @ApiOperation(value = "转到前台天猫-订单建立页", notes = "转到前台天猫-订单建立页")
     @GetMapping(value = "order/create/{product_id}")
     public String goToOrderConfirmPage(@PathVariable("product_id") Integer product_id,
                                        @RequestParam(required = false, defaultValue = "1") Short product_number,
@@ -226,6 +232,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //转到前台天猫-购物车订单建立页
+    @ApiOperation(value = "转到前台天猫-购物车订单建立页", notes = "转到前台天猫-购物车订单建立页")
     @GetMapping(value = "order/create/byCart")
     public String goToOrderConfirmPageByCart(Map<String, Object> map,
                                              HttpSession session, HttpServletRequest request,
@@ -337,6 +344,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //转到前台天猫-订单支付页
+    @ApiOperation(value = "转到前台天猫-订单支付页", notes = "转到前台天猫-订单支付页")
     @GetMapping(value = "order/pay/{order_code}")
     public String goToOrderPayPage(Map<String, Object> map, HttpSession session,
                                    @PathVariable("order_code") String order_code) {
@@ -392,6 +400,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //转到前台天猫-订单支付成功页
+    @ApiOperation(value = "转到前台天猫-订单支付成功页", notes = "转到前台天猫-订单支付成功页")
     @GetMapping(value = "order/pay/success/{order_code}")
     public String goToOrderPaySuccessPage(Map<String, Object> map, HttpSession session,
                                           @PathVariable("order_code") String order_code) {
@@ -463,6 +472,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //转到前台天猫-订单确认页
+    @ApiOperation(value = "转到前台天猫-订单确认页", notes = "转到前台天猫-订单确认页")
     @GetMapping(value = "order/confirm/{order_code}")
     public String goToOrderConfirmPage(Map<String, Object> map, HttpSession session,
                                        @PathVariable("order_code") String order_code) {
@@ -524,6 +534,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //转到前台天猫-订单完成页
+    @ApiOperation(value = "转到前台天猫-订单完成页", notes = "转到前台天猫-订单完成页")
     @GetMapping(value = "order/success/{order_code}")
     public String goToOrderSuccessPage(Map<String, Object> map, HttpSession session,
                                        @PathVariable("order_code") String order_code) {
@@ -581,6 +592,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //转到前台天猫-购物车页
+    @ApiOperation(value = "转到前台天猫-购物车页", notes = "转到前台天猫-购物车页")
     @GetMapping(value = "cart")
     public String goToCartPage(Map<String, Object> map, HttpSession session) {
         //检查用户是否登录
@@ -616,6 +628,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //更新订单信息为已支付，待发货-ajax
+    @ApiOperation(value = "更新订单信息为已支付，待发货", notes = "更新订单信息为已支付，待发货")
     @ResponseBody
     @PutMapping(value = "order/pay/{order_code}")
     public String orderPay(HttpSession session, @PathVariable("order_code") String order_code) {
@@ -678,6 +691,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //更新订单信息为已发货，待确认-ajax
+    @ApiOperation(value = "更新订单信息为已发货，待确认", notes = "更新订单信息为已发货，待确认")
     @GetMapping(value = "order/delivery/{order_code}")
     public String orderDelivery(HttpSession session, @PathVariable("order_code") String order_code) {
         //检查用户是否登录
@@ -715,6 +729,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //更新订单信息为交易成功-ajax
+    @ApiOperation(value = "更新订单信息为交易成功", notes = "更新订单信息为交易成功")
     @ResponseBody
     @PutMapping(value = "order/success/{order_code}", produces = "application/json;charset=utf-8")
     public String orderSuccess(HttpSession session, @PathVariable("order_code") String order_code) {
@@ -766,6 +781,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //更新订单信息为交易关闭-ajax
+    @ApiOperation(value = "更新订单信息为交易关闭", notes = "更新订单信息为交易关闭")
     @ResponseBody
     @PutMapping(value = "order/close/{order_code}", produces = "application/json;charset=utf-8")
     public String orderClose(HttpSession session, @PathVariable("order_code") String order_code) {
@@ -815,6 +831,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //更新购物车订单项数量-ajax
+    @ApiOperation(value = "更新购物车订单项数量", notes = "更新购物车订单项数量")
     @ResponseBody
     @PutMapping(value = "orderItem", produces = "application/json;charset=utf-8")
     public String updateOrderItem(HttpSession session, Map<String, Object> map, HttpServletResponse response,
@@ -870,6 +887,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //创建新订单-单订单项-ajax
+    @ApiOperation(value = "创建新订单-单订单项", notes = "创建新订单-单订单项")
     @ResponseBody
     @PostMapping(value = "order", produces = "application/json;charset=utf-8")
     public String createOrderByOne(HttpSession session, Map<String, Object> map, HttpServletResponse response,
@@ -969,6 +987,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //创建新订单-多订单项-ajax
+    @ApiOperation(value = "创建新订单-多订单项", notes = "创建新订单-多订单项")
     @ResponseBody
     @PostMapping(value = "order/list", produces = "application/json;charset=utf-8")
     public String createOrderByList(HttpSession session, Map<String, Object> map, HttpServletResponse response,
@@ -1089,6 +1108,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //创建订单项-购物车-ajax
+    @ApiOperation(value = "创建订单项-购物车", notes = "创建订单项-购物车")
     @ResponseBody
     @PostMapping(value = "orderItem/create/{product_id}", produces = "application/json;charset=utf-8")
     public String createOrderItem(@PathVariable("product_id") Integer product_id,
@@ -1151,6 +1171,7 @@ public class ForeOrderController extends BaseController {
     }
 
     //删除订单项-购物车-ajax
+    @ApiOperation(value = "删除订单项-购物车", notes = "删除订单项-购物车")
     @ResponseBody
     @DeleteMapping(value = "orderItem/{orderItem_id}", produces = "application/json;charset=utf-8")
     public String deleteOrderItem(@PathVariable("orderItem_id") Integer orderItem_id,

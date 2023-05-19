@@ -6,6 +6,8 @@ import com.xq.tmall.entity.Address;
 import com.xq.tmall.entity.User;
 import com.xq.tmall.service.AddressService;
 import com.xq.tmall.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import java.util.Map;
 /**
  * 前台天猫-用户注册
  */
+@Api(tags = "前台天猫-用户注册")
 @Controller
 public class ForeRegisterController extends BaseController {
     @Autowired
@@ -27,6 +30,7 @@ public class ForeRegisterController extends BaseController {
     private UserService userService;
 
     //转到前台天猫-用户注册页
+    @ApiOperation(value = "转到前台天猫-用户注册页", notes = "转到前台天猫-用户注册页")
     @GetMapping(value = "register")
     public String goToPage(Map<String, Object> map) {
         String addressId = "110000";
@@ -47,6 +51,7 @@ public class ForeRegisterController extends BaseController {
     }
 
     //天猫前台-用户注册-ajax
+    @ApiOperation(value = "天猫前台-用户注册", notes = "天猫前台-用户注册")
     @ResponseBody
     @PostMapping(value = "register/doRegister", produces = "application/json;charset=UTF-8")
     public String register(

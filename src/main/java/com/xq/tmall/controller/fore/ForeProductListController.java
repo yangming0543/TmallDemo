@@ -8,6 +8,8 @@ import com.xq.tmall.entity.User;
 import com.xq.tmall.service.*;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import java.util.Map;
 /**
  * 前台天猫-产品搜索列表
  */
+@Api(tags = "前台天猫-产品搜索列表")
 @Controller
 public class ForeProductListController extends BaseController {
     @Autowired
@@ -39,6 +42,7 @@ public class ForeProductListController extends BaseController {
 
 
     //转到前台天猫-产品搜索列表页
+    @ApiOperation(value = "转到前台天猫-产品搜索列表页", notes = "转到前台天猫-产品搜索列表页")
     @GetMapping(value = "product")
     public String goToPage(HttpSession session, Map<String, Object> map,
                            @RequestParam(value = "category_id", required = false) Integer category_id/* 分类ID */,
@@ -117,6 +121,7 @@ public class ForeProductListController extends BaseController {
     }
 
     //产品高级查询
+    @ApiOperation(value = "产品高级查询", notes = "产品高级查询")
     @GetMapping(value = "product/{index}/{count}")
     public String searchProduct(HttpSession session, Map<String, Object> map,
                                 @PathVariable("index") Integer index/* 页数 */,
