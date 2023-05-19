@@ -10,7 +10,7 @@ The backend page is compatible with modern browsers such as IE10 and above, and 
 4. Start the springboot project in IDEA (either in run or debug mode).
 5. Please refer to the attached SQL file for the account name and password, or the SQL file in the SQL folder under Resources (explained below the account password on the front-end and back-end pages).
    ![输入图片说明](https://images.gitee.com/uploads/images/2020/1016/150457_5c0c7304_996301.png "屏幕截图.png")
-
+6. Swagger interface document address: http://localhost:8082/tmall/swagger-ui.html
 Attention: It is normal for the order chart in the backend management interface to have no data. The chart displays the transaction volume for the past 7 days.
 
 ---Background interface (partial) - Access address: http://localhost:8082/tmall/admin/login (The account name and password are in the admin table)
