@@ -135,9 +135,17 @@
                             var productOrder_post = data.productOrderList[i].productOrder_post;
                             var productOrder_receiver = data.productOrderList[i].productOrder_receiver;
                             var productOrder_mobile = data.productOrderList[i].productOrder_mobile;
-                            var productOrder_userMessage = data.productOrderList[i].productOrder_userMessage;
+                            var productOrder_pay_date = "";
+                            if (data.productOrderList[i].productOrder_pay_date) {
+                                productOrder_pay_date = data.productOrderList[i].productOrder_pay_date;
+                            }
+                            var productOrder_delivery_date = "";
+                            if (data.productOrderList[i].productOrder_delivery_date) {
+                                productOrder_delivery_date = data.productOrderList[i].productOrder_delivery_date;
+                            }
+                            //var productOrder_userMessage = data.productOrderList[i].productOrder_userMessage;
                             //显示用户数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_productOrder_select_" + productOrder_id + "'><label for='cbx_productOrder_select_" + productOrder_id + "'></label></td><td title='" + productOrder_code + "'>" + productOrder_code + "</td><td title='" + productOrder_post + "'>" + productOrder_post + "</td><td title='" + productOrder_receiver + "'>" + productOrder_receiver + "</td><td title='" + productOrder_mobile + "'>" + productOrder_mobile + "</td><td><span class='" + productOrderStatusClass + "' title= '" + productOrderStatusTitle + "'>" + productOrderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + productOrder_id + "</td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_productOrder_select_" + productOrder_id + "'><label for='cbx_productOrder_select_" + productOrder_id + "'></label></td><td title='" + productOrder_code + "'>" + productOrder_code + "</td><td title='" + productOrder_post + "'>" + productOrder_post + "</td><td title='" + productOrder_receiver + "'>" + productOrder_receiver + "</td><td title='" + productOrder_mobile + "'>" + productOrder_mobile + "</td><td title='" + productOrder_pay_date + "'>" + productOrder_pay_date + "</td><td title='" + productOrder_delivery_date + "'>" + productOrder_delivery_date + "</td><td><span class='" + productOrderStatusClass + "' title= '" + productOrderStatusTitle + "'>" + productOrderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + productOrder_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -243,6 +251,8 @@
         </th>
         <th>收货人</th>
         <th>联系方式</th>
+        <th>支付日期</th>
+        <th>发货日期</th>
         <th class="data_info" data-sort="asc" data-name="productOrder_status">
             <span>订单状态</span>
             <span class="orderByDesc"></span>
@@ -260,6 +270,8 @@
             <td title="${productOrder.productOrder_post}">${productOrder.productOrder_post}</td>
             <td title="${productOrder.productOrder_receiver}">${productOrder.productOrder_receiver}</td>
             <td title="${productOrder.productOrder_mobile}">${productOrder.productOrder_mobile}</td>
+            <td title="${productOrder.productOrder_pay_date}">${productOrder.productOrder_pay_date}</td>
+            <td title="${productOrder.productOrder_delivery_date}">${productOrder.productOrder_delivery_date}</td>
             <td>
                 <c:choose>
                     <c:when test="${productOrder.productOrder_status==0}">
