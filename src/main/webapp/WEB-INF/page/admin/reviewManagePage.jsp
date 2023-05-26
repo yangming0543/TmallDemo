@@ -206,7 +206,7 @@
     <span class="data_count_title">查看合计</span>
     <span>评论总数:</span>
     <span class="data_count_value" id="review_count_data">${requestScope.reviewCount}</span>
-    <span class="data_count_unit">件</span>
+    <span class="data_count_unit">条</span>
 </div>
 <div class="table_normal_div">
     <table class="table_normal" id="table_review_list">

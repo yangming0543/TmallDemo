@@ -157,7 +157,7 @@
     <span class="data_count_title">查看合计</span>
     <span>分类总数:</span>
     <span class="data_count_value" id="category_count_data">${requestScope.categoryCount}</span>
-    <span class="data_count_unit">个</span>
+    <span class="data_count_unit">种</span>
 </div>
 <div class="table_normal_div">
     <table class="table_normal" id="table_category_list">
