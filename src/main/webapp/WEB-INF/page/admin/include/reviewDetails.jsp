@@ -4,7 +4,7 @@
 <head>
     <script>
         $(function () {
-            //单击取消按钮时
+            //单击关闭按钮时
             $("#btn_review_cancel").click(function () {
                 $(".menu_li[data-toggle=review]").click();
             });
@@ -27,13 +27,6 @@
         }
     </script>
     <style rel="stylesheet">
-        #user_profile_picture {
-            border-radius: 5px;
-        }
-
-        #table_orderItem_list th:first-child {
-            width: auto;
-        }
     </style>
 </head>
 <body>
