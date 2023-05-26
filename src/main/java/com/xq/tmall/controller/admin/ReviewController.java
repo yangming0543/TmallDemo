@@ -6,6 +6,7 @@ import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Review;
 import com.xq.tmall.service.ReviewService;
 import com.xq.tmall.util.Constants;
+import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,10 +42,11 @@ public class ReviewController extends BaseController {
         if (adminId == null) {
             return "admin/include/loginMessage";
         }
-
+        //根据{}排序，是否倒序:{}, orderBy, isDesc
+        OrderUtil orderUtil = new OrderUtil("review_createdate", true);
         //获取前10条评论列表
         PageUtil pageUtil = new PageUtil(0, 10);
-        List<Review> reviewList = reviewService.getList(null, pageUtil);
+        List<Review> reviewList = reviewService.getList(null, orderUtil, pageUtil);
         map.put("reviewList", reviewList);
         //获取评论总数量
         Integer reviewCount = reviewService.getTotal(null);
@@ -81,6 +83,8 @@ public class ReviewController extends BaseController {
     @GetMapping(value = "admin/review/{index}/{count}", produces = "application/json;charset=utf-8")
     public String getreviewBySearch(@RequestParam(required = false) String review_content/* 评论名称 */,
                                     @RequestParam(required = false) String review_createDate/* 评论时间 */,
+                                    @RequestParam(required = false) String orderBy/* 排序字段 */,
+                                    @RequestParam(required = false, defaultValue = "true") Boolean isDesc/* 是否倒序 */,
                                     @PathVariable Integer index/* 页数 */,
                                     @PathVariable Integer count/* 行数 */) throws UnsupportedEncodingException {
         //移除不必要条件
@@ -88,13 +92,21 @@ public class ReviewController extends BaseController {
             //如果为非空字符串则解决中文乱码
             review_content = "".equals(review_content) ? null : URLDecoder.decode(review_content, "UTF-8");
         }
+        if (orderBy == null || "".equals(orderBy)) {
+            orderBy = "review_createdate";
+        }
+        OrderUtil orderUtil = null;
+        if (orderBy != null) {
+            //根据{}排序，是否倒序:{}, orderBy, isDesc
+            orderUtil = new OrderUtil(orderBy, isDesc);
+        }
         JSONObject object = new JSONObject();
         Review review = new Review();
         review.setReview_content(review_content);
         review.setReview_createDate(review_createDate);
         //按条件获取第{}页的{}条评论, index + 1, count
         PageUtil pageUtil = new PageUtil(index, count);
-        List<Review> reviewList = reviewService.getList(review, pageUtil);
+        List<Review> reviewList = reviewService.getList(review, orderUtil, pageUtil);
         object.put("reviewList", JSON.parseArray(JSON.toJSONString(reviewList)));
         //按条件获取评论总数量
         Integer reviewCount = reviewService.getTotal(review);

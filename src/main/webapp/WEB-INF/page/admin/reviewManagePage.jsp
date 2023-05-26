@@ -213,22 +213,22 @@
         <thead class="text_info">
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
-            <th class="data_info" data-sort="asc" data-name="review_sale_price">
+            <th class="data_info" data-sort="asc" data-name="review_product_id">
                 <span>评论产品</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th class="data_info" data-sort="asc" data-name="review_name">
+            <th class="data_info" data-sort="asc" data-name="review_content">
                 <span>评论内容</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th class="data_info" data-sort="asc" data-name="review_price">
+            <th class="data_info" data-sort="asc" data-name="review_user_id">
                 <span>评论人</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th class="data_info" data-sort="asc" data-name="review_title">
+            <th class="data_info" data-sort="asc" data-name="review_createdate">
                 <span>评论时间</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>

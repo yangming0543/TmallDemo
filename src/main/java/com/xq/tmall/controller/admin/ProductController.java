@@ -58,9 +58,11 @@ public class ProductController extends BaseController {
         //获取产品分类列表
         List<Category> categoryList = categoryService.getList(null, null);
         map.put(Constants.CATEGORY_LIST, categoryList);
+        //根据{}排序，是否倒序:{}, orderBy, isDesc
+        OrderUtil orderUtil = new OrderUtil("product_create_date", true);
         //获取前10条产品列表
         PageUtil pageUtil = new PageUtil(0, 10);
-        List<Product> productList = productService.getList(null, null, null, pageUtil);
+        List<Product> productList = productService.getList(null, null, orderUtil, pageUtil);
         map.put("productList", productList);
         //获取产品总数量
         Integer productCount = productService.getTotal(null, null);
@@ -423,8 +425,8 @@ public class ProductController extends BaseController {
             //如果为非空字符串则解决中文乱码
             product_name = "".equals(product_name) ? null : URLDecoder.decode(product_name, "UTF-8");
         }
-        if (orderBy != null && "".equals(orderBy)) {
-            orderBy = null;
+        if (orderBy == null || "".equals(orderBy)) {
+            orderBy = "product_create_date";
         }
         //封装查询条件
         Product product = new Product();

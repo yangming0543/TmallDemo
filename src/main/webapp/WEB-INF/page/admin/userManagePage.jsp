@@ -101,7 +101,7 @@
                             var user_birthday = data.userList[i].user_birthday;
                             //显示用户数据
                             tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + user_id + "'><label for='cbx_user_select_" + user_id + "'></label></td><td title='" + user_name + "'>" + user_name + "</td><td title='" + user_nickname + "'>" + user_nickname + "</td><td title='" + user_realname + "'>" + user_realname + "</td><td title='" + user_birthday + "'>" + user_birthday + "</td><td title='" + gender + "'>" + gender + "</td>" +
-                                "<td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span>" +
+                                "<td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>修改</a></span>" +
                                 "&nbsp;&nbsp;<span class='td_special' title='删除用户'><a href='javascript:void(0);' onclick='delUserChildPage(this)'>删除</a></span>"+
                                 "</td><td hidden  class='user_id'>" + user_id + "</td></tr>");
                         }
@@ -265,7 +265,7 @@
                     </c:choose>
                 </td>
                 <td><span class="td_special" title="查看用户详情"><a href='javascript:void(0)'
-                                                               onclick='getChildPage(this)'>详情</a></span>
+                                                               onclick='getChildPage(this)'>修改</a></span>
                     &nbsp;&nbsp;<span class="td_special" title="删除用户"><a href='javascript:void(0)'
                                                                onclick='delUserChildPage(this)'>删除</a></span>
                 </td>

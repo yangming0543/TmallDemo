@@ -7,6 +7,7 @@ import com.xq.tmall.entity.Product;
 import com.xq.tmall.entity.Review;
 import com.xq.tmall.entity.User;
 import com.xq.tmall.service.ReviewService;
+import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,8 +54,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getList(Review review, PageUtil pageUtil) {
-        List<Review> reviewList = reviewMapper.select(review, pageUtil);
+    public List<Review> getList(Review review, OrderUtil orderUtil, PageUtil pageUtil) {
+        List<Review> reviewList = reviewMapper.select(review, orderUtil, pageUtil);
         List<User> userList = userMapper.select(new User(), null, null);
         List<Product> productList = productMapper.select(new Product(), null, null, null);
         Map<Integer, String> userMap = new HashMap<>();
