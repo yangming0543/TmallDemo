@@ -228,7 +228,7 @@
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th class="data_info" data-sort="asc" data-name="review_createdate">
+            <th class="data_info" data-sort="desc" data-name="review_createdate">
                 <span>评论时间</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>

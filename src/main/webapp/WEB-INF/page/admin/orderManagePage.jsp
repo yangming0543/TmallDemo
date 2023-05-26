@@ -249,10 +249,26 @@
             <span class="orderByDesc"></span>
             <span class="orderByAsc orderBySelect"></span>
         </th>
-        <th>收货人</th>
-        <th>联系方式</th>
-        <th>支付日期</th>
-        <th>发货日期</th>
+        <th class="data_info" data-sort="asc" data-name="productorder_receiver">
+            <span>收货人</span>
+            <span class="orderByDesc"></span>
+            <span class="orderByAsc orderBySelect"></span>
+        </th>
+        <th class="data_info" data-sort="asc" data-name="productorder_mobile">
+            <span>联系方式</span>
+            <span class="orderByDesc"></span>
+            <span class="orderByAsc orderBySelect"></span>
+        </th>
+        <th class="data_info" data-sort="desc" data-name="productorder_pay_date">
+            <span>支付日期</span>
+            <span class="orderByDesc"></span>
+            <span class="orderByAsc orderBySelect"></span>
+        </th>
+        <th class="data_info" data-sort="desc" data-name="productorder_delivery_date">
+            <span>发货日期</span>
+            <span class="orderByDesc"></span>
+            <span class="orderByAsc orderBySelect"></span>
+        </th>
         <th class="data_info" data-sort="asc" data-name="productOrder_status">
             <span>订单状态</span>
             <span class="orderByDesc"></span>

@@ -308,7 +308,7 @@
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-            <th class="data_info" data-sort="asc" data-name="product_create_date">
+            <th class="data_info" data-sort="desc" data-name="product_create_date">
                 <span>创建时间</span>
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>

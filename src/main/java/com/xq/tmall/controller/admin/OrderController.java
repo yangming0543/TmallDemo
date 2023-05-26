@@ -165,8 +165,8 @@ public class OrderController extends BaseController {
         if (productOrder_post != null) {
             productOrder_post = "".equals(productOrder_post) ? null : productOrder_post;
         }
-        if (orderBy != null && "".equals(orderBy)) {
-            orderBy = null;
+        if (orderBy == null || "".equals(orderBy)) {
+            orderBy = "productorder_pay_date";
         }
         //封装查询条件
         ProductOrder productOrder = new ProductOrder();
@@ -177,7 +177,6 @@ public class OrderController extends BaseController {
             //根据{}排序，是否倒序:{}, orderBy, isDesc
             orderUtil = new OrderUtil(orderBy, isDesc);
         }
-
         JSONObject object = new JSONObject();
         //按条件获取第{}页的{}条订单, index + 1, count
         PageUtil pageUtil = new PageUtil(index, count);
