@@ -87,7 +87,7 @@
                             var product_id = data.reviewList[i].review_product.product_name;
                             //显示评论数据
                             let centent="<tr><td><input type='checkbox' class='cbx_select' id='cbx_review_select_" + review_id + "'><label for='cbx_review_select_" + review_id + "'></label></td><td title='"+product_id+"'>" + product_id + "</td><td title='"+review_content+"'>" + review_content + "</td><td title='"+user_id+"'>" + user_id + "</td><td title='"+review_createDate+"'>" + review_createDate + "</td>" +
-                                "<td><!--<span class='td_special' title='查看评论详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span>--><span class='td_special' title='删除评论'><a href='javascript:void(0);' onclick='delChildPage(this)'>删除</a></span>";
+                                "<td><span class='td_special' title='查看评论详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span>"+"&nbsp;&nbsp;<span class='td_special' title='删除评论'><a href='javascript:void(0);' onclick='delChildPage(this)'>删除</a></span>";
                             centent+="</td><td hidden><span class='review_id'>" + review_id + "</span></td></tr>";
                             tbody.append(centent);
                         }
@@ -233,11 +233,6 @@
                 <span class="orderByDesc"></span>
                 <span class="orderByAsc orderBySelect"></span>
             </th>
-         <%--   <th class="data_info" data-sort="asc" data-name="review_create_date">
-                <span>评论订单</span>
-                <span class="orderByDesc"></span>
-                <span class="orderByAsc orderBySelect"></span>
-            </th>--%>
             <th>操作</th>
             <th hidden>评论ID</th>
         </tr>
@@ -250,8 +245,7 @@
                 <td title="${review.review_content}">${review.review_content}</td>
                 <td title="${review.review_user.user_name}">${review.review_user.user_name}</td>
                 <td title="${review.review_createDate}">${review.review_createDate}</td>
-                    <%--<td title="${review.productOrderItem_id}">${review.productOrderItem_id}</td>--%>
-                <td><%--<span class="td_special" title="查看评论详情"><a href="javascript:void(0)" onclick="getChildPage(this)">详情</a></span>--%>&nbsp;&nbsp;<span class="td_special" title="删除评论"><a href="javascript:void(0)" onclick="delChildPage(this)">删除</a></span>
+                <td><span class="td_special" title="查看评论详情"><a href="javascript:void(0)" onclick="getChildPage(this)">详情</a></span>&nbsp;&nbsp;<span class="td_special" title="删除评论"><a href="javascript:void(0)" onclick="delChildPage(this)">删除</a></span>
                 </td>
                 <td hidden><span class="review_id">${review.review_id}</span></td>
             </tr>

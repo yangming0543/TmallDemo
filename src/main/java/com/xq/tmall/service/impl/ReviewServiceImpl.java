@@ -89,7 +89,10 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review get(Integer review_id) {
-        return reviewMapper.selectOne(review_id);
+        Review review = reviewMapper.selectOne(review_id);
+        review.setReview_user(userMapper.selectOne(review.getReview_user().getUser_id()));
+        review.setReview_product(productMapper.selectOne(review.getReview_product().getProduct_id()));
+        return review;
     }
 
     @Override
