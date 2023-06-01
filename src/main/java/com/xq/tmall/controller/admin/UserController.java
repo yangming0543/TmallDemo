@@ -137,7 +137,7 @@ public class UserController extends BaseController {
 
         if (!StringUtils.isEmpty(user.getUser_realname())) {
             //用户隐私加密
-            user.setUser_realname(user.getUser_realname().substring(0, 1) + "*");
+            user.setUser_realname(user.getUser_realname().charAt(0) + "*");
         } else {
             user.setUser_realname("未命名");
         }

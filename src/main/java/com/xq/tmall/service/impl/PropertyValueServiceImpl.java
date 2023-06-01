@@ -39,6 +39,8 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     public boolean deleteList(Integer[] propertyValue_id_list) {
         return propertyValueMapper.deleteList(propertyValue_id_list) > 0;
     }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean delete(Integer id) {
         return propertyValueMapper.deleteOne(id) > 0;
