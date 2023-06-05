@@ -9,9 +9,11 @@
         <result column="review_createDate" property="review_createDate"/>
         <association property="review_user" javaType="com.xq.tmall.entity.User">
             <id property="user_id" column="review_user_id"/>
+            <result property="user_name" column="user_name"/>
         </association>
         <association property="review_product" javaType="com.xq.tmall.entity.Product">
             <id property="product_id" column="review_product_id"/>
+            <result property="product_name" column="product_name"/>
         </association>
         <association property="review_orderItem" javaType="com.xq.tmall.entity.ProductOrderItem">
             <id property="productOrderItem_id" column="review_orderItem_id"/>
@@ -53,14 +55,21 @@
         </where>
     </delete>
     <select id="select" resultMap="reviewMap">
-        SELECT review_id,review_content, date_format(review_createDate,'%Y-%m-%d %H:%i:%s') as review_createDate,review_user_id,review_product_id FROM review
+        SELECT r.review_id,r.review_content, date_format(r.review_createDate,'%Y-%m-%d %H:%i:%s') as review_createDate,u.user_name,p.product_name,r.review_user_id,r.review_product_id FROM review r
+        left join user u on r.review_user_id=u.user_id left join product p on r.review_product_id=p.product_id
         <if test="review != null">
             <where>
                 <if test="review.review_content != null">
-                    AND review_content like concat('%', #{review.review_content}, '%')
+                    AND r.review_content like concat('%', #{review.review_content}, '%')
                 </if>
                 <if test="review.review_createDate != null and review.review_createDate != ''">
-                    and date_format(review_createDate,'%Y-%m-%d') = #{review.review_createDate}
+                    and date_format(r.review_createDate,'%Y-%m-%d') = #{review.review_createDate}
+                </if>
+                <if test="review.review_user!= null and review.review_user.user_name!=null ">
+                    AND u.user_name like concat('%', #{review.review_user.user_name}, '%')
+                </if>
+                <if test="review.review_product!= null and review.review_product.product_name!=null ">
+                    AND p.product_name like concat('%', #{review.review_product.product_name}, '%')
                 </if>
             </where>
         </if>
@@ -92,20 +101,28 @@
         </if>
     </select>
     <select id="selectOne" resultMap="reviewMap" parameterType="int">
-        SELECT review_id,review_content,date_format(review_createDate,'%Y-%m-%d %H:%i:%s') as review_createDate,review_user_id,review_product_id FROM review
+        SELECT r.review_id,r.review_content,date_format(r.review_createDate,'%Y-%m-%d %H:%i:%s') as review_createDate,r.review_user_id,r.review_product_id,u.user_name,p.product_name FROM review r
+        left join user u on r.review_user_id=u.user_id left join product p on r.review_product_id=p.product_id
         <where>
             review_id = #{review_id}
         </where>
     </select>
     <select id="selectTotal" resultType="int" parameterType="review">
-        SELECT COUNT(review_id) FROM review
+        SELECT COUNT(r.review_id) FROM review r
+        left join user u on r.review_user_id=u.user_id left join product p on r.review_product_id=p.product_id
         <if test="review != null">
             <where>
                 <if test="review.review_content != null">
-                    AND review_content like concat('%', #{review.review_content}, '%')
+                    AND r.review_content like concat('%', #{review.review_content}, '%')
                 </if>
                 <if test="review.review_createDate != null and review.review_createDate != ''">
-                    and date_format(review_createDate,'%Y-%m-%d') = #{review.review_createDate}
+                    and date_format(r.review_createDate,'%Y-%m-%d') = #{review.review_createDate}
+                </if>
+                <if test="review.review_user!= null and review.review_user.user_name!=null ">
+                    AND u.user_name like concat('%', #{review.review_user.user_name}, '%')
+                </if>
+                <if test="review.review_product!= null and review.review_product.product_name!=null ">
+                    AND p.product_name like concat('%', #{review.review_product.product_name}, '%')
                 </if>
             </where>
         </if>

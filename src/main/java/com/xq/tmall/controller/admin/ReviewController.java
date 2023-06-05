@@ -3,7 +3,9 @@ package com.xq.tmall.controller.admin;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xq.tmall.controller.BaseController;
+import com.xq.tmall.entity.Product;
 import com.xq.tmall.entity.Review;
+import com.xq.tmall.entity.User;
 import com.xq.tmall.service.ReviewService;
 import com.xq.tmall.util.Constants;
 import com.xq.tmall.util.OrderUtil;
@@ -49,7 +51,7 @@ public class ReviewController extends BaseController {
         List<Review> reviewList = reviewService.getList(new Review(), orderUtil, pageUtil);
         map.put("reviewList", reviewList);
         //获取评论总数量
-        Integer reviewCount = reviewService.getTotal(null);
+        Integer reviewCount = reviewService.getTotal(new Review());
         map.put("reviewCount", reviewCount);
         //获取分页信息
         pageUtil.setTotal(reviewCount);
@@ -83,6 +85,7 @@ public class ReviewController extends BaseController {
     @GetMapping(value = "admin/review/{index}/{count}", produces = "application/json;charset=utf-8")
     public String getreviewBySearch(@RequestParam(required = false) String review_name/* 评论产品 */,
                                     @RequestParam(required = false) String review_content/* 评论内容 */,
+                                    @RequestParam(required = false) String review_userName/* 评论人 */,
                                     @RequestParam(required = false) String review_createDate/* 评论时间 */,
                                     @RequestParam(required = false) String orderBy/* 排序字段 */,
                                     @RequestParam(required = false, defaultValue = "true") Boolean isDesc/* 是否倒序 */,
@@ -97,6 +100,10 @@ public class ReviewController extends BaseController {
             //如果为非空字符串则解决中文乱码
             review_content = "".equals(review_content) ? null : URLDecoder.decode(review_content, "UTF-8");
         }
+        if (review_userName != null) {
+            //如果为非空字符串则解决中文乱码
+            review_userName = "".equals(review_userName) ? null : URLDecoder.decode(review_userName, "UTF-8");
+        }
         if (orderBy == null || "".equals(orderBy)) {
             orderBy = "review_createdate";
         }
@@ -107,8 +114,13 @@ public class ReviewController extends BaseController {
         }
         JSONObject object = new JSONObject();
         Review review = new Review();
-        review.setReview_name(review_name);
+        Product product = new Product();
+        product.setProduct_name(review_name);
+        review.setReview_product(product);
         review.setReview_content(review_content);
+        User user = new User();
+        user.setUser_name(review_userName);
+        review.setReview_user(user);
         review.setReview_createDate(review_createDate);
         //按条件获取第{}页的{}条评论, index + 1, count
         PageUtil pageUtil = new PageUtil(index, count);

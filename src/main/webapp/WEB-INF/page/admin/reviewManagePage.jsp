@@ -15,17 +15,21 @@
             $("#btn_review_submit").click(function () {
                 var review_name = $.trim($("#input_review_name").val());
                 var review_content = $.trim($("#input_review_content").val());
+                var review_userName = $.trim($("#input_review_userName").val());
                 var review_createDate = $("#select_review_createDate").val();
                 //封装数据
                 dataList.review_name = encodeURI(review_name);
                 dataList.review_content = encodeURI(review_content);
+                dataList.review_userName = encodeURI(review_userName);
                 dataList.review_createDate = review_createDate;
                 getData($(this), "admin/review/0/10", dataList);
             });
             //点击刷新按钮时
             $("#btn_review_refresh").click(function () {
                 //清除数据
+                dataList.review_name = null;
                 dataList.review_content = null;
+                dataList.review_userName = null;
                 dataList.review_createDate = null;
                 dataList.orderBy = null;
                 dataList.isDesc = true;
@@ -150,7 +154,9 @@
                         if (data.success) {
                             $('#modalDiv').modal("hide");
                             //清除数据
+                            dataList.review_name = null;
                             dataList.review_content = null;
+                            dataList.review_userName = null;
                             dataList.review_createDate = null;
                             dataList.orderBy = null;
                             dataList.isDesc = true;
@@ -190,6 +196,8 @@
         <input class="frm_input" id="input_review_name" type="text" maxlength="50"/>
         <label class="frm_label" id="lbl_review_content" for="input_review_content">评论内容</label>
         <input class="frm_input" id="input_review_content" type="text" maxlength="50"/>
+        <label class="frm_label" id="lbl_review_userName" for="input_review_content">评论人</label>
+        <input class="frm_input" id="input_review_userName" type="text" maxlength="50"/>
        <label class="frm_label" id="lbl_review_category_id" for="select_review_createDate">评论时间</label>
         <input class="frm_input" type="date" id="select_review_createDate" data-size="8">
         <input class="frm_btn" id="btn_review_submit" type="button" value="查询"/>
