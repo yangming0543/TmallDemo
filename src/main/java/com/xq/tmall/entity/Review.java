@@ -10,6 +10,10 @@ import lombok.Data;
 public class Review {
     private Integer review_id;
     /**
+     * 名称
+     */
+    private String review_name;
+    /**
      * 内容
      */
     private String review_content;

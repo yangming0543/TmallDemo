@@ -9,6 +9,7 @@ import com.xq.tmall.entity.User;
 import com.xq.tmall.service.ReviewService;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -72,6 +73,9 @@ public class ReviewServiceImpl implements ReviewService {
                 review_user.setUser_name(userMap.get(review_user.getUser_id()));
                 Product review_product = re.getReview_product();
                 review_product.setProduct_name(productMap.get(review_product.getProduct_id()));
+            }
+            if (StringUtils.isNotBlank(review.getReview_name())) {
+                reviewList = reviewList.stream().filter(req -> req.getReview_product().getProduct_name().contains(review.getReview_name())).collect(Collectors.toList());
             }
         }
         return reviewList;

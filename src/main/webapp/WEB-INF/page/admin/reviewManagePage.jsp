@@ -13,9 +13,11 @@
         $(function () {
             //点击查询按钮时
             $("#btn_review_submit").click(function () {
+                var review_name = $.trim($("#input_review_name").val());
                 var review_content = $.trim($("#input_review_content").val());
                 var review_createDate = $("#select_review_createDate").val();
                 //封装数据
+                dataList.review_name = encodeURI(review_name);
                 dataList.review_content = encodeURI(review_content);
                 dataList.review_createDate = review_createDate;
                 getData($(this), "admin/review/0/10", dataList);
@@ -184,7 +186,9 @@
 <body>
 <div class="frm_div text_info">
     <div class="frm_group">
-        <label class="frm_label" id="lbl_review_name" for="input_review_content">评论内容</label>
+        <label class="frm_label" id="lbl_review_name" for="input_review_content">评论产品</label>
+        <input class="frm_input" id="input_review_name" type="text" maxlength="50"/>
+        <label class="frm_label" id="lbl_review_content" for="input_review_content">评论内容</label>
         <input class="frm_input" id="input_review_content" type="text" maxlength="50"/>
        <label class="frm_label" id="lbl_review_category_id" for="select_review_createDate">评论时间</label>
         <input class="frm_input" type="date" id="select_review_createDate" data-size="8">

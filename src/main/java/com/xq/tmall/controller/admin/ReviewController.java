@@ -46,7 +46,7 @@ public class ReviewController extends BaseController {
         OrderUtil orderUtil = new OrderUtil("review_createdate", true);
         //获取前10条评论列表
         PageUtil pageUtil = new PageUtil(0, 10);
-        List<Review> reviewList = reviewService.getList(null, orderUtil, pageUtil);
+        List<Review> reviewList = reviewService.getList(new Review(), orderUtil, pageUtil);
         map.put("reviewList", reviewList);
         //获取评论总数量
         Integer reviewCount = reviewService.getTotal(null);
@@ -81,13 +81,18 @@ public class ReviewController extends BaseController {
     @ApiOperation(value = "按条件查询评论", notes = "按条件查询评论")
     @ResponseBody
     @GetMapping(value = "admin/review/{index}/{count}", produces = "application/json;charset=utf-8")
-    public String getreviewBySearch(@RequestParam(required = false) String review_content/* 评论名称 */,
+    public String getreviewBySearch(@RequestParam(required = false) String review_name/* 评论产品 */,
+                                    @RequestParam(required = false) String review_content/* 评论内容 */,
                                     @RequestParam(required = false) String review_createDate/* 评论时间 */,
                                     @RequestParam(required = false) String orderBy/* 排序字段 */,
                                     @RequestParam(required = false, defaultValue = "true") Boolean isDesc/* 是否倒序 */,
                                     @PathVariable Integer index/* 页数 */,
                                     @PathVariable Integer count/* 行数 */) throws UnsupportedEncodingException {
         //移除不必要条件
+        if (review_name != null) {
+            //如果为非空字符串则解决中文乱码
+            review_name = "".equals(review_name) ? null : URLDecoder.decode(review_name, "UTF-8");
+        }
         if (review_content != null) {
             //如果为非空字符串则解决中文乱码
             review_content = "".equals(review_content) ? null : URLDecoder.decode(review_content, "UTF-8");
@@ -102,6 +107,7 @@ public class ReviewController extends BaseController {
         }
         JSONObject object = new JSONObject();
         Review review = new Review();
+        review.setReview_name(review_name);
         review.setReview_content(review_content);
         review.setReview_createDate(review_createDate);
         //按条件获取第{}页的{}条评论, index + 1, count
