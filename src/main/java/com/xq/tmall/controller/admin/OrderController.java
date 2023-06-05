@@ -19,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -150,11 +152,13 @@ public class OrderController extends BaseController {
     @GetMapping(value = "admin/order/{index}/{count}", produces = "application/json;charset=UTF-8")
     public String getOrderBySearch(@RequestParam(required = false) String productOrder_code/* 订单号 */,
                                    @RequestParam(required = false) String productOrder_post/* 订单邮政编码 */,
+                                   @RequestParam(required = false) String productOrder_receiver/* 收货人 */,
+                                   @RequestParam(required = false) String productOrder_mobile/* 联系方式 */,
                                    @RequestParam(required = false) Byte[] productOrder_status_array/* 订单状态数组 */,
                                    @RequestParam(required = false) String orderBy/* 排序字段 */,
                                    @RequestParam(required = false, defaultValue = "true") Boolean isDesc/* 是否倒序 */,
                                    @PathVariable Integer index/* 页数 */,
-                                   @PathVariable Integer count/* 行数 */) {
+                                   @PathVariable Integer count/* 行数 */) throws UnsupportedEncodingException {
         //移除不必要条件
         if (productOrder_status_array != null && (productOrder_status_array.length <= 0 || productOrder_status_array.length >= 5)) {
             productOrder_status_array = null;
@@ -165,6 +169,13 @@ public class OrderController extends BaseController {
         if (productOrder_post != null) {
             productOrder_post = "".equals(productOrder_post) ? null : productOrder_post;
         }
+        if (productOrder_receiver != null) {
+            //如果为非空字符串则解决中文乱码
+            productOrder_receiver = "".equals(productOrder_receiver) ? null : URLDecoder.decode(productOrder_receiver, "UTF-8");
+        }
+        if (productOrder_mobile != null) {
+            productOrder_mobile = "".equals(productOrder_mobile) ? null : productOrder_mobile;
+        }
         if (orderBy == null || "".equals(orderBy)) {
             orderBy = "productorder_pay_date";
         }
@@ -172,6 +183,8 @@ public class OrderController extends BaseController {
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_code(productOrder_code);
         productOrder.setProductOrder_post(productOrder_post);
+        productOrder.setProductOrder_receiver(productOrder_receiver);
+        productOrder.setProductOrder_mobile(productOrder_mobile);
         OrderUtil orderUtil = null;
         if (orderBy != null) {
             //根据{}排序，是否倒序:{}, orderBy, isDesc

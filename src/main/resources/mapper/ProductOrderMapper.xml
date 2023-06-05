@@ -95,6 +95,12 @@
                 <if test="productOrder.productOrder_post != null">and productOrder_post LIKE
                     concat('%',#{productOrder.productOrder_post},'%')
                 </if>
+                <if test="productOrder.productOrder_receiver != null">and productOrder_receiver LIKE
+                    concat('%',#{productOrder.productOrder_receiver},'%')
+                </if>
+                <if test="productOrder.productOrder_mobile != null">and productOrder_mobile LIKE
+                    concat('%',#{productOrder.productOrder_mobile},'%')
+                </if>
                 <if test="productOrder.productOrder_user != null">and productOrder_user_id =
                     #{productOrder.productOrder_user.user_id}
                 </if>
@@ -132,6 +138,12 @@
             <if test="productOrder != null">
                 <if test="productOrder.productOrder_code">productOrder_code LIKE concat('%',#{productOrder.productOrder_code},'%')</if>
                 <if test="productOrder.productOrder_post">and productOrder_post LIKE concat('%',#{productOrder.productOrder_post},'%')</if>
+                <if test="productOrder.productOrder_receiver != null">and productOrder_receiver LIKE
+                    concat('%',#{productOrder.productOrder_receiver},'%')
+                </if>
+                <if test="productOrder.productOrder_mobile != null">and productOrder_mobile LIKE
+                    concat('%',#{productOrder.productOrder_mobile},'%')
+                </if>
                 <if test="productOrder.productOrder_user != null">and productOrder_user_id =
                     #{productOrder.productOrder_user.user_id}
                 </if>

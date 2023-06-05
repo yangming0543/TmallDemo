@@ -7,6 +7,8 @@
         var dataList = {
             "productOrder_code": null,
             "productOrder_post": null,
+            "productOrder_receiver": null,
+            "productOrder_mobile": null,
             "productOrder_status_array": null,
             "orderBy": null,
             "isDesc": true
@@ -19,6 +21,8 @@
             $("#btn_productOrder_submit").click(function () {
                 var productOrder_code = $.trim($("#input_productOrder_code").val());
                 var productOrder_post = $.trim($("#input_productOrder_post").val());
+                var productOrder_receiver = $.trim($("#input_productOrder_receiver").val());
+                var productOrder_mobile = $.trim($("#input_productOrder_mobile").val());
                 //订单状态数组
                 var productOrder_status_array = [];
                 $(".radio_productOrder_status:checked").each(function () {
@@ -35,6 +39,8 @@
                 //封装数据
                 dataList.productOrder_code = productOrder_code.toString();
                 dataList.productOrder_post = productOrder_post.toString();
+                dataList.productOrder_receiver = productOrder_receiver.toString();
+                dataList.productOrder_mobile = productOrder_mobile.toString();
                 dataList.productOrder_status_array = productOrder_status_array;
 
                 getData($(this), "admin/order/0/10", dataList);
@@ -44,6 +50,8 @@
                 //清除数据
                 dataList.productOrder_code = null;
                 dataList.productOrder_post = null;
+                dataList.productOrder_receiver = null;
+                dataList.productOrder_mobile = null;
                 dataList.productOrder_status_array = null;
                 dataList.orderBy = null;
                 dataList.isDesc = true;
@@ -198,6 +206,10 @@
         <input class="frm_input" id="input_productOrder_code" type="text" maxlength="20"/>
         <label class="frm_label" id="lbl_productOrder_post" for="input_productOrder_post">邮政编码</label>
         <input class="frm_input" id="input_productOrder_post" type="text" maxlength="6"/>
+        <label class="frm_label" id="lbl_productOrder_receiver" for="input_productOrder_receiver">收货人</label>
+        <input class="frm_input" id="input_productOrder_receiver" type="text" maxlength="20"/>
+        <label class="frm_label" id="lbl_productOrder_mobile" for="input_productOrder_mobile">联系方式</label>
+        <input class="frm_input" id="input_productOrder_mobile" type="text" maxlength="20"/>
         <input class="frm_btn" id="btn_productOrder_submit" type="button" value="查询"/>
         <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
     </div>
