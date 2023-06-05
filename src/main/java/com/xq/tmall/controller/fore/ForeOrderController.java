@@ -1,25 +1,32 @@
 package com.xq.tmall.controller.fore;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.toolkit.CollectionUtils;
+import com.thoughtworks.xstream.core.BaseException;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
+import com.xq.tmall.pay.PayFace;
+import com.xq.tmall.pay.req.TradeOrderReq;
+import com.xq.tmall.pay.resp.TradeOrderResp;
+import com.xq.tmall.pay.util.PayModelEnum;
 import com.xq.tmall.service.*;
-import com.xq.tmall.util.Constants;
-import com.xq.tmall.util.OrderUtil;
-import com.xq.tmall.util.PageUtil;
+import com.xq.tmall.util.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -53,8 +60,13 @@ public class ForeOrderController extends BaseController {
 
     public static final String LOGIN = "redirect:/login";
     public static final String ORDER = "/order/0/10";
-
+    @NotNull
+    private final Map<String, PayFace> payFaceMap;
     public static final String CART = "redirect:/cart";
+
+    public ForeOrderController(Map<String, PayFace> payFaceMap) {
+        this.payFaceMap = payFaceMap;
+    }
 
 
     //转到前台天猫-订单列表页
@@ -375,6 +387,7 @@ public class ForeOrderController extends BaseController {
             //用户与订单信息不一致，返回订单列表页
             return URL;
         }
+
         order.setProductOrderItemList(productOrderItemService.getListByOrderId(order.getProductOrder_id(), null));
 
         double orderTotalPrice = 0.00;
@@ -391,12 +404,39 @@ public class ForeOrderController extends BaseController {
             }
         }
         //订单总金额为：{}元, orderTotalPrice
+        // 创建支付
+       /* TradeOrderResp orderResp = createPay(1, "", order,orderTotalPrice);
+        if (orderResp.isSuccess()) {
+        map.put("productOrder", order);
+        map.put("orderTotalPrice", orderTotalPrice);
+        }*/
 
         map.put("productOrder", order);
         map.put("orderTotalPrice", orderTotalPrice);
 
         //转到前台天猫-订单支付页
         return "fore/productPayPage";
+    }
+
+    private TradeOrderResp createPay(Integer payType, String quitUrl, ProductOrder order, double orderTotalPrice) {
+        // 下单支付
+        String impl = PayTypeEnum.byCode(payType).getImpl();
+        PayFace payFace = payFaceMap.get(impl);
+        if (ObjectUtil.isNull(payFace)) {
+            throw new RuntimeException();
+        }
+        TradeOrderReq orderReq = new TradeOrderReq();
+        // 直连模式
+        orderReq.setPayModel(PayModelEnum.DIRECT_SALES.getCode());
+        orderReq.setTradeSerialNo(order.getProductOrder_code());
+        orderReq.setAmount(BigDecimal.valueOf(orderTotalPrice));
+        orderReq.setGoodsName("商品");
+        //orderReq.setUserClientIp(userClientIp);
+        orderReq.setNotifyUrl("fore/productPayPage");
+        if (StringUtils.hasText(quitUrl)) {
+            orderReq.setQuitUrl(quitUrl + "?tradeSerialNo=" + orderReq.getTradeSerialNo());
+        }
+        return payFace.tradeOrder(orderReq);
     }
 
     //转到前台天猫-订单支付成功页
