@@ -155,7 +155,7 @@
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
         </if>
     </select>
-    <select id="selectTotal" resultType="int">
+    <select id="selectTotal" resultType="java.lang.Integer">
         SELECT COUNT(product_id) FROM product
         <where>
             <if test="product != null">
@@ -176,7 +176,7 @@
             </if>
         </where>
     </select>
-    <select id="selectMoreListTotal" resultType="int">
+    <select id="selectMoreListTotal" resultType="java.lang.Integer">
         SELECT COUNT(product_id) FROM product
         <where>
             <if test="product != null">

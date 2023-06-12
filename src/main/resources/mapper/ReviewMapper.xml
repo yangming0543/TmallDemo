@@ -127,19 +127,19 @@
             </where>
         </if>
     </select>
-    <select id="selectTotalByUserId" resultType="int" parameterType="int">
+    <select id="selectTotalByUserId" resultType="int" parameterType="java.lang.Integer">
         SELECT COUNT(review_id) FROM review
         <where>
             review_user_id = #{user_id}
         </where>
     </select>
-    <select id="selectTotalByProductId" resultType="int" parameterType="int">
+    <select id="selectTotalByProductId" resultType="int" parameterType="java.lang.Integer">
         SELECT COUNT(review_id) FROM review
         <where>
             review_product_id = #{product_id}
         </where>
     </select>
-    <select id="selectTotalByOrderItemId" resultType="int" parameterType="int">
+    <select id="selectTotalByOrderItemId" resultType="int" parameterType="java.lang.Integer">
         SELECT COUNT(review_id) FROM review
         <where>
             review_orderItem_id = #{productOrderItem_id}

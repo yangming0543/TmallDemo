@@ -132,7 +132,7 @@
             productOrder_code = #{productOrder_code}
         </where>
     </select>
-    <select id="selectTotal" resultType="int">
+    <select id="selectTotal" resultType="java.lang.Integer">
         SELECT COUNT(productOrder_id) FROM productOrder
         <where>
             <if test="productOrder != null">

@@ -37,7 +37,7 @@
             and category_id = #{category_id}
         </where>
     </select>
-    <select id="selectTotal" resultType="int">
+    <select id="selectTotal" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM category
         <where>
             del_flag=0

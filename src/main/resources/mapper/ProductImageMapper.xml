@@ -67,7 +67,7 @@
             productImage_id = #{productImage_id}
         </where>
     </select>
-    <select id="selectTotal" resultType="int">
+    <select id="selectTotal" resultType="java.lang.Integer">
         SELECT COUNT(productImage_id) FROM productImage
         <where>
             <if test="product_id != null">
