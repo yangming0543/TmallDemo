@@ -9,7 +9,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,7 +40,6 @@ public class AdminLoginController extends BaseController {
     public String checkLogin(HttpSession session, @RequestParam String username, @RequestParam String password) {
         //管理员登录验证
         Integer admin = adminService.login(username, password);
-
         JSONObject object = new JSONObject();
         if (admin == 0) {
             //登录验证失败
@@ -47,7 +49,6 @@ public class AdminLoginController extends BaseController {
             session.setAttribute(Constants.ADMIN_ID, admin);
             object.put(Constants.SUCCESS, true);
         }
-
         return String.valueOf(object);
     }
 
