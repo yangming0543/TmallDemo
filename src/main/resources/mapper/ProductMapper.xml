@@ -50,7 +50,7 @@
             product_id =#{id}
         </where>
     </delete>
-    <select id="select" resultMap="productMap">
+    <select id="selectProductList" resultMap="productMap">
         SELECT product_id,product_name,product_title,product_price,product_sale_price,date_format(product_create_date,'%Y-%m-%d %H:%i:%s') as product_create_date,product_isEnabled,product_category_id
         <if test="orderUtil != null">
             <if test='orderUtil.orderBy == "product_sale_count"'>
@@ -127,7 +127,7 @@
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
         </if>
     </select>
-    <select id="selectOne" resultMap="productMap" parameterType="int">
+    <select id="selectOne" resultMap="productMap" parameterType="java.lang.Integer">
         SELECT product_id,product_name,product_title,product_price,product_sale_price,date_format(product_create_date,'%Y-%m-%d %H:%i:%s') as product_create_date,product_isEnabled,product_category_id FROM product
         <where>
             product_id = #{product_id}
@@ -156,7 +156,7 @@
         </if>
     </select>
     <select id="selectTotal" resultType="java.lang.Integer">
-        SELECT COUNT(product_id) FROM product
+        SELECT COUNT(*) FROM product
         <where>
             <if test="product != null">
                 <if test="product.product_name != null">product_name LIKE concat('%',#{product.product_name},'%')</if>
@@ -177,7 +177,7 @@
         </where>
     </select>
     <select id="selectMoreListTotal" resultType="java.lang.Integer">
-        SELECT COUNT(product_id) FROM product
+        SELECT COUNT(*) FROM product
         <where>
             <if test="product != null">
                 <if test="product.product_price != null">and product_sale_price &lt;= #{product.product_price}</if>

@@ -42,7 +42,7 @@ public interface PropertyMapper {
      * @param pageUtil
      * @return
      */
-    List<Property> select(@Param("property") Property property, @Param("pageUtil") PageUtil pageUtil);
+    List<Property> selectPropertyList(@Param("property") Property property, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 查询单条类别属性

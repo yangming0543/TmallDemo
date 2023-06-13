@@ -37,7 +37,7 @@ public interface ProductOrderItemMapper {
      * @param pageUtil
      * @return
      */
-    List<ProductOrderItem> select(@Param("pageUtil") PageUtil pageUtil);
+    List<ProductOrderItem> selectProductOrderItemList(@Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 根据订单id查询产品订单项

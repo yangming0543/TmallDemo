@@ -43,7 +43,7 @@ public interface ProductMapper {
      * @param pageUtil
      * @return
      */
-    List<Product> select(@Param("product") Product product, @Param("product_isEnabled_array") Byte[] product_isEnabled_array, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
+    List<Product> selectProductList(@Param("product") Product product, @Param("product_isEnabled_array") Byte[] product_isEnabled_array, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 查询产品标题列表

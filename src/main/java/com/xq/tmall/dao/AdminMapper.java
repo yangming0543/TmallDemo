@@ -28,7 +28,7 @@ public interface AdminMapper {
      * @param pageUtil
      * @return
      */
-    List<Admin> select(@Param("admin_name") String admin_name, @Param("pageUtil") PageUtil pageUtil);
+    List<Admin> selectAdminList(@Param("admin_name") String admin_name, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 查询管理员

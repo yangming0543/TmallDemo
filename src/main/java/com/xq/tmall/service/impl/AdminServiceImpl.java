@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Admin> getList(String admin_name, PageUtil pageUtil) {
-        return adminMapper.select(admin_name, pageUtil);
+        return adminMapper.selectAdminList(admin_name, pageUtil);
     }
 
     @Override

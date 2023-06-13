@@ -20,7 +20,7 @@
             category_id = #{category.category_id}
         </where>
     </update>
-    <select id="select" resultType="com.xq.tmall.entity.Category">
+    <select id="selectCategoryList" resultType="com.xq.tmall.entity.Category">
         SELECT category_id,category_name,category_image_src FROM category
         <where>
             del_flag=0

@@ -42,7 +42,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public List<Property> getList(Property property, PageUtil pageUtil) {
-        return propertyMapper.select(property, pageUtil);
+        return propertyMapper.selectPropertyList(property, pageUtil);
     }
 
     @Override

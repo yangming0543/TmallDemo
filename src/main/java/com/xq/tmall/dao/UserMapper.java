@@ -30,7 +30,7 @@ public interface UserMapper {
      * @param pageUtil
      * @return
      */
-    List<User> select(@Param("user") User user, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
+    List<User> selectUserList(@Param("user") User user, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 查询单条用户

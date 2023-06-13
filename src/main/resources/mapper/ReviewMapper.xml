@@ -54,7 +54,7 @@
             review_id =#{id}
         </where>
     </delete>
-    <select id="select" resultMap="reviewMap">
+    <select id="selectReviewList" resultMap="reviewMap">
         SELECT r.review_id,r.review_content, date_format(r.review_createDate,'%Y-%m-%d %H:%i:%s') as review_createDate,u.user_name,p.product_name,r.review_user_id,r.review_product_id FROM review r
         left join user u on r.review_user_id=u.user_id left join product p on r.review_product_id=p.product_id
         <if test="review != null">
@@ -100,15 +100,15 @@
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
         </if>
     </select>
-    <select id="selectOne" resultMap="reviewMap" parameterType="int">
+    <select id="selectOne" resultMap="reviewMap" parameterType="java.lang.Integer">
         SELECT r.review_id,r.review_content,date_format(r.review_createDate,'%Y-%m-%d %H:%i:%s') as review_createDate,r.review_user_id,r.review_product_id,u.user_name,p.product_name FROM review r
         left join user u on r.review_user_id=u.user_id left join product p on r.review_product_id=p.product_id
         <where>
             review_id = #{review_id}
         </where>
     </select>
-    <select id="selectTotal" resultType="int" parameterType="review">
-        SELECT COUNT(r.review_id) FROM review r
+    <select id="selectTotal" resultType="java.lang.Integer" parameterType="com.xq.tmall.entity.Review">
+        SELECT COUNT(*) FROM review r
         left join user u on r.review_user_id=u.user_id left join product p on r.review_product_id=p.product_id
         <if test="review != null">
             <where>
@@ -127,20 +127,20 @@
             </where>
         </if>
     </select>
-    <select id="selectTotalByUserId" resultType="int" parameterType="java.lang.Integer">
-        SELECT COUNT(review_id) FROM review
+    <select id="selectTotalByUserId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*) FROM review
         <where>
             review_user_id = #{user_id}
         </where>
     </select>
-    <select id="selectTotalByProductId" resultType="int" parameterType="java.lang.Integer">
-        SELECT COUNT(review_id) FROM review
+    <select id="selectTotalByProductId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*) FROM review
         <where>
             review_product_id = #{product_id}
         </where>
     </select>
-    <select id="selectTotalByOrderItemId" resultType="int" parameterType="java.lang.Integer">
-        SELECT COUNT(review_id) FROM review
+    <select id="selectTotalByOrderItemId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*) FROM review
         <where>
             review_orderItem_id = #{productOrderItem_id}
         </where>

@@ -58,7 +58,7 @@
             </foreach>
         </where>
     </delete>
-    <select id="select" parameterType="com.xq.tmall.util.PageUtil" resultMap="productOrderItemMap">
+    <select id="selectProductOrderItemList" parameterType="com.xq.tmall.util.PageUtil" resultMap="productOrderItemMap">
         SELECT
         productOrderItem_id,productOrderItem_number,productOrderItem_price,productOrderItem_product_id,productOrderItem_order_id,productOrderItem_user_id,productOrderItem_userMessage
         FROM productOrderItem
@@ -99,7 +99,7 @@
             LIMIT #{pageUtil.index},#{pageUtil.count}
         </if>
     </select>
-    <select id="selectOne" resultMap="productOrderItemMap" parameterType="int">
+    <select id="selectOne" resultMap="productOrderItemMap" parameterType="java.lang.Integer">
         SELECT
         productOrderItem_id,productOrderItem_number,productOrderItem_price,productOrderItem_product_id,productOrderItem_order_id,productOrderItem_user_id,productOrderItem_userMessage
         FROM productOrderItem
@@ -107,29 +107,29 @@
             productOrderItem_id = #{productOrderItem_id}
         </where>
     </select>
-    <select id="selectTotal" resultType="int">
-        SELECT COUNT(productOrderItem_id) FROM productOrderItem
+    <select id="selectTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM productOrderItem
     </select>
-    <select id="selectTotalByOrderId" resultType="int" parameterType="int">
+    <select id="selectTotalByOrderId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         SELECT COUNT(productOrderItem_id) FROM productOrderItem
         <where>
             productOrderItem_order_id = #{order_id}
         </where>
     </select>
-    <select id="selectTotalByUserId" resultType="int" parameterType="int">
-        SELECT COUNT(productOrderItem_id) FROM productOrderItem
+    <select id="selectTotalByUserId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(*) FROM productOrderItem
         <where>
             productOrderItem_user_id = #{user_id} AND productOrderItem_order_id is null
         </where>
     </select>
-    <select id="selectTotalByProductId" resultType="int" parameterType="int">
-        SELECT COUNT(productOrderItem_id) FROM productOrderItem
+    <select id="selectTotalByProductId" parameterType="int" resultType="java.lang.Integer" >
+        SELECT COUNT(*) FROM productOrderItem
         <where>
             productOrderItem_product_id = #{product_id}
         </where>
     </select>
-    <select id="selectSaleCount" resultType="int" parameterType="int">
-        SELECT SUM(productOrderItem_number) FROM productOrderItem WHERE productOrderItem_product_id = #{product_id}
+    <select id="selectSaleCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT IFNULL(SUM(productOrderItem_number), 0) FROM productOrderItem WHERE productOrderItem_product_id = #{product_id}
     </select>
 
     <select id="getTotalByProductId" resultType="com.xq.tmall.entity.OrderGroup">

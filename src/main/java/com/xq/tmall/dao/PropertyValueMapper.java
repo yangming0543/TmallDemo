@@ -56,7 +56,7 @@ public interface PropertyValueMapper {
      * @param pageUtil
      * @return
      */
-    List<PropertyValue> select(@Param("propertyValue") PropertyValue propertyValue, @Param("pageUtil") PageUtil pageUtil);
+    List<PropertyValue> selectPropertyValueList(@Param("propertyValue") PropertyValue propertyValue, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 查询单条产品属性

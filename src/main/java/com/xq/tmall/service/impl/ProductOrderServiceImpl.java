@@ -39,7 +39,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public List<ProductOrder> getList(ProductOrder productOrder, Byte[] productOrder_status_array, OrderUtil orderUtil, PageUtil pageUtil) {
-        return productOrderMapper.select(productOrder, productOrder_status_array, orderUtil, pageUtil);
+        return productOrderMapper.selectProductOrderList(productOrder, productOrder_status_array, orderUtil, pageUtil);
     }
 
     @Override

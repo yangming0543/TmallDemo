@@ -21,7 +21,7 @@
             admin_id = #{admin.admin_id}
         </where>
     </update>
-    <select id="select" resultType="com.xq.tmall.entity.Admin">
+    <select id="selectAdminList" resultType="com.xq.tmall.entity.Admin">
         SELECT admin_id,admin_name,admin_nickname,admin_profile_picture_src FROM admin
         <if test="pageUtil != null">
             LIMIT #{pageUtil.index},#{pageUtil.count}
@@ -32,7 +32,7 @@
             </if>
         </where>
     </select>
-    <select id="selectOne" resultType="com.xq.tmall.entity.Admin" parameterType="int">
+    <select id="selectOne" resultType="com.xq.tmall.entity.Admin">
         SELECT admin_id,admin_name,admin_nickname,admin_profile_picture_src FROM admin
         <where>
             <if test="admin_id != null">
@@ -43,8 +43,8 @@
             </if>
         </where>
     </select>
-    <select id="selectByLogin" resultType="int">
-        SELECT COUNT(admin_id) FROM admin
+    <select id="selectByLogin" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM admin
         <where>
             <if test="admin_name != null">
             and admin_name = #{admin_name}
@@ -54,8 +54,8 @@
             </if>
         </where>
     </select>
-    <select id="selectTotal" resultType="int">
-        SELECT COUNT(admin_id) FROM admin
+    <select id="selectTotal" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM admin
         <where>
             <if test="admin_name != null">admin_name LIKE concat('%',#{admin_name},'%')</if>
         </where>

@@ -47,7 +47,7 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     }
     @Override
     public List<PropertyValue> getList(PropertyValue propertyValue, PageUtil pageUtil) {
-        return propertyValueMapper.select(propertyValue, pageUtil);
+        return propertyValueMapper.selectPropertyValueList(propertyValue, pageUtil);
     }
 
     @Override

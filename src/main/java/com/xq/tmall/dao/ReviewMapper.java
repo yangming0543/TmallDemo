@@ -49,7 +49,7 @@ public interface ReviewMapper {
      * @param pageUtil
      * @return
      */
-    List<Review> select(@Param("review") Review review, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
+    List<Review> selectReviewList(@Param("review") Review review, @Param("orderUtil") OrderUtil orderUtil, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 通过用户id查询评论

@@ -28,7 +28,7 @@ public interface CategoryMapper {
      * @param pageUtil
      * @return
      */
-    List<Category> select(@Param("category_name") String category_name, @Param("pageUtil") PageUtil pageUtil);
+    List<Category> selectCategoryList(@Param("category_name") String category_name, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 查询单条类别

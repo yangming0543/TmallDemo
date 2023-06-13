@@ -53,7 +53,7 @@
             </foreach>
         </where>
     </delete>
-    <select id="select" resultMap="propertyValueMap">
+    <select id="selectPropertyValueList" resultMap="propertyValueMap">
         SELECT propertyValue_id,propertyValue_value,propertyValue_property_id,propertyValue_product_id FROM propertyValue
         <if test="propertyValue != null">
             <where>
@@ -67,14 +67,14 @@
             </where>
         </if>
     </select>
-    <select id="selectOne" resultMap="propertyValueMap" parameterType="int">
+    <select id="selectOne" resultMap="propertyValueMap" parameterType="java.lang.Integer">
         SELECT propertyValue_id,propertyValue_value,propertyValue_property_id,propertyValue_product_id FROM propertyValue
         <where>
             propertyValue_id = #{propertyValue_id}
         </where>
     </select>
-    <select id="selectTotal" resultType="int" parameterType="com.xq.tmall.entity.PropertyValue">
-        SELECT COUNT(propertyValue_id) FROM propertyValue
+    <select id="selectTotal" resultType="java.lang.Integer" parameterType="com.xq.tmall.entity.PropertyValue">
+        SELECT COUNT(*) FROM propertyValue
         <if test="propertyValue != null">
             <where>
                 <if test="propertyValue.propertyValue_value">propertyValue_value = #{propertyValue.propertyValue_value}</if>

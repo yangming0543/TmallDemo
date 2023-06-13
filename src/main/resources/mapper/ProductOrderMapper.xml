@@ -85,7 +85,7 @@
             </foreach>
         </where>
     </delete>
-    <select id="select" resultMap="productOrderMap">
+    <select id="selectProductOrderList" resultMap="productOrderMap">
         <include refid="selectProductOrder"/>
         <where>
             <if test="productOrder != null">
@@ -120,7 +120,7 @@
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
         </if>
     </select>
-    <select id="selectOne" resultMap="productOrderMap" parameterType="int">
+    <select id="selectOne" resultMap="productOrderMap" parameterType="java.lang.Integer">
         <include refid="selectProductOrder"/>
         <where>
             productOrder_id = #{productOrder_id}
@@ -133,7 +133,7 @@
         </where>
     </select>
     <select id="selectTotal" resultType="java.lang.Integer">
-        SELECT COUNT(productOrder_id) FROM productOrder
+        SELECT COUNT(*) FROM productOrder
         <where>
             <if test="productOrder != null">
                 <if test="productOrder.productOrder_code">productOrder_code LIKE concat('%',#{productOrder.productOrder_code},'%')</if>

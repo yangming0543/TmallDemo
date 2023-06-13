@@ -42,7 +42,7 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     @Override
     public List<ProductImage> getList(Integer product_id, Byte productImage_type, PageUtil pageUtil) {
-        return productImageMapper.select(product_id, productImage_type, pageUtil);
+        return productImageMapper.selectProductImageList(product_id, productImage_type, pageUtil);
     }
 
     @Override

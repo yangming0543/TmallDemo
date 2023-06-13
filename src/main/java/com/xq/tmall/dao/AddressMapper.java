@@ -27,7 +27,7 @@ public interface AddressMapper {
      * @param address_regionId
      * @return
      */
-    List<Address> select(@Param("address_name") String address_name, @Param("address_regionId") String address_regionId);
+    List<Address> selectAddressList(@Param("address_name") String address_name, @Param("address_regionId") String address_regionId);
 
     /**
      * 根据id查询地址

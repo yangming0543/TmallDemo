@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getList(User user, OrderUtil orderUtil, PageUtil pageUtil) {
-        return userMapper.select(user, orderUtil, pageUtil);
+        return userMapper.selectUserList(user, orderUtil, pageUtil);
     }
 
     @Override

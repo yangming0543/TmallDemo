@@ -29,7 +29,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<Address> getList(String address_name, String address_regionId) {
-        return addressMapper.select(address_name, address_regionId);
+        return addressMapper.selectAddressList(address_name, address_regionId);
     }
 
     @Override

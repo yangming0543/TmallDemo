@@ -43,7 +43,7 @@ public interface ProductImageMapper {
      * @param pageUtil
      * @return
      */
-    List<ProductImage> select(@Param("product_id") Integer product_id, @Param("productImage_type") Byte productImage_type, @Param("pageUtil") PageUtil pageUtil);
+    List<ProductImage> selectProductImageList(@Param("product_id") Integer product_id, @Param("productImage_type") Byte productImage_type, @Param("pageUtil") PageUtil pageUtil);
 
     /**
      * 查询单条产品图片

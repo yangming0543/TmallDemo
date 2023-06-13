@@ -27,7 +27,7 @@
         </where>
     </update>
 
-    <select id="select" resultMap="address">
+    <select id="selectAddressList" resultMap="address">
         SELECT address_areaId,address_name,address_regionId FROM address
         <where>
             <if test="address_name != null">

@@ -39,7 +39,7 @@ public class ProductOrderItemServiceImpl implements ProductOrderItemService {
 
     @Override
     public List<ProductOrderItem> getList(PageUtil pageUtil) {
-        return productOrderItemMapper.select(pageUtil);
+        return productOrderItemMapper.selectProductOrderItemList(pageUtil);
     }
 
     @Override

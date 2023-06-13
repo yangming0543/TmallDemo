@@ -47,7 +47,7 @@
             </foreach>
         </where>
     </delete>
-    <select id="select" resultMap="imageMap">
+    <select id="selectProductImageList" resultMap="imageMap">
         SELECT productImage_id,productImage_type,productImage_src,productImage_product_id FROM productImage
         <where>
             <if test="product_id != null">
@@ -61,14 +61,14 @@
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
         </if>
     </select>
-    <select id="selectOne" resultMap="imageMap" parameterType="int">
+    <select id="selectOne" resultMap="imageMap" parameterType="java.lang.Integer">
         SELECT productImage_id,productImage_type,productImage_src,productImage_product_id FROM productImage
         <where>
             productImage_id = #{productImage_id}
         </where>
     </select>
     <select id="selectTotal" resultType="java.lang.Integer">
-        SELECT COUNT(productImage_id) FROM productImage
+        SELECT COUNT(*) FROM productImage
         <where>
             <if test="product_id != null">
                 productImage_product_id = #{product_id}

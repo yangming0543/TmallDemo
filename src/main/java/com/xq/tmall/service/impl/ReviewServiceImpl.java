@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getList(Review review, OrderUtil orderUtil, PageUtil pageUtil) {
-        return reviewMapper.select(review, orderUtil, pageUtil);
+        return reviewMapper.selectReviewList(review, orderUtil, pageUtil);
     }
 
     @Override
