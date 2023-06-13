@@ -37,7 +37,7 @@ public interface UserMapper {
      * @param user_id
      * @return
      */
-    User selectOne(@Param("user_id") Integer user_id);
+    User selectOne(Integer user_id);
 
     /**
      * 查询用户登录信息

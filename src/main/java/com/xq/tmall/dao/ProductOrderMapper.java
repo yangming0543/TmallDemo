@@ -9,10 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+
 @Repository
 public interface ProductOrderMapper {
     /**
      * 新增产品订单
+     *
      * @param productOrder
      * @return
      */
@@ -20,6 +22,7 @@ public interface ProductOrderMapper {
 
     /**
      * 修改产品订单
+     *
      * @param productOrder
      * @return
      */
@@ -27,6 +30,7 @@ public interface ProductOrderMapper {
 
     /**
      * 批量删除产品订单
+     *
      * @param productOrder_id_list
      * @return
      */
@@ -34,6 +38,7 @@ public interface ProductOrderMapper {
 
     /**
      * 查询产品订单列表
+     *
      * @param productOrder
      * @param productOrder_status_array
      * @param orderUtil
@@ -44,13 +49,15 @@ public interface ProductOrderMapper {
 
     /**
      * 查询单条产品订单
+     *
      * @param productOrder_id
      * @return
      */
-    ProductOrder selectOne(@Param("productOrder_id") Integer productOrder_id);
+    ProductOrder selectOne(Integer productOrder_id);
 
     /**
      * 根据订单号查询产品订单
+     *
      * @param productOrder_code
      * @return
      */
@@ -58,6 +65,7 @@ public interface ProductOrderMapper {
 
     /**
      * 查询产品订单总数
+     *
      * @param productOrder
      * @param productOrder_status_array
      * @return
@@ -66,6 +74,7 @@ public interface ProductOrderMapper {
 
     /**
      * 查询订单组列表
+     *
      * @param beginDate
      * @param endDate
      * @return

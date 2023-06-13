@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface CategoryMapper {
     /**
      * 新增类别
+     *
      * @param category
      * @return
      */
@@ -17,6 +19,7 @@ public interface CategoryMapper {
 
     /**
      * 修改类别
+     *
      * @param category
      * @return
      */
@@ -24,6 +27,7 @@ public interface CategoryMapper {
 
     /**
      * 分页查询类别列表
+     *
      * @param category_name
      * @param pageUtil
      * @return
@@ -32,15 +36,17 @@ public interface CategoryMapper {
 
     /**
      * 查询单条类别
+     *
      * @param category_id
      * @return
      */
-    Category selectOne(@Param("category_id") Integer category_id);
+    Category selectOne(Integer category_id);
 
     /**
      * 查询类别总数
+     *
      * @param category_name
      * @return
      */
-    Integer selectTotal(@Param("category_name") String category_name);
+    Integer selectTotal(String category_name);
 }

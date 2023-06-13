@@ -75,7 +75,7 @@ public interface ReviewMapper {
      * @param review_id
      * @return
      */
-    Review selectOne(@Param("review_id") Integer review_id);
+    Review selectOne(Integer review_id);
 
     /**
      * 查询评论总数
@@ -91,7 +91,7 @@ public interface ReviewMapper {
      * @param user_id
      * @return
      */
-    Integer selectTotalByUserId(@Param("user_id") Integer user_id);
+    Integer selectTotalByUserId(Integer user_id);
 
     /**
      * 根据产品id查询评论总数
@@ -99,7 +99,7 @@ public interface ReviewMapper {
      * @param product_id
      * @return
      */
-    Integer selectTotalByProductId(@Param("product_id") Integer product_id);
+    Integer selectTotalByProductId(Integer product_id);
 
     /**
      * 根据产品订单id查询评论总数
@@ -107,5 +107,5 @@ public interface ReviewMapper {
      * @param productOrderItem_id
      * @return
      */
-    Integer selectTotalByOrderItemId(@Param("productOrderItem_id") Integer productOrderItem_id);
+    Integer selectTotalByOrderItemId(Integer productOrderItem_id);
 }

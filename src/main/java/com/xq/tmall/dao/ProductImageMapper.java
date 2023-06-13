@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface ProductImageMapper {
     /**
      * 新增产品图片
+     *
      * @param productImage
      * @return
      */
@@ -17,6 +19,7 @@ public interface ProductImageMapper {
 
     /**
      * 批量新增产品图片
+     *
      * @param productImageList
      * @return
      */
@@ -24,6 +27,7 @@ public interface ProductImageMapper {
 
     /**
      * 修改产品图片
+     *
      * @param productImage
      * @return
      */
@@ -31,6 +35,7 @@ public interface ProductImageMapper {
 
     /**
      * 批量删除产品图片
+     *
      * @param productImage_id_list
      * @return
      */
@@ -38,6 +43,7 @@ public interface ProductImageMapper {
 
     /**
      * 查询产品图片列表
+     *
      * @param product_id
      * @param productImage_type
      * @param pageUtil
@@ -47,13 +53,15 @@ public interface ProductImageMapper {
 
     /**
      * 查询单条产品图片
+     *
      * @param productImage_id
      * @return
      */
-    ProductImage selectOne(@Param("productImage_id") Integer productImage_id);
+    ProductImage selectOne(Integer productImage_id);
 
     /**
      * 查询产品图片总数
+     *
      * @param product_id
      * @param productImage_type
      * @return

@@ -8,11 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 @Repository
 public interface ProductOrderItemMapper {
     /**
      * 新增产品订单项
+     *
      * @param productOrderItem
      * @return
      */
@@ -20,6 +21,7 @@ public interface ProductOrderItemMapper {
 
     /**
      * 修改产品订单项
+     *
      * @param productOrderItem
      * @return
      */
@@ -27,6 +29,7 @@ public interface ProductOrderItemMapper {
 
     /**
      * 批量删除产品订单项
+     *
      * @param productOrderItem_id_list
      * @return
      */
@@ -34,6 +37,7 @@ public interface ProductOrderItemMapper {
 
     /**
      * 查询产品订单项列表
+     *
      * @param pageUtil
      * @return
      */
@@ -41,6 +45,7 @@ public interface ProductOrderItemMapper {
 
     /**
      * 根据订单id查询产品订单项
+     *
      * @param order_id
      * @param pageUtil
      * @return
@@ -49,6 +54,7 @@ public interface ProductOrderItemMapper {
 
     /**
      * 根据用户id查询产品订单项
+     *
      * @param user_id
      * @param pageUtil
      * @return
@@ -57,6 +63,7 @@ public interface ProductOrderItemMapper {
 
     /**
      * 根据产品id查询产品订单项
+     *
      * @param product_id
      * @param pageUtil
      * @return
@@ -65,40 +72,46 @@ public interface ProductOrderItemMapper {
 
     /**
      * 查询单条产品订单项
+     *
      * @param productOrderItem_id
      * @return
      */
-    ProductOrderItem selectOne(@Param("productOrderItem_id") Integer productOrderItem_id);
+    ProductOrderItem selectOne(Integer productOrderItem_id);
 
     /**
      * 查询产品订单项总数
+     *
      * @return
      */
     Integer selectTotal();
 
     /**
      * 根据订单id查询产品订单项总数
+     *
      * @param order_id
      * @return
      */
-    Integer selectTotalByOrderId(@Param("order_id") Integer order_id);
+    Integer selectTotalByOrderId(Integer order_id);
 
     /**
      * 根据用户id查询产品订单项总数
+     *
      * @param user_id
      * @return
      */
-    Integer selectTotalByUserId(@Param("user_id") Integer user_id);
+    Integer selectTotalByUserId(Integer user_id);
 
     /**
      * 根据茶品id查询产品订单项
+     *
      * @param product_id
      * @return
      */
-    Integer selectSaleCount(@Param("product_id") Integer product_id);
+    Integer selectSaleCount(Integer product_id);
 
     /**
      * 根据产品id查询订单组
+     *
      * @param product_id
      * @param beginDate
      * @param endDate

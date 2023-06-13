@@ -47,7 +47,7 @@ public interface PropertyValueMapper {
      * @param id
      * @return
      */
-    Integer deleteOne(@Param("id") Integer id);
+    Integer deleteOne(Integer id);
 
     /**
      * 查询产品属性列表
@@ -64,7 +64,7 @@ public interface PropertyValueMapper {
      * @param propertyValue_id
      * @return
      */
-    PropertyValue selectOne(@Param("propertyValue_id") Integer propertyValue_id);
+    PropertyValue selectOne(Integer propertyValue_id);
 
     /**
      * 查询产品属性总数

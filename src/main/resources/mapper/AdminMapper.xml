@@ -5,20 +5,20 @@
 <mapper namespace="com.xq.tmall.dao.AdminMapper">
     <insert id="insertOne" parameterType="com.xq.tmall.entity.Admin">
         INSERT admin(admin_name,admin_nickname,admin_password,admin_profile_picture_src)
-            VALUES (#{admin.admin_name},
-            #{admin.admin_nickname},
-            #{admin.admin_password},
-            #{admin.admin_profile_picture_src})
+            VALUES (#{admin_name},
+            #{admin_nickname},
+            #{admin_password},
+            #{admin_profile_picture_src})
     </insert>
     <update id="updateOne" parameterType="com.xq.tmall.entity.Admin">
         UPDATE admin
         <set>
-            <if test="admin.admin_profile_picture_src != null">admin_profile_picture_src = #{admin.admin_profile_picture_src},</if>
-            <if test="admin.admin_nickname != null">admin_nickname = #{admin.admin_nickname},</if>
-            <if test="admin.admin_password != null">admin_password = #{admin.admin_password}</if>
+            <if test="admin_profile_picture_src != null">admin_profile_picture_src = #{admin_profile_picture_src},</if>
+            <if test="admin_nickname != null">admin_nickname = #{admin_nickname},</if>
+            <if test="admin_password != null">admin_password = #{admin_password},</if>
         </set>
         <where>
-            admin_id = #{admin.admin_id}
+            admin_id = #{admin_id}
         </where>
     </update>
     <select id="selectAdminList" resultType="com.xq.tmall.entity.Admin">
@@ -43,7 +43,7 @@
             </if>
         </where>
     </select>
-    <select id="selectByLogin" resultType="java.lang.Integer">
+    <select id="selectByLogin" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM admin
         <where>
             <if test="admin_name != null">

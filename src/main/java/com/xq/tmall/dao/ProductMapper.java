@@ -32,7 +32,7 @@ public interface ProductMapper {
      * @param id
      * @return
      */
-    Integer deleteOne(@Param("id")Integer id);
+    Integer deleteOne(Integer id);
 
     /**
      * 查询列表
@@ -60,7 +60,7 @@ public interface ProductMapper {
      * @param product_Id
      * @return
      */
-    Product selectOne(@Param("product_id") Integer product_Id);
+    Product selectOne(Integer product_Id);
 
     /**
      * 查询产品总数
