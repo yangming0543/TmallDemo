@@ -122,7 +122,7 @@
             productOrderItem_user_id = #{user_id} AND productOrderItem_order_id is null
         </where>
     </select>
-    <select id="selectTotalByProductId" parameterType="int" resultType="java.lang.Integer" >
+    <select id="selectTotalByProductId" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
         SELECT COUNT(*) FROM productOrderItem
         <where>
             productOrderItem_product_id = #{product_id}

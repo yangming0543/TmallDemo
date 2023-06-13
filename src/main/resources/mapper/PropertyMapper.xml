@@ -56,7 +56,7 @@
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
         </if>
     </select>
-    <select id="selectOne" resultMap="propertyMap" parameterType="int">
+    <select id="selectOne" resultMap="propertyMap" parameterType="java.lang.Integer">
         SELECT property_id,property_name,property_category_id FROM property
         <where>
             property_id = #{property_id}

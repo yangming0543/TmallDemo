@@ -30,7 +30,7 @@
             LIMIT #{pageUtil.pageStart},#{pageUtil.count}
         </if>
     </select>
-    <select id="selectOne" parameterType="int" resultType="com.xq.tmall.entity.Category">
+    <select id="selectOne" parameterType="java.lang.Integer" resultType="com.xq.tmall.entity.Category">
         SELECT category_id,category_name,category_image_src FROM category
         <where>
             del_flag=0
