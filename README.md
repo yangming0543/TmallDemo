@@ -13,7 +13,7 @@
 5.账户名和密码详见附件中的sql文件或者在resources下的sql文件夹中的sql文件（前台页面和后台页面账户密码下方有说明）。
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/1016/150457_5c0c7304_996301.png "屏幕截图.png")
 6.swagger接口文档地址：http://localhost:8082/tmall/swagger-ui.html
-7.Druid Monitor监控地址：http://localhost:8082/tmall/druid/sql.html
+7.Druid Monitor监控地址：http://localhost:8082/tmall/druid/sql.html（账号：admin 密码：123456）
 
 注意事项：后台管理界面的订单图表没有数据为正常现象，该图表显示的为近7天的交易额。
 
