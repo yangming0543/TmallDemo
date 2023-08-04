@@ -163,7 +163,6 @@ public class CategoryController extends BaseController {
             //如果为非空字符串则解决中文乱码：URLDecoder.decode(String,"UTF-8");
             category_name = "".equals(category_name) ? null : URLDecoder.decode(category_name, "UTF-8");
         }
-
         JSONObject object = new JSONObject();
         //按条件获取第{}页的{}条分类, index + 1, count
         PageUtil pageUtil = new PageUtil(index, count);

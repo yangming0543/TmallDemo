@@ -4,10 +4,6 @@
 <head>
     <script>
         $(function () {
-
-            /******
-             * event
-             ******/
             //单击保存按钮时
             $("#btn_admin_save").click(function () {
                 var admin_nickname = $.trim($("#input_admin_nickname").val());
@@ -93,7 +89,6 @@
                     $("#btn_admin_save").attr("disabled", true).val("保存中...");
                 },
                 error: function () {
-
                 }
             });
         }

@@ -52,7 +52,6 @@ public class OrderController extends BaseController {
         if (adminId == null) {
             return "admin/include/loginMessage";
         }
-
         //获取前10条订单列表
         PageUtil pageUtil = new PageUtil(0, 10);
         List<ProductOrder> productOrderList = productOrderService.getList(null, null, new OrderUtil("productOrder_id", true), pageUtil);
@@ -76,7 +75,6 @@ public class OrderController extends BaseController {
         if (adminId == null) {
             return "admin/include/loginMessage";
         }
-
         //获取order_id为{}的订单信息, oid
         ProductOrder order = productOrderService.get(oid);
         //获取订单详情-地址信息
@@ -202,7 +200,6 @@ public class OrderController extends BaseController {
         pageUtil.setTotal(productOrderCount);
         object.put("totalPage", pageUtil.getTotalPage());
         object.put("pageUtil", pageUtil);
-
         return String.valueOf(object);
     }
 }

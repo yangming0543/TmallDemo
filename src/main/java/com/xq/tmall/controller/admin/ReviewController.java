@@ -56,7 +56,6 @@ public class ReviewController extends BaseController {
         //获取分页信息
         pageUtil.setTotal(reviewCount);
         map.put("pageUtil", pageUtil);
-
         //转到后台管理-评论页-ajax方式
         return "admin/reviewManagePage";
     }
@@ -73,7 +72,6 @@ public class ReviewController extends BaseController {
         //获取review_id为{}的评论信息, cid
         Review review = reviewService.get(cid);
         map.put("review", review);
-
         //转到后台管理-评论详情页-ajax方式
         return "admin/include/reviewDetails";
     }
@@ -133,7 +131,6 @@ public class ReviewController extends BaseController {
         pageUtil.setTotal(reviewCount);
         object.put("totalPage", pageUtil.getTotalPage());
         object.put("pageUtil", pageUtil);
-
         return String.valueOf(object);
     }
 

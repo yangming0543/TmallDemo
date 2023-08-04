@@ -54,7 +54,6 @@ public class ProductController extends BaseController {
         if (adminId == null) {
             return URL;
         }
-
         //获取产品分类列表
         List<Category> categoryList = categoryService.getList(null, null);
         map.put(Constants.CATEGORY_LIST, categoryList);
@@ -83,7 +82,6 @@ public class ProductController extends BaseController {
         if (adminId == null) {
             return URL;
         }
-
         //获取product_id为{}的产品信息, pid
         Product product = productService.get(pid);
         //获取产品详情-图片信息
@@ -137,7 +135,6 @@ public class ProductController extends BaseController {
         if (adminId == null) {
             return URL;
         }
-
         //获取分类列表
         List<Category> categoryList = categoryService.getList(null, null);
         map.put(Constants.CATEGORY_LIST, categoryList);
@@ -185,7 +182,6 @@ public class ProductController extends BaseController {
         }
         int product_id = lastIDService.selectLastID();
         //添加成功！,新增产品的ID值为：{}, product_id
-
         JSONObject object = JSON.parseObject(propertyJson);
         Set<String> propertyIdSet = object.keySet();
         if (CollectionUtils.isNotEmpty(propertyIdSet)) {
@@ -302,7 +298,6 @@ public class ProductController extends BaseController {
             throw new RuntimeException();
         }
         //产品信息更新成功！
-
         JSONObject object = JSON.parseObject(propertyAddJson);
         Set<String> propertyIdSet = object.keySet();
         if (CollectionUtils.isNotEmpty(propertyIdSet)) {
@@ -326,7 +321,6 @@ public class ProductController extends BaseController {
                 throw new RuntimeException();
             }
         }
-
         object = JSON.parseObject(propertyUpdateJson);
         propertyIdSet = object.keySet();
         if (CollectionUtils.isNotEmpty(propertyIdSet)) {
@@ -441,7 +435,6 @@ public class ProductController extends BaseController {
             //根据{}排序，是否倒序:{}, orderBy, isDesc
             orderUtil = new OrderUtil(orderBy, isDesc);
         }
-
         JSONObject object = new JSONObject();
         //按条件获取第{}页的{}条产品, index + 1, count
         PageUtil pageUtil = new PageUtil(index, count);
@@ -465,14 +458,12 @@ public class ProductController extends BaseController {
         //封装查询条件
         Category category = new Category();
         category.setCategory_id(property_category_id);
-
         JSONObject object = new JSONObject();
         //按类型获取属性列表，类型ID：{}, property_category_id
         Property property = new Property();
         property.setProperty_category(category);
         List<Property> propertyList = propertyService.getList(property, null);
         object.put(Constants.PROPERTY_LIST, JSON.parseArray(JSON.toJSONString(propertyList)));
-
         return String.valueOf(object);
     }
 
@@ -513,7 +504,6 @@ public class ProductController extends BaseController {
         } else {
             filePath = session.getServletContext().getRealPath("/") + "res/images/item/productDetailsPicture/" + fileName;
         }
-
         //文件上传路径：{}, filePath
         JSONObject object = new JSONObject();
         try {

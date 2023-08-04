@@ -8,9 +8,6 @@
             "category_name": null
         };
         $(function () {
-            /******
-             * event
-             * *****/
             //点击查询按钮时
             $("#btn_category_submit").click(function () {
                 var category_name = $.trim($("#input_category_name").val());

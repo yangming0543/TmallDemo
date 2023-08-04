@@ -54,7 +54,6 @@ public class UserController extends BaseController {
         if (adminId == null) {
             return "admin/include/loginMessage";
         }
-
         //获取前十条用户信息
         PageUtil pageUtil = new PageUtil(0, 10);
         List<User> userList = userService.getList(null, null, pageUtil);
@@ -65,7 +64,6 @@ public class UserController extends BaseController {
         //获取分页信息
         pageUtil.setTotal(userCount);
         map.put("pageUtil", pageUtil);
-
         //转到后台管理-用户页-ajax方式
         return "admin/userManagePage";
     }
@@ -80,7 +78,6 @@ public class UserController extends BaseController {
         if (adminId == null) {
             return "admin/include/loginMessage";
         }
-
         //获取user_id为{}的用户信息, uid
         User user = userService.get(uid);
         //获取用户详情-所在地地址信息
@@ -101,7 +98,6 @@ public class UserController extends BaseController {
         Address add = new Address();
         add.setAddress_name(builder.toString());
         user.setUser_address(add);
-
         //获取用户详情-家乡地址信息
         address = addressService.get(user.getUser_homeplace().getAddress_areaId());
         //最后一级地址
@@ -117,7 +113,6 @@ public class UserController extends BaseController {
         }
         //家乡地址字符串：{}, builder
         user.setUser_homeplace(add);
-
         //获取用户详情-购物车订单项信息
         List<ProductOrderItem> productOrderItemList = productOrderItemService.getListByUserId(user.getUser_id(), null);
         if (productOrderItemList != null) {
@@ -134,7 +129,6 @@ public class UserController extends BaseController {
             }
         }
         user.setProductOrderItemList(productOrderItemList);
-
         if (!StringUtils.isEmpty(user.getUser_realname())) {
             //用户隐私加密
             user.setUser_realname(user.getUser_realname().charAt(0) + "*");
@@ -178,7 +172,6 @@ public class UserController extends BaseController {
             //根据{}排序，是否倒序:{}, orderBy, isDesc
             orderUtil = new OrderUtil(orderBy, isDesc);
         }
-
         JSONObject object = new JSONObject();
         //按条件获取第{}页的{}条用户, index + 1, count
         PageUtil pageUtil = new PageUtil(index, count);
@@ -191,7 +184,6 @@ public class UserController extends BaseController {
         pageUtil.setTotal(userCount);
         object.put("totalPage", pageUtil.getTotalPage());
         object.put("pageUtil", pageUtil);
-
         return String.valueOf(object);
     }
 
@@ -214,5 +206,4 @@ public class UserController extends BaseController {
         }
         return String.valueOf(object);
     }
-
 }
