@@ -63,7 +63,7 @@
                     AND r.review_content like concat('%', #{review.review_content}, '%')
                 </if>
                 <if test="review.review_createDate != null and review.review_createDate != ''">
-                    and date_format(r.review_createDate,'%Y-%m-%d') = #{review.review_createDate}
+                    AND date_format(r.review_createDate,'%Y-%m-%d') = #{review.review_createDate}
                 </if>
                 <if test="review.review_user!= null and review.review_user.user_name!=null ">
                     AND u.user_name like concat('%', #{review.review_user.user_name}, '%')
@@ -116,7 +116,7 @@
                     AND r.review_content like concat('%', #{review.review_content}, '%')
                 </if>
                 <if test="review.review_createDate != null and review.review_createDate != ''">
-                    and date_format(r.review_createDate,'%Y-%m-%d') = #{review.review_createDate}
+                    AND date_format(r.review_createDate,'%Y-%m-%d') = #{review.review_createDate}
                 </if>
                 <if test="review.review_user!= null and review.review_user.user_name!=null ">
                     AND u.user_name like concat('%', #{review.review_user.user_name}, '%')

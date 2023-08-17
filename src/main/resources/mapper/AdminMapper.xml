@@ -36,10 +36,10 @@
         SELECT admin_id,admin_name,admin_nickname,admin_profile_picture_src FROM admin
         <where>
             <if test="admin_id != null">
-                admin_id = #{admin_id}
+                and admin_id = #{admin_id}
             </if>
             <if test="admin_name != null">
-                admin_name = #{admin_name}
+                and admin_name = #{admin_name}
             </if>
         </where>
     </select>

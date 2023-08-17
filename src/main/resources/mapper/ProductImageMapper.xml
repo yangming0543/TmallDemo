@@ -51,7 +51,7 @@
         SELECT productImage_id,productImage_type,productImage_src,productImage_product_id FROM productImage
         <where>
             <if test="product_id != null">
-                productImage_product_id = #{product_id}
+                and productImage_product_id = #{product_id}
             </if>
             <if test="productImage_type != null">
                 and productImage_type = #{productImage_type}
@@ -71,7 +71,7 @@
         SELECT COUNT(*) FROM productImage
         <where>
             <if test="product_id != null">
-                productImage_product_id = #{product_id}
+                and productImage_product_id = #{product_id}
             </if>
             <if test="productImage_type != null">
                 and productImage_type = #{productImage_type}

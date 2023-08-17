@@ -31,7 +31,7 @@
         SELECT address_areaId,address_name,address_regionId FROM address
         <where>
             <if test="address_name != null">
-                address_name LIKE concat('%',#{address_name},'%')
+                and address_name LIKE concat('%',#{address_name},'%')
             </if>
             <if test="address_regionId != null">
                 and address_regionId = #{address_regionId} and address_areaId != address_regionId
