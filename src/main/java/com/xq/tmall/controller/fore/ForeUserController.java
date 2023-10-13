@@ -45,7 +45,6 @@ public class ForeUserController extends BaseController {
             //获取用户信息
             User user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
-
             //获取用户所在地区级地址
             String districtAddressId = user.getUser_address().getAddress_areaId();
             Address districtAddress = addressService.get(districtAddressId);
@@ -55,7 +54,6 @@ public class ForeUserController extends BaseController {
             List<Address> addressList = addressService.getRoot();
             List<Address> cityList = addressService.getList(null, cityAddress.getAddress_regionId().getAddress_areaId());
             List<Address> districtList = addressService.getList(null, cityAddress.getAddress_areaId());
-
             map.put("addressList", addressList);
             map.put("cityList", cityList);
             map.put("districtList", districtList);

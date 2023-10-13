@@ -231,7 +231,6 @@ public class ProductController extends BaseController {
                 throw new RuntimeException();
             }
         }
-
         if (productDetailsImageList != null && productDetailsImageList.length > 0) {
             //整合产品子信息-产品详情图片
             List<ProductImage> productImageList = new ArrayList<>(5);

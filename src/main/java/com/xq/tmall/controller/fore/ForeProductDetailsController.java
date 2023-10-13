@@ -104,11 +104,9 @@ public class ForeProductDetailsController extends BaseController {
                 review.setReview_user(userService.get(review.getReview_user().getUser_id()));
             }
         }
-
         //获取产品子信息-销量数和评论数信息
         product.setProduct_sale_count(productOrderItemService.getSaleCountByProductId(product_id));
         product.setProduct_review_count(reviewService.getTotalByProductId(product_id));
-
         //获取猜你喜欢列表
         Integer category_id = product.getProduct_category().getCategory_id();
         Product product1 = new Product();
@@ -134,7 +132,6 @@ public class ForeProductDetailsController extends BaseController {
         }
         //获取分类列表
         List<Category> categoryList = categoryService.getList(null, new PageUtil(0, 3));
-
         map.put("loveProductList", loveProductList);
         map.put("categoryList", categoryList);
         map.put("propertyList", propertyList);
@@ -159,7 +156,6 @@ public class ForeProductDetailsController extends BaseController {
         List<Review> reviewList = reviewService.getListByProductId(product_id, new PageUtil(index, count));
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("reviewList", JSON.parseArray(JSON.toJSONString(reviewList)));
-
         return String.valueOf(jsonObject);
     }
 
@@ -171,19 +167,16 @@ public class ForeProductDetailsController extends BaseController {
     public String loadProductPropertyList(@PathVariable("pid") String pid/*产品ID*/) {
         //获取产品ID
         Integer product_id = Integer.parseInt(pid);
-
         //获取产品详情-属性值信息
         Product product = new Product();
         product.setProduct_id(product_id);
         PropertyValue propertyValue1 = new PropertyValue();
         propertyValue1.setPropertyValue_product(product);
         List<PropertyValue> propertyValueList = propertyValueService.getList(propertyValue1, null);
-
         //获取产品详情-分类信息对应的属性列表
         Property property1 = new Property();
         property1.setProperty_category(product.getProduct_category());
         List<Property> propertyList = propertyService.getList(property1, null);
-
         //属性列表和属性值列表合并
         for (Property property : propertyList) {
             for (PropertyValue propertyValue : propertyValueList) {
@@ -197,7 +190,6 @@ public class ForeProductDetailsController extends BaseController {
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("propertyList", JSON.parseArray(JSON.toJSONString(propertyList)));
-
         return String.valueOf(jsonObject);
     }
 
@@ -232,7 +224,6 @@ public class ForeProductDetailsController extends BaseController {
                 break;
             }
         }
-
         //guessNumber值为{}，新guessNumber值为{}, guessNumber, i
         List<Product> loveProductList = productService.getList(product, new Byte[]{0, 2}, null, new PageUtil().setCount(3).setPageStart(i));
         if (loveProductList != null) {
@@ -241,7 +232,6 @@ public class ForeProductDetailsController extends BaseController {
                 loveProduct.setSingleProductImageList(productImageService.getList(loveProduct.getProduct_id(), (byte) 0, new PageUtil(0, 1)));
             }
         }
-
         JSONObject jsonObject = new JSONObject();
         //获取数据成功！
         jsonObject.put("success", true);

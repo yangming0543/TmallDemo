@@ -22,10 +22,16 @@ public class Category {
      * 删除标识(1删除 0未删除）
      */
     private Integer del_flag;
-    //产品列表
+    /**
+     * 产品列表
+     */
     private List<Product> productList;
-    //产品二维集合
+    /**
+     * 产品二维集合
+     */
     private List<List<Product>> complexProductList;
-    //属性列表
+    /**
+     * 属性列表
+     */
     private List<Property> propertyList;
 }

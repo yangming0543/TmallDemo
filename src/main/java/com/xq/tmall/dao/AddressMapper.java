@@ -22,7 +22,7 @@ public interface AddressMapper {
     Integer updateOne(@Param("address") Address address);
 
     /**
-     * 按条件查询
+     * 按条件查询地址
      * @param address_name
      * @param address_regionId
      * @return

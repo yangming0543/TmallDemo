@@ -342,7 +342,6 @@ public class ForeOrderController extends BaseController {
         map.put("cityList", cityAddress);
         map.put("districtList", districtAddress);
         map.put("orderTotalPrice", orderTotalPrice);
-
         map.put("addressId", addressId);
         map.put("cityAddressId", cityAddressId);
         map.put("districtAddressId", districtAddressId);
@@ -565,7 +564,6 @@ public class ForeOrderController extends BaseController {
             }
         }
         //订单总金额为：{}元, orderTotalPrice
-
         map.put("productOrder", order);
         map.put("orderTotalPrice", orderTotalPrice);
 
@@ -624,9 +622,7 @@ public class ForeOrderController extends BaseController {
             }
             map.put("orderItem", productOrderItem);
         }
-
         map.put("product", product);
-
         //转到前台天猫-订单完成页
         return "fore/orderSuccessPage";
     }
@@ -662,7 +658,6 @@ public class ForeOrderController extends BaseController {
         }
         map.put("orderItemList", orderItemList);
         map.put("orderItemTotal", orderItemTotal);
-
         //转到前台天猫-购物车页
         return "fore/productBuyCarPage";
     }
@@ -718,7 +713,6 @@ public class ForeOrderController extends BaseController {
         SimpleDateFormat time = new SimpleDateFormat(Constants.DATE, Locale.UK);
         productOrder.setProductOrder_pay_date(time.format(new Date()));
         productOrder.setProductOrder_status((byte) 1);
-
         boolean yn = productOrderService.update(productOrder);
         if (yn) {
             object.put(Constants.SUCCESS, true);
@@ -762,9 +756,7 @@ public class ForeOrderController extends BaseController {
         SimpleDateFormat time = new SimpleDateFormat(Constants.DATE, Locale.UK);
         productOrder.setProductOrder_delivery_date(time.format(new Date()));
         productOrder.setProductOrder_status((byte) 2);
-
         productOrderService.update(productOrder);
-
         return URL;
     }
 
@@ -810,7 +802,6 @@ public class ForeOrderController extends BaseController {
         productOrder.setProductOrder_status((byte) 3);
         SimpleDateFormat time = new SimpleDateFormat(Constants.DATE, Locale.UK);
         productOrder.setProductOrder_confirm_date(time.format(new Date()));
-
         boolean yn = productOrderService.update(productOrder);
         if (yn) {
             object.put(Constants.SUCCESS, true);
@@ -860,7 +851,6 @@ public class ForeOrderController extends BaseController {
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(order.getProductOrder_id());
         productOrder.setProductOrder_status((byte) 4);
-
         boolean yn = productOrderService.update(productOrder);
         if (yn) {
             object.put(Constants.SUCCESS, true);
@@ -883,7 +873,6 @@ public class ForeOrderController extends BaseController {
             object.put(Constants.SUCCESS, false);
             return String.valueOf(object);
         }
-
         JSONObject orderItemString = JSON.parseObject(orderItemMap);
         Set<String> orderItemIDSet = orderItemString.keySet();
         if (CollectionUtils.isNotEmpty(orderItemIDSet)) {
@@ -979,7 +968,6 @@ public class ForeOrderController extends BaseController {
         response.addCookie(cookie5);
         response.addCookie(cookie6);
         response.addCookie(cookie7);
-
         StringBuilder productOrder_code = new StringBuilder()
                 .append(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
                 .append(0)
@@ -1020,7 +1008,6 @@ public class ForeOrderController extends BaseController {
         if (!yn) {
             throw new RuntimeException();
         }
-
         object.put(Constants.SUCCESS, true);
         object.put("url", "/order/pay/" + productOrder.getProductOrder_code());
         return String.valueOf(object);
@@ -1116,7 +1103,7 @@ public class ForeOrderController extends BaseController {
         address.setAddress_areaId(districtAddressId);
         productOrder.setProductOrder_address(address);
         productOrder.setProductOrder_post(productOrder_post);
-
+        //用户
         User user = new User();
         user.setUser_id(Integer.valueOf(userId.toString()));
         productOrder.setProductOrder_user(user);
@@ -1141,7 +1128,6 @@ public class ForeOrderController extends BaseController {
         if (!yn) {
             throw new RuntimeException();
         }
-
         object.put(Constants.SUCCESS, true);
         object.put("url", "/order/pay/" + productOrder.getProductOrder_code());
         return String.valueOf(object);
@@ -1163,7 +1149,6 @@ public class ForeOrderController extends BaseController {
             object.put(Constants.SUCCESS, false);
             return String.valueOf(object);
         }
-
         //通过产品ID获取产品信息：{}, product_id
         Product product = productService.get(product_id);
         if (product == null) {
@@ -1171,7 +1156,7 @@ public class ForeOrderController extends BaseController {
             object.put(Constants.SUCCESS, false);
             return String.valueOf(object);
         }
-
+        //产品订单项
         ProductOrderItem productOrderItem = new ProductOrderItem();
         //检查用户的购物车项
         List<ProductOrderItem> orderItemList = productOrderItemService.getListByUserId(Integer.valueOf(userId.toString()), null);

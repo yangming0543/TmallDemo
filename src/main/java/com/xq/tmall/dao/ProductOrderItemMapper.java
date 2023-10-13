@@ -102,7 +102,7 @@ public interface ProductOrderItemMapper {
     Integer selectTotalByUserId(Integer user_id);
 
     /**
-     * 根据茶品id查询产品订单项
+     * 根据产品id查询产品订单项
      *
      * @param product_id
      * @return

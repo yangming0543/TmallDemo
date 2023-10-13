@@ -26,7 +26,7 @@ public interface CategoryMapper {
     Integer updateOne(@Param("category") Category category);
 
     /**
-     * 分页查询类别列表
+     * 查询类别列表
      *
      * @param category_name
      * @param pageUtil

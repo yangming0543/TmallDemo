@@ -67,7 +67,7 @@ public class Product {
      */
     private Integer product_review_count;
     /**
-     *产品出售
+     * 产品出售
      */
     public Object setProduct_sale_co;
 

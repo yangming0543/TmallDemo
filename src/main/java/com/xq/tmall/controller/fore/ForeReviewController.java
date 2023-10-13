@@ -82,9 +82,7 @@ public class ForeReviewController extends BaseController {
         product.setProduct_review_count(reviewService.getTotalByProductId(product.getProduct_id()));
         product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), (byte) 0, new PageUtil(0, 1)));
         orderItem.setProductOrderItem_product(product);
-
         map.put("orderItem", orderItem);
-
         //转到前台天猫-评论添加页
         return "fore/addReview";
     }
@@ -159,11 +157,9 @@ public class ForeReviewController extends BaseController {
             }
         }
         Integer total = reviewService.getTotalByProductId(product_id);
-
         JSONObject object = new JSONObject();
         object.put("reviewList", reviewList);
         object.put("pageUtil", new PageUtil().setTotal(total).setIndex(index).setCount(count));
-
         return String.valueOf(object);
     }
 }

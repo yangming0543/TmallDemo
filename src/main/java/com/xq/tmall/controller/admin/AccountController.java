@@ -42,7 +42,6 @@ public class AccountController extends BaseController {
         //获取目前登录的管理员信息
         Admin admin = adminService.get(null, Integer.parseInt(adminId.toString()));
         map.put("admin", admin);
-
         //转到后台管理-账户页-ajax方式
         return "admin/accountManagePage";
     }
@@ -109,7 +108,6 @@ public class AccountController extends BaseController {
         Admin putAdmin = new Admin();
         putAdmin.setAdmin_id(Integer.valueOf(admin_id));
         putAdmin.setAdmin_nickname(admin_nickname);
-
         if (StringUtils.isNotEmpty(admin_password) && StringUtils.isNotEmpty(admin_newPassword)) {
             //获取需要修改的管理员信息
             Admin admin = adminService.get(null, Integer.valueOf(adminId.toString()));
@@ -127,7 +125,6 @@ public class AccountController extends BaseController {
             //管理员头像路径为, admin_profile_picture_src
             putAdmin.setAdmin_profile_picture_src(admin_profile_picture_src.substring(admin_profile_picture_src.lastIndexOf("/") + 1));
         }
-
         //更新管理员信息，管理员ID值为：{}", admin_id
         Boolean yn = adminService.update(putAdmin);
         if (yn) {

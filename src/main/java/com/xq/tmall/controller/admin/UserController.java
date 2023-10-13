@@ -166,7 +166,6 @@ public class UserController extends BaseController {
         User user = new User();
         user.setUser_name(user_name);
         user.setUser_gender(gender);
-
         OrderUtil orderUtil = null;
         if (orderBy != null) {
             //根据{}排序，是否倒序:{}, orderBy, isDesc

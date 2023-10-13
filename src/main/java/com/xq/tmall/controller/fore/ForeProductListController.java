@@ -60,12 +60,10 @@ public class ForeProductListController extends BaseController {
         if (product_name != null && "".equals(product_name.trim())) {
             return "redirect:/";
         }
-
         //整合搜索信息
         Product product = new Product();
         String searchValue = null;
         Integer searchType = null;
-
         if (category_id != null) {
             Category category = new Category();
             category.setCategory_id(category_id);
@@ -108,14 +106,12 @@ public class ForeProductListController extends BaseController {
         List<Category> categoryList = categoryService.getList(null, new PageUtil(0, 5));
         //获取分页信息
         pageUtil.setTotal(productCount);
-
         map.put("categoryList", categoryList);
         map.put("totalPage", pageUtil.getTotalPage());
         map.put("pageUtil", pageUtil);
         map.put("productList", productList);
         map.put("searchValue", searchValue);
         map.put("searchType", searchType);
-
         //转到前台天猫-产品搜索列表页
         return "fore/productListPage";
     }
@@ -135,7 +131,6 @@ public class ForeProductListController extends BaseController {
         OrderUtil orderUtil = null;
         String searchValue = null;
         Integer searchType = null;
-
         if (category_id != null) {
             Category category = new Category();
             category.setCategory_id(category_id);
@@ -185,7 +180,6 @@ public class ForeProductListController extends BaseController {
         List<Category> categoryList = categoryService.getList(null, new PageUtil(0, 5));
         //获取分页信息
         pageUtil.setTotal(productCount);
-
         map.put("productCount", productCount);
         map.put("totalPage", pageUtil.getTotalPage());
         map.put("pageUtil", pageUtil);
@@ -195,7 +189,6 @@ public class ForeProductListController extends BaseController {
         map.put("searchValue", searchValue);
         map.put("searchType", searchType);
         map.put("categoryList", categoryList);
-
         return "fore/productListPage";
     }
 }

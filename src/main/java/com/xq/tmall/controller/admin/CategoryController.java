@@ -198,9 +198,7 @@ public class CategoryController extends BaseController {
             object.put(Constants.SUCCESS, true);
             object.put("fileName", fileName);
         } catch (IOException e) {
-            logger.warn("文件上传失败!");
-            e.printStackTrace();
-            object.put(Constants.SUCCESS, false);
+            logger.error("文件上传失败!");
         }
         return String.valueOf(object);
     }
