@@ -223,6 +223,65 @@
         function getPage(index) {
             getData($(this), "admin/product/" + index + "/10", dataList);
         }
+
+        function doDownLoadTemp(){
+            location.href = "${pageContext.request.contextPath}/admin/product/template";
+        }
+
+        //文件赋值
+        var fileDom;
+
+        function uploadFile(fileDom) {
+            this.fileDom = fileDom;
+        }
+
+        //导入事件
+        $("#import-ok").click(function () {
+            $('#modalFileDiv').modal();
+        })
+        //关闭事件
+        $("#btn-import-close").unbind("click").click(function () {
+            //清空值
+            $(fileDom).val('');
+        })
+        $("#btn-import-ok").unbind("click").click(function () {
+            if (fileDom == null || fileDom.files[0] == null) {
+                alert("导入失败，文件不存在！");
+                return false;
+            }
+            //获取文件
+            let file = fileDom.files[0];
+            let formData = new FormData();
+            formData.append("file", file);
+            $.ajax({
+                url: "admin/product/importFile",
+                type: "post",
+                data: formData,
+                dataType: "json",
+                contentType: false,//禁止设置请求类型
+                processData: false,//禁止对jquery数据进行处理，因为formData已经做了处理
+                mimeType: "multipart/form-data",
+                success: function (data) {
+                    if (data.success) {
+                        $("#modalFileDiv").modal("hide");
+                        //清空值
+                        $(fileDom).val('');
+                        alert("导入成功！");
+                        //获取数据
+                        getData($(this), "admin/product/0/10", null);
+                        //清除排序样式
+                        var table = $("#table_product_list");
+                        table.find("span.orderByDesc,span.orderByAsc").css("opacity", "0");
+                        table.find("th.data_info").attr("data-sort", "asc");
+                    } else {
+                        alert("导入失败！");
+                    }
+                },
+                beforeSend: function () {
+                    $(fileDom).attr("disabled", true).prev("span").text("文件上传中...");
+                },
+            });
+        });
     </script>
     <style rel="stylesheet">
         #text_cut{
@@ -236,8 +295,27 @@
     </style>
 </head>
 <body>
+<%-- 模态框 --%>
+<div class="modal fade" id="modalFileDiv" tabindex="-1" role="dialog" aria-labelledby="modalFileDiv" aria-hidden="true"
+     data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">请正确上传文件导入模版，在进行导入！</h4>
+                <input onchange="uploadFile(this)" type="file"/>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btn-import-ok">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-import-close">关闭</button>
+            </div>
+        </div>
+        <%-- /.modal-content --%>
+    </div>
+    <%-- /.modal --%>
+</div>
+
 <div class="frm_div text_info">
-    <div class="frm_group">
+    <input class="frm_group">
         <label class="frm_label" id="lbl_product_name" for="input_product_name">产品名称</label>
         <input class="frm_input" id="input_product_name" type="text" maxlength="50"/>
         <label class="frm_label" id="lbl_product_category_id" for="select_product_category">产品类型</label>
@@ -249,6 +327,8 @@
         </select>
         <input class="frm_btn" id="btn_product_submit" type="button" value="查询"/>
         <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
+        <input class="frm_btn frm_clear" onclick="doDownLoadTemp();" type="button" value="下载模板"/>
+        <input type="button" class="frm_btn" id="import-ok" value="导入"/>
     </div>
     <div class="frm_group">
         <label class="frm_label" id="lbl_product_isEnabled" for="checkbox_product_isEnabled_true">产品状态</label>

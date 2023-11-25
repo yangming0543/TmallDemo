@@ -92,4 +92,11 @@ public interface ProductMapper {
      * @return
      */
     Integer selectMoreListTotal(@Param("product") Product product, @Param("product_isEnabled_array") Byte[] product_isEnabled_array, @Param("product_name_split") String[] product_name_split);
+
+    /**
+     * 批量添加产品
+     * @param infos
+     * @return
+     */
+    int saveScheme(@Param("list") List<Product> infos);
 }

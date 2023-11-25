@@ -3854,7 +3854,7 @@ CREATE TABLE `product` (
                            `product_price` decimal(10,2) DEFAULT NULL COMMENT '原价',
                            `product_sale_price` decimal(10,2) NOT NULL COMMENT '促销价',
                            `product_create_date` datetime NOT NULL COMMENT '创建日期',
-                           `product_category_id` int NOT NULL COMMENT '类别id',
+                           `product_category_id` int COMMENT '类别id',
                            `product_isEnabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否可用',
                            PRIMARY KEY (`product_id`) USING BTREE,
                            KEY `product_ibfk_1` (`product_category_id`) USING BTREE

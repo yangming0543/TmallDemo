@@ -64,4 +64,9 @@ public class ProductServiceImpl implements ProductService {
     public Integer getMoreListTotal(Product product, Byte[] bytes, String[] product_name_split) {
         return productMapper.selectMoreListTotal(product, bytes, product_name_split);
     }
+
+    @Override
+    public int saveScheme(List<Product> infos) {
+        return productMapper.saveScheme(infos);
+    }
 }

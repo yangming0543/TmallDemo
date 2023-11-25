@@ -203,4 +203,21 @@
             </if>
         </where>
     </select>
+
+
+    <!--保存系统方案-->
+    <insert id="saveScheme">
+        INSERT product (product_name,product_title,product_price,product_sale_price,product_create_date,product_isEnabled)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.product_name},
+            #{item.product_title},
+            #{item.product_price},
+            #{item.product_sale_price},
+            #{item.product_create_date},
+            #{item.product_isEnabled}
+            )
+        </foreach>
+    </insert>
 </mapper>

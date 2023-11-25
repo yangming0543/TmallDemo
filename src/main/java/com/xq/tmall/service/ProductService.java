@@ -89,4 +89,12 @@ public interface ProductService {
      * @return
      */
     Integer getMoreListTotal(Product product, Byte[] bytes, String[] product_name_split);
+
+    /**
+     * 批量添加产品
+     *
+     * @param infos
+     * @return
+     */
+    int saveScheme(List<Product> infos);
 }
