@@ -24,7 +24,7 @@
                         }
                     },
                     legend: {
-                        data: ['总交易额', '交易完成', '等待买家确认', '等待卖家发货', '等待买家付款']
+                        data: ['总交易额', '交易完成', '等待买家确认', '等待卖家发货', '等待买家付款', '交易关闭']
                     },
                     grid: {
                         left: '3%',
@@ -69,6 +69,11 @@
                         },
                         {
                             name: '等待买家付款',
+                            type: 'line',
+                            data: []
+                        },
+                        {
+                            name: '交易关闭',
                             type: 'line',
                             data: []
                         }
@@ -153,7 +158,10 @@
                             }, {
                                 name: "等待买家付款",
                                 data: data.orderUnpaidArray
-                            }]
+                            }, {
+                                    name: "交易关闭",
+                                    data: data.orderCloseArray
+                                }]
                         });
                     }, beforeSend: function () {
                         $(".loader").css("display", "block");
@@ -182,7 +190,10 @@
                     }, {
                         name: "等待买家付款",
                         data: jsonObject.orderUnpaidArray
-                    }]
+                    }, {
+                            name: "交易关闭",
+                            data: jsonObject.orderCloseArray
+                        }]
                 });
             }
         }
@@ -324,13 +335,6 @@
     </style>
 </head>
 <body>
-<ul id="chartByDate">
-    <li><span class="chartDateBtn text_info select">最近一周</span></li>
-    <li class="chartDateBtn"><input class="chartDateInput" id="input_beginDate" type="date" title="开始日期"/><span
-            class="split">—</span> <input class="chartDateInput details_unit" id="input_endDate" type="date"
-                                          title="结束日期"/></li>
-    <li><input class="frm_btn" id="btn_chart_search" type="button" value="查询"/></li>
-</ul>
 <ul id="chartTotal">
     <li id="productTotal">
         <p class="chartTotalTitle"><span class="chartTitleText">上架产品数量</span><span class="chartTitleUnit">(单位：件)</span>
@@ -350,6 +354,13 @@
         <span class="chartTotalValue">${requestScope.orderTotal}</span>
         <div class="chartTotalStyle" style="background-color: #ffdea4"></div>
     </li>
+</ul>
+<ul id="chartByDate">
+    <li><span class="chartDateBtn text_info select">最近一周</span></li>
+    <li class="chartDateBtn"><input class="chartDateInput" id="input_beginDate" type="date" title="开始日期"/><span
+            class="split">—</span> <input class="chartDateInput details_unit" id="input_endDate" type="date"
+                                          title="结束日期"/></li>
+    <li><input class="frm_btn" id="btn_chart_search" type="button" value="查询"/></li>
 </ul>
 <div id="chartDiv" style="width: 100%;height: 500px"></div>
 <div class="loader"></div>

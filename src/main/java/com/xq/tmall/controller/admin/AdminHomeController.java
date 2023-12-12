@@ -137,10 +137,16 @@ public class AdminHomeController extends BaseController {
         int[] orderUnconfirmedArray = new int[7];
         //交易成功数组
         int[] orderSuccessArray = new int[7];
+        //交易关闭数组
+        int[] orderCloseArray = new int[7];
         for (OrderGroup orderGroup : orderGroupList) {
             int index = 0;
+            //日期比较
             for (int j = 0; j < dateStr.length; j++) {
-                if (dateStr[j].equals(orderGroup.getProductOrder_pay_date())) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(orderGroup.getProductOrder_pay_date());
+                String format = time2.format(cal.getTime());
+                if (dateStr[j].equals(format)) {
                     index = j;
                 }
             }
@@ -157,13 +163,16 @@ public class AdminHomeController extends BaseController {
                 case 3:
                     orderSuccessArray[index] = orderGroup.getProductOrder_count();
                     break;
+                case 4:
+                    orderCloseArray[index] = orderGroup.getProductOrder_count();
+                    break;
                 default:
-                    throw new RuntimeException("错误的订单类型!");
+                    break;
             }
         }
         //获取总交易订单数组
         for (int i = 0; i < dateStr.length; i++) {
-            orderTotalArray[i] = orderUnpaidArray[i] + orderNotShippedArray[i] + orderUnconfirmedArray[i] + orderSuccessArray[i];
+            orderTotalArray[i] = orderUnpaidArray[i] + orderNotShippedArray[i] + orderUnconfirmedArray[i] + orderSuccessArray[i] + orderCloseArray[i];
         }
         //返回结果集map
         jsonObject.put("orderTotalArray", JSON.parseArray(JSON.toJSONString(orderTotalArray)));
@@ -171,6 +180,7 @@ public class AdminHomeController extends BaseController {
         jsonObject.put("orderNotShippedArray", JSON.parseArray(JSON.toJSONString(orderNotShippedArray)));
         jsonObject.put("orderUnconfirmedArray", JSON.parseArray(JSON.toJSONString(orderUnconfirmedArray)));
         jsonObject.put("orderSuccessArray", JSON.parseArray(JSON.toJSONString(orderSuccessArray)));
+        jsonObject.put("orderCloseArray", JSON.parseArray(JSON.toJSONString(orderCloseArray)));
         jsonObject.put("dateStr", JSON.parseArray(JSON.toJSONString(dateStr)));
         return jsonObject;
     }
