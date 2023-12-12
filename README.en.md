@@ -13,7 +13,7 @@ The backend page is compatible with modern browsers such as IE10 and above, and 
    ![Master Branch Database SQL](https://images.gitee.com/uploads/images/2020/1016/150457_5c0c7304_996301.png "屏幕截图.png")
 
    The feature branch database SQL is as follows:
-   ![Feature Branch Database SQL](1700038011674.jpg)
+   ![Feature Branch Database SQL](images/1700038011674.jpg)
 
 6. Swagger interface document address: http://localhost:8082/tmall/swagger-ui.html
 
@@ -22,18 +22,18 @@ The backend page is compatible with modern browsers such as IE10 and above, and 
 Attention: It is normal for the order chart in the backend management interface to have no data. The chart displays the transaction volume for the past 7 days.
 
 ---Background interface (partial) - Access address: http://localhost:8082/tmall/admin/login (The account name and password are in the admin table)
-![登录界面](img_2.png)
-![首页](img_3.png)
-![产品列表](img.png)
-![添加产品](img_1.png)
-![产品详情](img_4.png)
-![产品类别列表](img_5.png)
-![评论管理](img_6.png)
-![用户列表](img_7.png)
-![用户详情](img_8.png)
-![订单列表](img_9.png)
-![订单详情](img_10.png)
-![管理员详情](img_11.png)
+![登录界面](images/img_2.png)
+![首页](images/img_3.png)
+![产品列表](images/img.png)
+![添加产品](images/img_1.png)
+![产品详情](images/img_4.png)
+![产品类别列表](images/img_5.png)
+![评论管理](images/img_6.png)
+![用户列表](images/img_7.png)
+![用户详情](images/img_8.png)
+![订单列表](images/img_9.png)
+![订单详情](images/img_10.png)
+![管理员详情](images/img_11.png)
 ---Front end interface (partial) - Access address http://localhost:8082/tmall/login (Account name and password in the user table)
 ![登录界面](https://gitee.com/uploads/images/2018/0526/223030_17b28619_1616166.png "2018-05-26_221715.png")
 ![首页](https://gitee.com/uploads/images/2018/0526/223018_14e999f1_1616166.png "2018-05-26_221703.png")

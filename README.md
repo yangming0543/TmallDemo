@@ -16,7 +16,7 @@ master分支数据库sql如下：
 
 feature分支数据库sql如下：
 
-![feature分支数据库sql](1700038011674.jpg)
+![feature分支数据库sql](images/1700038011674.jpg)
 6.swagger接口文档地址：http://localhost:8082/tmall/swagger-ui.html
 
 7.Druid Monitor监控地址：http://localhost:8082/tmall/druid/sql.html（账号：admin 密码：123456）
@@ -24,18 +24,18 @@ feature分支数据库sql如下：
 注意事项：后台管理界面的订单图表没有数据为正常现象，该图表显示的为近7天的交易额。
 
 ---后台界面(部分)--- 访问地址：http://localhost:8082/tmall/admin/login（账户名和密码在admin表里）
-![登录界面](img_2.png)
-![首页](img_3.png)
-![产品列表](img.png)
-![添加产品](img_1.png)
-![产品详情](img_4.png)
-![产品类别列表](img_5.png)
-![评论管理](img_6.png)
-![用户列表](img_7.png)
-![用户详情](img_8.png)
-![订单列表](img_9.png)
-![订单详情](img_10.png)
-![管理员详情](img_11.png)
+![登录界面](images/img_2.png)
+![首页](images/img_3.png)
+![产品列表](images/img.png)
+![添加产品](images/img_1.png)
+![产品详情](images/img_4.png)
+![产品类别列表](images/img_5.png)
+![评论管理](images/img_6.png)
+![用户列表](images/img_7.png)
+![用户详情](images/img_8.png)
+![订单列表](images/img_9.png)
+![订单详情](images/img_10.png)
+![管理员详情](images/img_11.png)
 
 ---前台界面(部分)--- 访问地址 http://localhost:8082/tmall/login (账户名和密码在user表里)
 ![登录界面](https://gitee.com/uploads/images/2018/0526/223030_17b28619_1616166.png "2018-05-26_221715.png")
