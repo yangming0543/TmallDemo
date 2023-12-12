@@ -84,7 +84,7 @@
                 let beginDateVal = $("#input_beginDate").val();
                 let endDateVal = $("#input_endDate").val();
                 //异步加载数据
-                getChartData(beginDateVal, endDateVal, JSON.parse('${requestScope.jsonObject}'));
+                getChartData(beginDateVal, endDateVal, null);
             });
             //设置日期控件约束
             var date = new Date();
@@ -118,7 +118,7 @@
                     return;
                 }
                 //异步加载数据
-                getChartData(null, null, JSON.parse('${requestScope.jsonObject}'));
+                getChartData(null, null, null);
                 $(this).addClass("select");
             });
             //点击统计数据时
