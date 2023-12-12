@@ -301,7 +301,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">请正确上传文件导入模版，在进行导入！</h4>
+                <h4 class="modal-title">请正确选择文件导入模版，在进行导入！</h4>
                 <input onchange="uploadFile(this)" type="file"/>
             </div>
             <div class="modal-footer">
