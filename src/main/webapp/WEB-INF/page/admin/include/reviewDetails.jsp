@@ -34,7 +34,7 @@
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_order_user">评论人</label>
         <span class="details_value td_wait"><a id="span_order_user" href="javascript:void(0)"
-                                               onclick="getUserPage(${requestScope.review.review_user.user_id})">${requestScope.review.review_user.user_nickname}</a></span>
+                                               onclick="getUserPage(${requestScope.review.review_user.user_id})">${requestScope.review.review_user.user_name}</a></span>
     </div>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_review_createDate">评论时间</label>
