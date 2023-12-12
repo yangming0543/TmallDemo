@@ -12,11 +12,11 @@
 4.在IDEA中启动springboot项目即可（run方式或debug方式都行）。
 5.账户名和密码详见附件中的sql文件或者在resources下的sql文件夹中的sql文件（前台页面和后台页面账户密码下方有说明）。
 master分支数据库sql如下：
-![输入图片说明](https://images.gitee.com/uploads/images/2020/1016/150457_5c0c7304_996301.png "屏幕截图.png")
+![master分支数据库sql](https://images.gitee.com/uploads/images/2020/1016/150457_5c0c7304_996301.png "屏幕截图.png")
 
 feature分支数据库sql如下：
 
-![输入图片说明](1700038011674.jpg)
+![feature分支数据库sql](1700038011674.jpg)
 6.swagger接口文档地址：http://localhost:8082/tmall/swagger-ui.html
 
 7.Druid Monitor监控地址：http://localhost:8082/tmall/druid/sql.html（账号：admin 密码：123456）
