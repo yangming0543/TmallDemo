@@ -81,8 +81,10 @@
                 };
                 // 使用刚指定的配置项和数据显示图表。
                 myChart.setOption(option);
+                let beginDateVal = $("#input_beginDate").val();
+                let endDateVal = $("#input_endDate").val();
                 //异步加载数据
-                getChartData(null, null, JSON.parse('${requestScope.jsonObject}'));
+                getChartData(beginDateVal, endDateVal, JSON.parse('${requestScope.jsonObject}'));
             });
             //设置日期控件约束
             var date = new Date();
@@ -97,7 +99,11 @@
              ******/
             //点击查询按钮时
             $("#btn_chart_search").click(function () {
-                getChartData($("#input_beginDate").val(), $("#input_endDate").val(), null);
+                let beginDateVal = $("#input_beginDate").val();
+                let endDateVal = $("#input_endDate").val();
+                if (beginDateVal && endDateVal) {
+                    getChartData(beginDateVal, endDateVal, null);
+                }
             });
             //更改日期时
             $(".chartDateInput").change(function () {

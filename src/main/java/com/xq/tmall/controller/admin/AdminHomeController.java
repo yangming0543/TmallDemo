@@ -96,6 +96,7 @@ public class AdminHomeController extends BaseController {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             return getChartData(simpleDateFormat.parse(beginDate), simpleDateFormat.parse(endDate)).toJSONString();
         } else {
+
             return getChartData(null, null).toJSONString();
         }
     }
