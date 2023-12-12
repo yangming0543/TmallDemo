@@ -4,7 +4,7 @@
 <head>
     <script>
         $(function () {
-            //单击关闭按钮时
+            //单击取消按钮时
             $("#btn_review_cancel").click(function () {
                 $(".menu_li[data-toggle=review]").click();
             });
@@ -55,7 +55,7 @@
     </div>
 </div>
 <div class="details_tools_div">
-    <input class="frm_btn frm_clear" id="btn_review_cancel" type="button" value="关闭"/>
+    <input class="frm_btn frm_clear" id="btn_review_cancel" type="button" value="取消"/>
 </div>
 <div class="loader"></div>
 </body>
