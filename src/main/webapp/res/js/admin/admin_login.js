@@ -1,5 +1,6 @@
 $(function () {
     //初始化
+    getHomeCode();
     initialCookie();
     initialData();
 
@@ -8,15 +9,15 @@ $(function () {
      ******/
     //点击面板main时
     $("#div_main").click(function () {
-        var div = $("#div_peelPanel");
+        const div = $("#div_peelPanel");
         if (div.css("display") === "block") {
             div.slideUp();
         }
     });
     //点击顶部换肤img时
     $("#div_peelPanel").find(">li>img").click(function () {
-        var background = $("#div_background");
-        var url = $(this).parent("li").attr("value");
+        const background = $("#div_background");
+        const url = $(this).parent("li").attr("value");
         if(url !== null && url !== ""){
             if(url !== background.css("background-image")){
                 background.css("background-image", url);
@@ -26,7 +27,7 @@ $(function () {
     });
     //点击顶部换肤标签时
     $("#txt_peel").click(function () {
-        var div = $("#div_peelPanel");
+        const div = $("#div_peelPanel");
         if(div.css("display")==="block"){
             div.slideUp();
         } else {
@@ -36,10 +37,19 @@ $(function () {
     //点击表单登录按钮时
     $("#btn_login").click(function () {
         //表单验证
-        var username = $.trim($("#input_username").val());
-        var password = $.trim($("#input_password").val());
+        let username = $.trim($("#input_username").val());
+        let password = $.trim($("#input_password").val());
+        let code = $.trim($("#input_code").val());
         if(username === "" || password === "") {
             styleUtil.errorShow($("#txt_error_msg"),"请输入用户名和密码");
+            return;
+        }
+        if(code === "") {
+            styleUtil.errorShow($("#txt_error_msg"), "请输入验证码");
+            return;
+        }
+        if (cookieUtil.getCookie("imgCode") != code){
+            styleUtil.errorShow($("#txt_error_msg"), "验证码错误!");
             return;
         }
         $.ajax({
@@ -50,35 +60,36 @@ $(function () {
                 $("#btn_login").val("登录");
                 if (data.success) {
                     cookieUtil.setCookie("username", username, 30);
+                    cookieUtil.removeCookie("imgCode");
                     location.href = "/tmall/admin";
                 } else {
-                    styleUtil.errorShow($("#txt_error_msg"), "用户名或密码错误");
+                    styleUtil.errorShow($("#txt_error_msg"), "用户名或密码错误!");
                 }
             },
             beforeSend:function () {
                 $("#btn_login").val("登录中...");
             },
             error:function (data) {
-
+                styleUtil.errorShow($("#txt_error_msg"), "请重新登录!");
             }
         });
     });
     //获得文本框焦点时
     $("#input_username,#input_password").focus(function () {
         //移除校验错误
-        var msg = $("#txt_error_msg");
+        const msg = $("#txt_error_msg");
         styleUtil.errorHide(msg);
     });
     //失去用户名文本框焦点时
     $("#input_username").blur(function () {
-       // getUserProfilePicture($(this).val());
+        getUserProfilePicture($(this).val());
     });
 });
 
 //初始化Cookie数据
 function initialCookie() {
-    var url;
-    var username;
+    let url;
+    let username;
     if(document.cookie.length>0) {
         username = cookieUtil.getCookie("username");
         url = cookieUtil.getCookie("backgroundImageUrl");
@@ -89,7 +100,7 @@ function initialCookie() {
         }
         if(username !== null){
             $("#input_username").val(username);
-          //  getUserProfilePicture(username);
+            getUserProfilePicture(username);
         }
     } else {
         $("#div_background").css("background-image", "url(/tmall/res/images/admin/loginPage/background-1.jpg)");
@@ -103,8 +114,8 @@ function initialData() {
         $("#txt_date").text(new Date().toLocaleString());
     }, 1000);
     //表单焦点
-    var txt_username = $("#input_username");
-    var username = $.trim(txt_username.val());
+    const txt_username = $("#input_username");
+    const username = $.trim(txt_username.val());
     if(username !== null && username !== ""){
         $("#input_password").focus();
         return;
@@ -119,10 +130,19 @@ function getUserProfilePicture(username) {
             if(data.success){
                 if(data.srcString !== null){
                     $("#img_profile_picture").attr("src", "/tmall/res/images/item/adminProfilePicture/" + data.srcString);
-                    return true;
+                }else{
+                    $("#img_profile_picture").attr("src","/tmall/res/images/admin/loginPage/default_profile_picture-128x128.png");
                 }
             }
         });
     }
-    $("#img_profile_picture").attr("src","/tmall/res/images/admin/loginPage/default_profile_picture-128x128.png");
+}
+
+function getHomeCode() {
+    $.getJSON("/tmall/admin/login/code",function (data) {
+            if(data!== null){
+                $("#img_code").attr("src", data.img);
+                cookieUtil.setCookie("imgCode", data.code,1);
+            }
+    });
 }

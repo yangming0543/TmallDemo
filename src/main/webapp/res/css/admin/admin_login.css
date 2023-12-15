@@ -125,6 +125,7 @@ html,body,#div_background{
     opacity: 0;
     left: 20px;
     bottom: 10px;
+    margin-top: 20px;
 }
 #div_content #btn_login{
     width: 100%;

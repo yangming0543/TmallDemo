@@ -32,12 +32,17 @@
         <div id="div_head"><p>Tmall <span>管理后台</span></p></div>
         <div id="div_content">
             <img id="img_profile_picture"
-                 src="${pageContext.request.contextPath}/res/images/admin/loginPage/default_profile_picture-128x128.png"
-                 alt="头像" title="头像"
-                 onerror="this.src='${pageContext.request.contextPath}/res/images/admin/loginPage/default_profile_picture-128x128.png'"/>
+                 alt="头像" title="头像">
             <form id="form_login">
-                <input type="text" class="form-control form_control" placeholder="用户名" id="input_username" title="请输入用户名"/>
-                <input type="password" class="form-control form_control" placeholder="密码" id="input_password" title="请输入密码" autocomplete="on">
+                <input type="text" class="form-control form_control" placeholder="用户名" id="input_username"
+                       title="请输入用户名"/>
+                <input type="password" class="form-control form_control" placeholder="密码" id="input_password"
+                       title="请输入密码" autocomplete="on">
+
+                <input type="text" class="form-control form_control" placeholder="验证码" id="input_code"
+                       title="请输入验证码"/>
+                <img id="img_code"
+                     alt="验证码" title="验证码" onclick="getHomeCode()"/>
                 <span id="txt_error_msg"></span>
                 <input type="button" class="btn btn-danger" id="btn_login" value="登录"/>
             </form>
