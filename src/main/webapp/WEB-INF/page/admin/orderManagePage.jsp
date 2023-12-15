@@ -4,7 +4,7 @@
 <head>
     <script>
         //检索数据集
-        var dataList = {
+        const dataList = {
             "productOrder_code": null,
             "productOrder_post": null,
             "productOrder_receiver": null,
@@ -64,7 +64,7 @@
             });
             //点击th排序时
             $("th.data_info").click(function () {
-                var table = $("#table_productOrder_list");
+                const table = $("#table_productOrder_list");
                 if(table.find(">tbody>tr").length <= 1){
                     return;
                 }

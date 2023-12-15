@@ -4,7 +4,7 @@
 <head>
     <script>
         //检索数据集
-        var dataList = {
+        const dataList = {
             "user_name": null,
             "user_gender_array": null,
             "orderBy": null,
@@ -87,8 +87,8 @@
                     //显示用户统计数据
                     $("#user_count_data").text(data.userCount);
                     if (data.userList.length > 0) {
-                        for (var i = 0; i < data.userList.length; i++) {
-                            var gender;
+                        for (let i = 0; i < data.userList.length; i++) {
+                            let gender;
                             if (data.userList[i].user_gender === 0) {
                                 gender = "男";
                             } else {

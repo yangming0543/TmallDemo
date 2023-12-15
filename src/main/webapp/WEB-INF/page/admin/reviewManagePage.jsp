@@ -85,12 +85,12 @@
                     //显示评论统计数据
                     $("#review_count_data").text(data.reviewCount);
                     if (data.reviewList.length > 0) {
-                        for (var i = 0; i < data.reviewList.length; i++) {
-                            var review_id = data.reviewList[i].review_id;
-                            var review_content = data.reviewList[i].review_content;
-                            var review_createDate = data.reviewList[i].review_createDate;
-                            var user_id = data.reviewList[i].review_user.user_name;
-                            var product_id = data.reviewList[i].review_product.product_name;
+                        for (let i = 0; i < data.reviewList.length; i++) {
+                            const review_id = data.reviewList[i].review_id;
+                            const review_content = data.reviewList[i].review_content;
+                            const review_createDate = data.reviewList[i].review_createDate;
+                            const user_id = data.reviewList[i].review_user.user_name;
+                            const product_id = data.reviewList[i].review_product.product_name;
                             //显示评论数据
                             let centent="<tr><td><input type='checkbox' class='cbx_select' id='cbx_review_select_" + review_id + "'><label for='cbx_review_select_" + review_id + "'></label></td><td title='"+product_id+"'>" + product_id + "</td><td title='"+review_content+"'>" + review_content + "</td><td title='"+user_id+"'>" + user_id + "</td><td title='"+review_createDate+"'>" + review_createDate + "</td>" +
                                 "<td><span class='td_special' title='查看评论详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span>"+"&nbsp;&nbsp;<span class='td_special' title='删除评论'><a href='javascript:void(0);' onclick='delChildPage(this)'>删除</a></span>";
@@ -102,7 +102,7 @@
                             trDataStyle($(this));
                         });
                         //分页
-                        var pageUtil = {
+                        const pageUtil = {
                             index: data.pageUtil.index,
                             count: data.pageUtil.count,
                             total: data.pageUtil.total,
