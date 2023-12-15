@@ -37,7 +37,7 @@
         }
 
         function getPage(index) {
-            var name = $(".tab_select").children("a").attr("name");
+            let name = $(".tab_select").children("a").attr("name");
             if (name === undefined) {
                 name = "";
             }

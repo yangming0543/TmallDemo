@@ -6,7 +6,7 @@
     <script>
         $(function () {
             $("#review_form").submit(function () {
-                var text = $.trim($("#text-review").val());
+                const text = $.trim($("#text-review").val());
                 if (text === "") {
                     $(this).css("border", "1px solid #FF0036");
                     return false;
