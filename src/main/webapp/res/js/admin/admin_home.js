@@ -4,7 +4,7 @@ $(function () {
      ******/
     //点击导航栏li时
     $(".menu_li").click(function () {
-        var url = $(this).attr("data-toggle");
+        const url = $(this).attr("data-toggle");
         //如果已选择li则退出
         if($(this).hasClass("menu_li_select")){
             return;
@@ -17,7 +17,7 @@ $(function () {
         //ajax请求页面
         ajaxUtil.getPage(url,null,false);
         //设置文本
-        var title = $(this).children("span").text();
+        const title = $(this).children("span").text();
         $("#div_home_title").children("span").text(title);
         document.title = "Tmall管理后台 - "+title;
     });
@@ -36,7 +36,7 @@ $(function () {
 });
 //tbody中tr的单击样式
 function trDataStyle(obj) {
-    var checkbox = obj.find(".cbx_select").first();
+    const checkbox = obj.find(".cbx_select").first();
     if(checkbox.prop("checked")){
         checkbox.prop("checked",false);
     } else {
@@ -48,10 +48,10 @@ function trDataStyle(obj) {
 function createPageDiv(obj, pageUtil) {
     $("#pageDiv").detach();
     obj.before("<div id='pageDiv'></div>");
-    var pageDiv = $("#pageDiv");
+    const pageDiv = $("#pageDiv");
 
     pageDiv.append("<ul><li data-name='firstPage'><a href='javascript:void(0)' onclick='getPage(0)' aria-label='首页'><span aria-hidden='true'>&laquo;</span></a></li><li data-name='prevPage'><a href='javascript:void(0)' onclick='getPage(" + (pageUtil.index - 1) + ")' aria-label='上一页'><span aria-hidden='true'>&lsaquo;</span></a></li></ul>");
-    var pageDivUl = $("#pageDiv>ul");
+    const pageDivUl = $("#pageDiv>ul");
     for (var i = 1; i <= pageUtil.totalPage; i++) {
         if (i - pageUtil.index >= -5 && i - pageUtil.index <= 5) {
             if (i === pageUtil.index + 1) {

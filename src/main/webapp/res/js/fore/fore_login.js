@@ -12,7 +12,7 @@ $(function () {
         });
     //登录方式切换
     $("#loginSwitch").click(function () {
-        var messageSpan = $(".loginMessageMain").children("span");
+        const messageSpan = $(".loginMessageMain").children("span");
         if ($(".pwdLogin").css("display") === "block") {
             $(".pwdLogin").css("display", "none");
             $(".qrcodeLogin").css("display", "block");
@@ -26,7 +26,7 @@ $(function () {
         }
     });
     $("#pwdLogin").click(function () {
-        var messageSpan = $(".loginMessageMain").children("span");
+        const messageSpan = $(".loginMessageMain").children("span");
         $(".pwdLogin").css("display", "block");
         $(".qrcodeLogin").css("display", "none");
         messageSpan.text("扫码登录更安全");
@@ -34,7 +34,7 @@ $(function () {
     });
     //登录验证
     $(".loginForm").submit(function () {
-        var yn = true;
+        let yn = true;
         $(this).find(":text,:password").each(function () {
             if ($.trim($(this).val()) === "") {
                 styleUtil.errorShow($("#error_message_p"), "请输入用户名和密码！");

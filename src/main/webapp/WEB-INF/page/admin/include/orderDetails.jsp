@@ -6,7 +6,7 @@
     <script>
         $(function () {
             //设置订单状态
-            var status_index = '${requestScope.order.productOrder_status}';
+            const status_index = '${requestScope.order.productOrder_status}';
             switch (status_index) {
                 case '0':
                     $("#wait_point_1").addClass("wait_point_select").children(".wait_point_text").addClass('td_special');
@@ -34,7 +34,7 @@
             });
             //单击发货按钮时
             $("#btn_order_save").click(function () {
-                var order_id = '${requestScope.order.productOrder_id}';
+                const order_id = '${requestScope.order.productOrder_id}';
                 $.ajax({
                     url: "admin/order/" + order_id,
                     type: "PUT",

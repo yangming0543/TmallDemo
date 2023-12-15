@@ -2,7 +2,7 @@ var index = 1;
 $(function () {
     //主页切换动画
     getTimer();
-    var timer = setInterval(getTimer, 3000);
+    let timer = setInterval(getTimer, 3000);
     $(".banner_main > a").attr("href", "/tmall/product/" + $("#banner1").attr("name"));
     //单击商品分类链接时
     $(".banner_div a").click(function () {
@@ -11,7 +11,7 @@ $(function () {
     //悬浮到分类导航时
     $(".banner_nav>li").hover(function () {
         $(this).find(">a").css("color", "#6347ED");
-        var div = $(this).find(">.banner_div").css("display", "block");
+        const div = $(this).find(">.banner_div").css("display", "block");
         if ($(this).attr("data-status") === "ajaxShow") {
             return;
         }
@@ -77,10 +77,10 @@ $(function () {
 });
 
 function getTimer() {
-    var banner = $(".banner");
-    var sliders = $(".banner_slider>li");
-    var color;
-    var img = $("#banner" + index);
+    const banner = $(".banner");
+    const sliders = $(".banner_slider>li");
+    let color;
+    const img = $("#banner" + index);
     $(".banner_main > a").attr("href", "/tmall/product/" + img.attr("name"));
     if (index === 1) {
         color = "#0F1322";

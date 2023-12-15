@@ -15,14 +15,14 @@ $(function () {
                 if (data.success) {
                     $("#select_user_address_city").empty();
                     $("#select_user_address_district").empty();
-                    for (var i = 0; i < data.addressList.length; i++) {
-                        var address_id = data.addressList[i].address_areaId;
-                        var address_name = data.addressList[i].address_name;
+                    for (let i = 0; i < data.addressList.length; i++) {
+                        const address_id = data.addressList[i].address_areaId;
+                        const address_name = data.addressList[i].address_name;
                         $("#select_user_address_city").append("<option value='" + address_id + "'>" + address_name + "</option>")
                     }
-                    for (var j = 0; j < data.childAddressList.length; j++) {
-                        var childAddress_id = data.childAddressList[j].address_areaId;
-                        var childAddress_name = data.childAddressList[j].address_name;
+                    for (let j = 0; j < data.childAddressList.length; j++) {
+                        const childAddress_id = data.childAddressList[j].address_areaId;
+                        const childAddress_name = data.childAddressList[j].address_name;
                         $("#select_user_address_district").append("<option value='" + childAddress_id + "'>" + childAddress_name + "</option>")
                     }
                     $('#select_user_address_city').selectpicker('refresh');
@@ -52,9 +52,9 @@ $(function () {
                 $(".loader").hide();
                 if (data.success) {
                     $("#select_user_address_district").empty();
-                    for (var i = 0; i < data.addressList.length; i++) {
-                        var address_id = data.addressList[i].address_areaId;
-                        var address_name = data.addressList[i].address_name;
+                    for (let i = 0; i < data.addressList.length; i++) {
+                        const address_id = data.addressList[i].address_areaId;
+                        const address_name = data.addressList[i].address_name;
                         $("#select_user_address_district").append("<option value='" + address_id + "'>" + address_name + "</option>")
                     }
                     $('#select_user_address_district').selectpicker('refresh');
@@ -114,18 +114,18 @@ $(function () {
     //非空验证
     $("#register_sub").click(function () {
         //用户名
-        var user_name = $.trim($("input[name=user_name]").val());
+        const user_name = $.trim($("input[name=user_name]").val());
         //密码
-        var user_password = $.trim($("input[name=user_password]").val());
+        const user_password = $.trim($("input[name=user_password]").val());
         //确认密码
-        var user_password_one = $.trim($("input[name=user_password_one]").val());
+        const user_password_one = $.trim($("input[name=user_password_one]").val());
         //昵称
-        var user_nickname = $.trim($("input[name=user_nickname]").val());
+        const user_nickname = $.trim($("input[name=user_nickname]").val());
         //出生日期
-        var user_birthday = $.trim($("input[name=user_birthday]").val());
+        const user_birthday = $.trim($("input[name=user_birthday]").val());
 
         //验证密码的格式 包含数字和英文字母
-        var reg = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
+        const reg = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
         if (user_name == null || user_name === "") {
             $("#user_name").css("border", "1px solid red")
                 .next().text("请输入用户名").css("display", "inline-block").css("color", "red");

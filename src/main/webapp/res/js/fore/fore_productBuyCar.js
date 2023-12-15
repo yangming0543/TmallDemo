@@ -7,12 +7,12 @@ $(function () {
         }
     });
     $(".tbody_checkbox>.cbx_select").click(function () {
-        var obj = $(this).parents("tr.orderItem_info").toggleClass("orderItem_selected");
+        const obj = $(this).parents("tr.orderItem_info").toggleClass("orderItem_selected");
         sumPrice();
     });
     $("#cbx_select_all,#J_SelectAllCbx2").click(function () {
-        var yn = $(this).prop("checked");
-        var obj = $("tr.orderItem_info");
+        const yn = $(this).prop("checked");
+        const obj = $("tr.orderItem_info");
         if (!yn) {
             $(".tbody_checkbox>.cbx_select").prop("checked", false);
             sumPrice();
@@ -26,7 +26,7 @@ $(function () {
         }
     });
     $(".item_amount>input[type=text]").bind('input propertychange', function () {
-        var number = $(this).val();
+        let number = $(this).val();
         if (isNaN(number) || $.trim(number) === "") {
             $(this).val(1);
             $(this).prev("a").addClass("no_minus");
@@ -44,9 +44,9 @@ $(function () {
             number = 1;
             $(this).prev("a").addClass("no_minus");
         }
-        var price = $(this).parents("tr").find(".orderItem_product_price").text();
+        let price = $(this).parents("tr").find(".orderItem_product_price").text();
         price = parseFloat(price.substring(1));
-        var price_sum = parseFloat(price * parseInt(number));
+        const price_sum = parseFloat(price * parseInt(number));
         $(this).parents("tr").find(".orderItem_product_realPrice").text("￥" + price_sum.toFixed(1));
         sumPrice();
     });
@@ -54,8 +54,8 @@ $(function () {
 
 function up(obj) {
     obj = $(obj);
-    var number = obj.next("input");
-    var value = parseInt(number.val());
+    const number = obj.next("input");
+    let value = parseInt(number.val());
     if (value > 1) {
         obj.removeClass("no_minus");
     } else {
@@ -75,9 +75,9 @@ function up(obj) {
         } else {
             number.next("a").addClass("no_minus");
         }
-        var price = obj.parents("tr").find(".orderItem_product_price").text();
+        let price = obj.parents("tr").find(".orderItem_product_price").text();
         price = parseFloat(price.substring(1));
-        var price_sum = parseFloat(price * value);
+        const price_sum = parseFloat(price * value);
         number.val(value);
         obj.parents("tr").find(".orderItem_product_realPrice").text("￥" + price_sum.toFixed(1));
         if (value === 1) {
@@ -89,8 +89,8 @@ function up(obj) {
 
 function down(obj) {
     obj = $(obj);
-    var number = obj.prev("input");
-    var value = parseInt(number.val());
+    const number = obj.prev("input");
+    let value = parseInt(number.val());
     if (value < 500) {
         obj.removeClass("no_minus");
     } else {
@@ -105,9 +105,9 @@ function down(obj) {
         }
         obj.prevAll(".J_Minus").removeClass("no_minus");
         value++;
-        var price = obj.parents("tr").find(".orderItem_product_price").text();
+        let price = obj.parents("tr").find(".orderItem_product_price").text();
         price = parseFloat(price.substring(1));
-        var price_sum = parseFloat(price * value);
+        const price_sum = parseFloat(price * value);
         obj.parents("tr").find(".orderItem_product_realPrice").text("￥" + price_sum.toFixed(1));
         number.val(value);
         sumPrice();
@@ -115,8 +115,8 @@ function down(obj) {
 }
 
 function sumPrice() {
-    var price_sum = 0.00;
-    var obj = $("input.cbx_select:checked").parents("tr.orderItem_info");
+    let price_sum = 0.00;
+    const obj = $("input.cbx_select:checked").parents("tr.orderItem_info");
     obj.each(function () {
         price_sum += parseFloat($(this).find(".orderItem_product_realPrice").text().substring(1));
     });
@@ -135,10 +135,10 @@ function create(obj) {
     if (!obj.hasClass("selected")) {
         return true;
     }
-    var orderItemMap = {};
-    var tr = $("input.cbx_select:checked").parents("tr.orderItem_info");
+    const orderItemMap = {};
+    const tr = $("input.cbx_select:checked").parents("tr.orderItem_info");
     tr.each(function () {
-        var key = $(this).find(".input_orderItem").attr("name");
+        const key = $(this).find(".input_orderItem").attr("name");
         orderItemMap[key] = $(this).find(".item_amount").children("input").val();
     });
     $.ajax({

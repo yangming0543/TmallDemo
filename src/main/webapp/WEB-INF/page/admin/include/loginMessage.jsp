@@ -4,7 +4,7 @@
     <title>登录态已失效</title>
     <script>
         $(function () {
-            var time = 3;
+            let time = 3;
             setInterval(function () {
                 if (time === 0) {
                     location.href = "/tmall/admin/login";

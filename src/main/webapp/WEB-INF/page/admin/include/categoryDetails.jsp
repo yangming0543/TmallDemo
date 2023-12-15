@@ -11,11 +11,11 @@
                  ******/
                 //单击保存按钮时
                 $("#btn_category_save").click(function () {
-                    var category_name = $.trim($("#input_category_name").val());
-                    var category_image_src = $.trim($("#pic_category").attr("src"));
+                    const category_name = $.trim($("#input_category_name").val());
+                    const category_image_src = $.trim($("#pic_category").attr("src"));
 
                     //校验数据合法性
-                    var yn = true;
+                    let yn = true;
                     if (category_image_src === "" || category_image_src === undefined) {
                         yn = false;
                         $("#btn-ok").unbind("click").click(function () {
@@ -32,7 +32,7 @@
                         return;
                     }
 
-                    var dataList = {
+                    const dataList = {
                         "category_name": category_name,
                         "category_image_src": category_image_src
                     };
@@ -49,12 +49,12 @@
                 }
                 //单击保存按钮时
                 $("#btn_category_save").click(function () {
-                    var category_id = $("#details_category_id").val();
-                    var category_name = $.trim($("#input_category_name").val());
-                    var category_image_src = $.trim($("#pic_category").attr("src"));
+                    const category_id = $("#details_category_id").val();
+                    const category_name = $.trim($("#input_category_name").val());
+                    const category_image_src = $.trim($("#pic_category").attr("src"));
 
                     //校验数据合法性
-                    var yn = true;
+                    let yn = true;
                     if (category_image_src === "") {
                         yn = false;
                         $("#btn-ok").unbind("click").click(function () {
@@ -71,7 +71,7 @@
                         return;
                     }
 
-                    var dataList = {
+                    const dataList = {
                         "category_name": category_name,
                         "category_image_src": category_image_src
                     };
@@ -84,8 +84,8 @@
              ******/
             //单击图片列表项时
             $(".details_picList").on("click", "li:not(.details_picList_fileUpload)", function () {
-                var img = $(this);
-                var fileUploadInput = $(this).parents("ul").children(".details_picList_fileUpload");
+                const img = $(this);
+                const fileUploadInput = $(this).parents("ul").children(".details_picList_fileUpload");
                 $("#btn-ok").unbind("click").click(function () {
                     img.remove();
                     fileUploadInput.css("display", "inline-block");
@@ -107,9 +107,9 @@
         //图片上传
         function uploadImage(fileDom) {
             //获取文件
-            var file = fileDom.files[0];
+            const file = fileDom.files[0];
             //判断类型
-            var imageType = /^image\//;
+            const imageType = /^image\//;
             if (file === undefined || !imageType.test(file.type)) {
                 $("#btn-ok").unbind("click").click(function () {
                     $("#modalDiv").modal("hide");
@@ -129,7 +129,7 @@
             }
             //清空值
             $(fileDom).val('');
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append("file", file);
             //上传图片
             $.ajax({

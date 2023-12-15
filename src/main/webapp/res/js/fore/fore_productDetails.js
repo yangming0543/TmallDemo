@@ -1,5 +1,5 @@
 $(function () {
-    var ul = $(".context_ul_goodsList").children("ul");
+    const ul = $(".context_ul_goodsList").children("ul");
 
     $(".J_GoodsDetails").addClass("tab-selected");
     $(".context_img_li").eq(0).addClass("context_img_li_hover");
@@ -13,7 +13,7 @@ $(function () {
     });
     //移入预览图片列表时
     $(".context_img_li").mouseenter(function () {
-        var img = $(this).children("img");
+        const img = $(this).children("img");
         $(".context_img_main").attr("src", img.attr("src"));
         $(".context_img_ks").children("img").attr("src", img.attr("src"));
         $(".context_img_li").removeClass("context_img_li_hover");
@@ -21,12 +21,12 @@ $(function () {
     });
     //产品数量框验证
     $(".amount_value_up").click(function () {
-        var number = parseInt($(".context_buymember").val());
+        let number = parseInt($(".context_buymember").val());
         number++;
         $(".context_buymember").val(number);
     });
     $(".amount_value-down").click(function () {
-        var number = parseInt($(".context_buymember").val());
+        let number = parseInt($(".context_buymember").val());
         if (number > 1) {
             number--;
             $(".context_buymember").val(number);
@@ -46,8 +46,8 @@ $(function () {
     });
     //点击猜你喜欢翻页按钮时
     $(".ul_trigger_up").click(function () {
-        var ulTop = parseInt(ul.css("top"));
-        var fTop = ulTop + 480;
+        const ulTop = parseInt(ul.css("top"));
+        const fTop = ulTop + 480;
         if (fTop > 0) {
             ul.animate({
                 top: ulTop + 40
@@ -63,8 +63,8 @@ $(function () {
         }
     });
     $(".ul_trigger_down").click(function () {
-        var ulTop = parseInt(ul.css("top"));
-        var fTop = ulTop - 480;
+        const ulTop = parseInt(ul.css("top"));
+        const fTop = ulTop - 480;
         if (ul.height() < 2880) {
             getGuessLoveProducts();
         }
@@ -96,7 +96,7 @@ $(function () {
     });
     //模态窗口登录
     $(".loginForm").unbind("submit").submit(function () {
-        var yn = true;
+        let yn = true;
         $(this).find(":text,:password").each(function () {
             if ($.trim($(this).val()) === "") {
                 styleUtil.errorShow($("#error_message_p"), "请输入用户名和密码！");
@@ -144,22 +144,22 @@ function getDetailsPage(obj, className) {
 }
 
 function SelectorMousemove(e) {
-    var $img = $(".context_img_main");
-    var $selector = $(".context_img_winSelector");
-    var $imgWidth = $img.width();
-    var $imgHeight = $img.height();
-    var $selectorWidth = $selector.width();
-    var $selectorHeight = $selector.height();
+    const $img = $(".context_img_main");
+    const $selector = $(".context_img_winSelector");
+    const $imgWidth = $img.width();
+    const $imgHeight = $img.height();
+    const $selectorWidth = $selector.width();
+    const $selectorHeight = $selector.height();
     /*扫描器的定位*/
     //获取光标正中位置
-    var x = e.pageX - $img.offset().left - $selectorWidth / 2;
-    var y = e.pageY - $img.offset().top - $selectorHeight / 2;
+    let x = e.pageX - $img.offset().left - $selectorWidth / 2;
+    let y = e.pageY - $img.offset().top - $selectorHeight / 2;
     x = x < 0 ? 0 : x;
     y = y < 0 ? 0 : y;
     x = x > $imgWidth - $selectorWidth ? $imgWidth - $selectorWidth : x;
     y = y > $imgHeight - $selectorHeight ? $imgHeight - $selectorHeight : y;
     $selector.css({left: x, top: y});
-    var naturalNumber = $('.context_img_ks').width() / $selectorWidth;
+    const naturalNumber = $('.context_img_ks').width() / $selectorWidth;
     //1.917为转换系数
     $('.context_img_ks>img').css({
         left: -x * 1.917,
@@ -176,10 +176,10 @@ function getGuessLoveProducts() {
         success: function (data) {
             if (data.success) {
                 $("#guessNumber").val(data.guessNumber);
-                for (var i = 0; i < data.loveProductList.length; i++) {
-                    var src = data.loveProductList[i].singleProductImageList[0].productImage_src;
-                    var product_id = data.loveProductList[i].product_id;
-                    var product_sale_price = data.loveProductList[i].product_sale_price;
+                for (let i = 0; i < data.loveProductList.length; i++) {
+                    const src = data.loveProductList[i].singleProductImageList[0].productImage_src;
+                    const product_id = data.loveProductList[i].product_id;
+                    const product_sale_price = data.loveProductList[i].product_sale_price;
                     $(".context_ul_goodsList").children("ul").append("<li class='context_ul_main'><div class='context_ul_img'>" +
                         "<a href='/tmall/product/" + product_id + "'><img src='/tmall/res/images/item/productSinglePicture/" + src + "'/></a><p>¥" + product_sale_price + ".00</p></div></li>"
                     );

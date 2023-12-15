@@ -59,7 +59,7 @@ $(function () {
             success:function (data) {
                 $("#btn_login").val("登录");
                 if (data.success) {
-                    cookieUtil.setCookie("username", username, 30);
+                    cookieUtil.setCookie("username", username, 7);
                     cookieUtil.removeCookie("imgCode");
                     location.href = "/tmall/admin";
                 } else {
@@ -122,8 +122,8 @@ function initialData() {
     }
     txt_username.focus();
 }
-//获取用户头像
 
+//获取用户头像
 function getUserProfilePicture(username) {
     if(username !== null && username !== ""){
         $.getJSON("/tmall/admin/login/profile_picture",{"username":username},function (data) {
@@ -138,6 +138,7 @@ function getUserProfilePicture(username) {
     }
 }
 
+//获取登录验证码
 function getHomeCode() {
     $.getJSON("/tmall/admin/login/code",function (data) {
             if(data!== null){

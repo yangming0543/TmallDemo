@@ -9,9 +9,9 @@ $(function () {
     //点击li排序时
     $('.context_menu li').click(function () {
         //获取排序字段
-        var orderBy = $(this).attr('data-name');
+        const orderBy = $(this).attr('data-name');
         //判断排序顺序及样式设置
-        var isDesc = true;
+        let isDesc = true;
         if (orderBy === 'product_sale_price') {
             if ($(this).children(".orderByDesc").hasClass("orderBySelect")) {
                 isDesc = false;
@@ -26,7 +26,7 @@ $(function () {
     });
     //点击产品图片时
     $(".context_product_imgList>li").click(function () {
-        var url = $(this).children("img").attr("src");
+        const url = $(this).children("img").attr("src");
         if (url !== undefined) {
             $(this).parent("ul").prev("a").children(".context_product_imgMain").attr("src", url);
         }
