@@ -16,9 +16,9 @@
              ******/
             //点击查询按钮时
             $("#btn_user_submit").click(function () {
-                var user_name = $.trim($("#input_user_name").val());
+                const user_name = $.trim($("#input_user_name").val());
                 //用户性别数组
-                var gender_array = [];
+                const gender_array = [];
                 $(".radio_gender:checked").each(function () {
                     gender_array.push($(this).val());
                 });
@@ -38,13 +38,13 @@
                 //获取数据
                 getData($(this), "admin/user/0/10", null);
                 //清除排序样式
-                var table = $("#table_user_list");
+                const table = $("#table_user_list");
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                 table.find("th.data_info").attr("data-sort","asc");
             });
             //点击th排序时
             $("th.data_info").click(function () {
-                var table = $("#table_user_list");
+                const table = $("#table_user_list");
                 if(table.find(">tbody>tr").length <= 1){
                     return;
                 }
@@ -71,8 +71,8 @@
         });
         //获取用户数据
         function getData(object,url,dataObject) {
-            var table = $("#table_user_list");
-            var tbody = table.children("tbody").first();
+            const table = $("#table_user_list");
+            const tbody = table.children("tbody").first();
             $.ajax({
                 url: url,
                 type: "get",
@@ -94,11 +94,11 @@
                             } else {
                                 gender = "女";
                             }
-                            var user_id = data.userList[i].user_id;
-                            var user_name = data.userList[i].user_name;
-                            var user_nickname = data.userList[i].user_nickname;
-                            var user_realname = data.userList[i].user_realname;
-                            var user_birthday = data.userList[i].user_birthday;
+                            const user_id = data.userList[i].user_id;
+                            const user_name = data.userList[i].user_name;
+                            const user_nickname = data.userList[i].user_nickname;
+                            const user_realname = data.userList[i].user_realname;
+                            const user_birthday = data.userList[i].user_birthday;
                             //显示用户数据
                             tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + user_id + "'><label for='cbx_user_select_" + user_id + "'></label></td><td title='" + user_name + "'>" + user_name + "</td><td title='" + user_nickname + "'>" + user_nickname + "</td><td title='" + user_realname + "'>" + user_realname + "</td><td title='" + user_birthday + "'>" + user_birthday + "</td><td title='" + gender + "'>" + gender + "</td>" +
                                 "<td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>修改</a></span>" +
@@ -110,7 +110,7 @@
                             trDataStyle($(this));
                         });
                         //分页
-                        var pageUtil = {
+                        const pageUtil = {
                             index: data.pageUtil.index,
                             count: data.pageUtil.count,
                             total: data.pageUtil.total,
@@ -160,7 +160,7 @@
                             //获取数据
                             getData($(this), "admin/user/0/10", null);
                             //清除排序样式
-                            var table = $("#table_user_list");
+                            const table = $("#table_user_list");
                             table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                             table.find("th.data_info").attr("data-sort","asc");
                         } else {

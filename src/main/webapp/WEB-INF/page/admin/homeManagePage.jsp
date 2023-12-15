@@ -3,14 +3,14 @@
 <html>
 <head>
     <script>
-        var myChart;
+        let myChart;
         $(function () {
             $.getJSON('/tmall/res/js/basicTheme.json', function (themeJSON) {
                 echarts.registerTheme('basicTheme', themeJSON);
                 // 基于准备好的dom，初始化eCharts实例
                 myChart = echarts.init($("#chartDiv")[0], "basicTheme");
                 // 指定图表的配置项和数据
-                var option = {
+                const option = {
                     title: {
                         text: '商城订单交易额'
                     },
@@ -87,9 +87,9 @@
                 getChartData(beginDateVal, endDateVal, null);
             });
             //设置日期控件约束
-            var date = new Date();
+            const date = new Date();
             date.setDate(date.getDate() - 1);
-            var formatDate = FormatDate(date);
+            let formatDate = FormatDate(date);
             $("#input_endDate").attr("max", formatDate).attr("min", "2018-01-07").val(formatDate);
             date.setDate(date.getDate() - 6);
             formatDate = FormatDate(date);
@@ -107,9 +107,9 @@
             });
             //更改日期时
             $(".chartDateInput").change(function () {
-                var date = new Date($("#input_endDate").val());
+                const date = new Date($("#input_endDate").val());
                 date.setDate(date.getDate() - 6);
-                var formatDate = FormatDate(date);
+                const formatDate = FormatDate(date);
                 $("#input_beginDate").val(formatDate).attr("min", formatDate).attr("max", formatDate);
             });
             //点击查询近一周数据按钮时
@@ -209,9 +209,9 @@
          * */
         //格式化日期
         function FormatDate(strTime) {
-            var date = new Date(strTime);
-            var formatedMonth = ("0" + (date.getMonth() + 1)).slice(-2);
-            var formatedDate = ("0" + (date.getDate())).slice(-2);
+            const date = new Date(strTime);
+            const formatedMonth = ("0" + (date.getMonth() + 1)).slice(-2);
+            const formatedDate = ("0" + (date.getDate())).slice(-2);
             return date.getFullYear() + "-" + formatedMonth + "-" + formatedDate;
         }
     </script>

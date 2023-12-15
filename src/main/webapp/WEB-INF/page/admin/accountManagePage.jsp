@@ -6,17 +6,17 @@
         $(function () {
             //单击保存按钮时
             $("#btn_admin_save").click(function () {
-                var admin_nickname = $.trim($("#input_admin_nickname").val());
-                var admin_image_src = null;
-                var admin_password = null;
-                var admin_newPassword = null;
+                const admin_nickname = $.trim($("#input_admin_nickname").val());
+                let admin_image_src = null;
+                let admin_password = null;
+                let admin_newPassword = null;
                 if ($("#admin_profile_picture").hasClass("new")) {
                     admin_image_src = $.trim($("#admin_profile_picture").attr("src"));
                 }
                 if ($(".modifyPwd").css("display") === "block") {
                     admin_password = $.trim($("#input_admin_password").val());
                     admin_newPassword = $.trim($("#input_admin_newPassword").val());
-                    var admin_confirmPassword = $.trim($("#input_admin_confirmPassword").val());
+                    const admin_confirmPassword = $.trim($("#input_admin_confirmPassword").val());
                     //校验数据合法性
                     if (admin_password === "") {
                         styleUtil.errorShow($("#text_password_details_msg"), "请输入原密码");
@@ -40,7 +40,7 @@
                     }
                 }
 
-                var dataList = {
+                const dataList = {
                     "admin_nickname": admin_nickname,
                     "admin_profile_picture_src": admin_image_src,
                     "admin_password": admin_password,
@@ -51,7 +51,7 @@
         });
 
         function modifyPwd() {
-            var div = $(".modifyPwd");
+            const div = $(".modifyPwd");
             if (div.css("display") === "none") {
                 div.slideDown();
             } else {
@@ -96,9 +96,9 @@
         //图片上传
         function uploadImage(fileDom) {
             //获取文件
-            var file = fileDom.files[0];
+            const file = fileDom.files[0];
             //判断类型
-            var imageType = /^image\//;
+            const imageType = /^image\//;
             if (file === undefined || !imageType.test(file.type)) {
                 $("#btn-ok").unbind("click").click(function () {
                     $("#modalDiv").modal("hide");
@@ -118,7 +118,7 @@
             }
             //清空值
             $(fileDom).val('');
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append("file", file);
             //上传图片
             $.ajax({

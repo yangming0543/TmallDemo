@@ -13,10 +13,10 @@
         $(function () {
             //点击查询按钮时
             $("#btn_review_submit").click(function () {
-                var review_name = $.trim($("#input_review_name").val());
-                var review_content = $.trim($("#input_review_content").val());
-                var review_userName = $.trim($("#input_review_userName").val());
-                var review_createDate = $("#select_review_createDate").val();
+                const review_name = $.trim($("#input_review_name").val());
+                const review_content = $.trim($("#input_review_content").val());
+                const review_userName = $.trim($("#input_review_userName").val());
+                const review_createDate = $("#select_review_createDate").val();
                 //封装数据
                 dataList.review_name = encodeURI(review_name);
                 dataList.review_content = encodeURI(review_content);
@@ -36,13 +36,13 @@
                 //获取数据
                 getData($(this), "admin/review/0/10", null);
                 //清除排序样式
-                var table = $("#table_review_list");
+                const table = $("#table_review_list");
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                 table.find("th.data_info").attr("data-sort","asc");
             });
             //点击th排序时
             $("th.data_info").click(function () {
-                var table = $("#table_review_list");
+                const table = $("#table_review_list");
                 if(table.find(">tbody>tr").length <= 1){
                     return;
                 }
@@ -69,8 +69,8 @@
         });
         //获取评论数据
         function getData(object,url,dataObject) {
-            var table = $("#table_review_list");
-            var tbody = table.children("tbody").first();
+            const table = $("#table_review_list");
+            const tbody = table.children("tbody").first();
             $.ajax({
                 url: url,
                 type: "get",
@@ -123,8 +123,8 @@
 
         //获取评论子界面
         function getChildPage(obj) {
-            var url;
-            var title;
+            let url;
+            let title;
             if(obj === null){
                 title = "添加评论";
                 url = "review/new";
@@ -163,7 +163,7 @@
                             //获取数据
                             getData($(this), "admin/review/0/10", null);
                             //清除排序样式
-                            var table = $("#table_review_list");
+                            const table = $("#table_review_list");
                             table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                             table.find("th.data_info").attr("data-sort","asc");
                         } else {

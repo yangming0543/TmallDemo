@@ -4,7 +4,7 @@
 <head>
     <script>
         //检索数据集
-        var dataList = {
+        const dataList = {
             "product_name": null,
             "category_id": null,
             "product_sale_price": null,
@@ -21,12 +21,12 @@
              ******/
             //点击查询按钮时
             $("#btn_product_submit").click(function () {
-                var product_name = $.trim($("#input_product_name").val());
-                var category_id = parseInt($("#select_product_category").val());
-                var lowest_price = $.trim($("#input_product_sale_price").val());
-                var highest_price = $.trim($("#input_product_price").val());
+                const product_name = $.trim($("#input_product_name").val());
+                const category_id = parseInt($("#select_product_category").val());
+                const lowest_price = $.trim($("#input_product_sale_price").val());
+                const highest_price = $.trim($("#input_product_price").val());
                 //产品状态数组
-                var status_array = [];
+                const status_array = [];
                 $("input[name = checkbox_product_isEnabled]:checked").each(function () {
                     status_array.push($(this).val());
                 });
@@ -57,13 +57,13 @@
                 //获取数据
                 getData($(this), "admin/product/0/10", null);
                 //清除排序样式
-                var table = $("#table_product_list");
+                const table = $("#table_product_list");
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                 table.find("th.data_info").attr("data-sort","asc");
             });
             //点击th排序时
             $("th.data_info").click(function () {
-                var table = $("#table_product_list");
+                const table = $("#table_product_list");
                 if(table.find(">tbody>tr").length <= 1){
                     return;
                 }
@@ -90,8 +90,8 @@
         });
         //获取产品数据
         function getData(object,url,dataObject) {
-            var table = $("#table_product_list");
-            var tbody = table.children("tbody").first();
+            const table = $("#table_product_list");
+            const tbody = table.children("tbody").first();
             $.ajax({
                 url: url,
                 type: "get",
@@ -106,10 +106,10 @@
                     //显示产品统计数据
                     $("#product_count_data").text(data.productCount);
                     if (data.productList.length > 0) {
-                        for (var i = 0; i < data.productList.length; i++) {
-                            var isEnabledClass;
-                            var isEnabledTitle;
-                            var isEnabled;
+                        for (let i = 0; i < data.productList.length; i++) {
+                            let isEnabledClass;
+                            let isEnabledTitle;
+                            let isEnabled;
                             switch (data.productList[i].product_isEnabled) {
                                 case 0:
                                     isEnabledClass = "td_success";
@@ -127,12 +127,12 @@
                                     isEnabled = "停售中";
                                     break;
                             }
-                            var product_price = data.productList[i].product_price.toFixed(1);
-                            var product_sale_price = data.productList[i].product_sale_price.toFixed(1);
-                            var product_id = data.productList[i].product_id;
-                            var product_name = data.productList[i].product_name;
-                            var product_title = data.productList[i].product_title;
-                            var product_create_date = data.productList[i].product_create_date;
+                            const product_price = data.productList[i].product_price.toFixed(1);
+                            const product_sale_price = data.productList[i].product_sale_price.toFixed(1);
+                            const product_id = data.productList[i].product_id;
+                            const product_name = data.productList[i].product_name;
+                            const product_title = data.productList[i].product_title;
+                            const product_create_date = data.productList[i].product_create_date;
                             //显示产品数据
                             let centent="<tr><td><input type='checkbox' class='cbx_select' id='cbx_product_select_" + product_id + "'><label for='cbx_product_select_" + product_id + "'></label></td><td title='"+product_name+"'>" + product_name + "</td><td title='"+product_title+"'>" + product_title + "</td><td title='"+product_price+"'>" + product_price + "</td><td title='"+product_sale_price+"'>" + product_sale_price + "</td><td title='"+product_create_date+"'>" + product_create_date + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td>" +
                                 "<td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>修改</a></span>";
@@ -147,7 +147,7 @@
                             trDataStyle($(this));
                         });
                         //分页
-                        var pageUtil = {
+                        const pageUtil = {
                             index: data.pageUtil.index,
                             count: data.pageUtil.count,
                             total: data.pageUtil.total,
@@ -168,8 +168,8 @@
 
         //获取产品子界面
         function getChildPage(obj) {
-            var url;
-            var title;
+            let url;
+            let title;
             if(obj === null){
                 title = "添加产品";
                 url = "product/new";
@@ -209,7 +209,7 @@
                             //获取数据
                             getData($(this), "admin/product/0/10", null);
                             //清除排序样式
-                            var table = $("#table_product_list");
+                            const table = $("#table_product_list");
                             table.find("span.orderByDesc,span.orderByAsc").css("opacity", "0");
                             table.find("th.data_info").attr("data-sort", "asc");
                         } else {
@@ -229,7 +229,7 @@
         }
 
         //文件赋值
-        var fileDom;
+        let fileDom;
 
         function uploadFile(fileDom) {
             this.fileDom = fileDom;
@@ -270,7 +270,7 @@
                         //获取数据
                         getData($(this), "admin/product/0/10", null);
                         //清除排序样式
-                        var table = $("#table_product_list");
+                        const table = $("#table_product_list");
                         table.find("span.orderByDesc,span.orderByAsc").css("opacity", "0");
                         table.find("th.data_info").attr("data-sort", "asc");
                     } else {

@@ -19,12 +19,12 @@
              ******/
             //点击查询按钮时
             $("#btn_productOrder_submit").click(function () {
-                var productOrder_code = $.trim($("#input_productOrder_code").val());
-                var productOrder_post = $.trim($("#input_productOrder_post").val());
-                var productOrder_receiver = $.trim($("#input_productOrder_receiver").val());
-                var productOrder_mobile = $.trim($("#input_productOrder_mobile").val());
+                const productOrder_code = $.trim($("#input_productOrder_code").val());
+                const productOrder_post = $.trim($("#input_productOrder_post").val());
+                const productOrder_receiver = $.trim($("#input_productOrder_receiver").val());
+                const productOrder_mobile = $.trim($("#input_productOrder_mobile").val());
                 //订单状态数组
-                var productOrder_status_array = [];
+                const productOrder_status_array = [];
                 $(".radio_productOrder_status:checked").each(function () {
                     productOrder_status_array.push($(this).val());
                 });
@@ -58,7 +58,7 @@
                 //获取数据
                 getData($(this), "admin/order/0/10", null);
                 //清除排序样式
-                var table = $("#table_productOrder_list");
+                const table = $("#table_productOrder_list");
                 table.find("span.orderByDesc,span.orderByAsc").css("opacity","0");
                 table.find("th.data_info").attr("data-sort","asc");
             });
@@ -91,8 +91,8 @@
         });
         //获取订单数据
         function getData(object,url,dataObject) {
-            var table = $("#table_productOrder_list");
-            var tbody = table.children("tbody").first();
+            const table = $("#table_productOrder_list");
+            const tbody = table.children("tbody").first();
             $.ajax({
                 url: url,
                 type: "get",
@@ -107,10 +107,10 @@
                     //显示订单统计数据
                     $("#productOrder_count_data").text(data.productOrderCount);
                     if (data.productOrderList.length > 0) {
-                        for (var i = 0; i < data.productOrderList.length; i++) {
-                            var productOrderStatusClass;
-                            var productOrderStatusTitle;
-                            var productOrderStatus;
+                        for (let i = 0; i < data.productOrderList.length; i++) {
+                            let productOrderStatusClass;
+                            let productOrderStatusTitle;
+                            let productOrderStatus;
                             switch (data.productOrderList[i].productOrder_status) {
                                 case 0:
                                     productOrderStatusClass = "td_await";
@@ -138,16 +138,16 @@
                                     productOrderStatus = "交易关闭";
                                     break;
                             }
-                            var productOrder_id = data.productOrderList[i].productOrder_id;
-                            var productOrder_code = data.productOrderList[i].productOrder_code;
-                            var productOrder_post = data.productOrderList[i].productOrder_post;
-                            var productOrder_receiver = data.productOrderList[i].productOrder_receiver;
-                            var productOrder_mobile = data.productOrderList[i].productOrder_mobile;
-                            var productOrder_pay_date = "";
+                            const productOrder_id = data.productOrderList[i].productOrder_id;
+                            const productOrder_code = data.productOrderList[i].productOrder_code;
+                            const productOrder_post = data.productOrderList[i].productOrder_post;
+                            const productOrder_receiver = data.productOrderList[i].productOrder_receiver;
+                            const productOrder_mobile = data.productOrderList[i].productOrder_mobile;
+                            let productOrder_pay_date = "";
                             if (data.productOrderList[i].productOrder_pay_date) {
                                 productOrder_pay_date = data.productOrderList[i].productOrder_pay_date;
                             }
-                            var productOrder_delivery_date = "";
+                            let productOrder_delivery_date = "";
                             if (data.productOrderList[i].productOrder_delivery_date) {
                                 productOrder_delivery_date = data.productOrderList[i].productOrder_delivery_date;
                             }
@@ -160,7 +160,7 @@
                             trDataStyle($(this));
                         });
                         //分页
-                        var pageUtil = {
+                        const pageUtil = {
                             index: data.pageUtil.index,
                             count: data.pageUtil.count,
                             total: data.pageUtil.total,

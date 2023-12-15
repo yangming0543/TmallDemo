@@ -10,7 +10,7 @@
         $(function () {
             //点击查询按钮时
             $("#btn_category_submit").click(function () {
-                var category_name = $.trim($("#input_category_name").val());
+                const category_name = $.trim($("#input_category_name").val());
                 //封装数据
                 dataList.category_name = encodeURI(category_name);
 
@@ -30,8 +30,8 @@
         });
         //获取分类数据
         function getData(object, url, dataObject) {
-            var table = $("#table_category_list");
-            var tbody = table.children("tbody").first();
+            const table = $("#table_category_list");
+            const tbody = table.children("tbody").first();
             $.ajax({
                 url: url,
                 type: "get",
@@ -45,9 +45,9 @@
                     //显示分类统计数据
                     $("#category_count_data").text(data.categoryCount);
                     if(data.categoryList.length > 0) {
-                        for (var i = 0; i < data.categoryList.length; i++) {
-                            var category_id = data.categoryList[i].category_id;
-                            var category_name = data.categoryList[i].category_name;
+                        for (let i = 0; i < data.categoryList.length; i++) {
+                            const category_id = data.categoryList[i].category_id;
+                            const category_name = data.categoryList[i].category_name;
                             //显示分类数据
                             tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_category_select_" + category_id + "'><label for='cbx_category_select_" + category_id + "'></label></td><td title='" + category_name + "'>" + category_name + "</td>" +
                                 "<td><span class='td_special' title='查看分类详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>修改</a></span>" +
@@ -59,7 +59,7 @@
                             trDataStyle($(this));
                         });
                         //分页
-                        var pageUtil = {
+                        const pageUtil = {
                             index: data.pageUtil.index,
                             count: data.pageUtil.count,
                             total: data.pageUtil.total,
@@ -80,8 +80,8 @@
 
         // 获取产品分类子界面
         function getChildPage(obj) {
-            var url;
-            var title;
+            let url;
+            let title;
             if (obj === null) {
                 title = "添加分类";
                 url = "category/new";
