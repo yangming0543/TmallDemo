@@ -3,6 +3,68 @@
 <head>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_login.js"></script>
     <script src="${pageContext.request.contextPath}/res/js/fore/fore_productDetails.js"></script>
+    <script>
+        $(function () {
+            //点击购买按钮时
+            $(".context_buy_form").submit(function () {
+                if ('${sessionScope.userId}' === "") {
+                    $(".loginModel").show();
+                    $(".loginDiv").show();
+                    return false;
+                }
+                var number = isNaN($.trim($(".context_buymember").val()));
+                if (number) {
+                    location.reload();
+                } else {
+                    location.href = "${pageContext.request.contextPath}/order/create/${requestScope.product.product_id}?product_number=" + $.trim($(".context_buymember").val());
+                }
+                return false;
+            });
+            //点击加入购物车按钮时
+            $(".context_buyCar_form").submit(function () {
+                if ('${sessionScope.userId}' === "") {
+                    $(".loginModel").show();
+                    $(".loginDiv").show();
+                    return false;
+                }
+                var number = isNaN($.trim($(".context_buymember").val()));
+                if (number) {
+                    location.reload();
+                } else {
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/orderItem/create/${requestScope.product.product_id}?product_number=" + $.trim($(".context_buymember").val()),
+                        type: "POST",
+                        data: {"product_number": number},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.success) {
+                                $(".msg").stop(true, true).animate({
+                                    opacity: 1
+                                }, 550, function () {
+                                    $(".msg").animate({
+                                        opacity: 0
+                                    }, 1500);
+                                });
+                            } else {
+                                if (data.url != null) {
+                                    location.href = "/tmall" + data.url;
+                                } else {
+                                    alert("加入购物车失败，请稍后再试！");
+                                }
+                            }
+                        },
+                        beforeSend: function () {
+
+                        },
+                        error: function () {
+                            alert("加入购物车失败，请稍后再试！");
+                        }
+                    });
+                    return false;
+                }
+            });
+        });
+    </script>
     <link href="${pageContext.request.contextPath}/res/css/fore/fore_productDetails.css" rel="stylesheet">
     <title>${requestScope.product.product_name}-tmall.com天猫</title>
 </head>
@@ -159,69 +221,8 @@
                 <em>库存1000件</em>
             </dd>
         </dl>
-        <div class="context_buy">
-            <script>
-                $(function () {
-                    //点击购买按钮时
-                    $(".context_buy_form").submit(function () {
-                        if ('${sessionScope.userId}' === "") {
-                            $(".loginModel").show();
-                            $(".loginDiv").show();
-                            return false;
-                        }
-                        var number = isNaN($.trim($(".context_buymember").val()));
-                        if (number) {
-                            location.reload();
-                        } else {
-                            location.href = "${pageContext.request.contextPath}/order/create/${requestScope.product.product_id}?product_number=" + $.trim($(".context_buymember").val());
-                        }
-                        return false;
-                    });
-                    //点击加入购物车按钮时
-                    $(".context_buyCar_form").submit(function () {
-                        if ('${sessionScope.userId}' === "") {
-                            $(".loginModel").show();
-                            $(".loginDiv").show();
-                            return false;
-                        }
-                        var number = isNaN($.trim($(".context_buymember").val()));
-                        if (number) {
-                            location.reload();
-                        } else {
-                            $.ajax({
-                                url: "${pageContext.request.contextPath}/orderItem/create/${requestScope.product.product_id}?product_number=" + $.trim($(".context_buymember").val()),
-                                type: "POST",
-                                data: {"product_number": number},
-                                dataType: "json",
-                                success: function (data) {
-                                    if (data.success) {
-                                        $(".msg").stop(true, true).animate({
-                                            opacity: 1
-                                        }, 550, function () {
-                                            $(".msg").animate({
-                                                opacity: 0
-                                            }, 1500);
-                                        });
-                                    } else {
-                                        if (data.url != null) {
-                                            location.href = "/tmall" + data.url;
-                                        } else {
-                                            alert("加入购物车失败，请稍后再试！");
-                                        }
-                                    }
-                                },
-                                beforeSend: function () {
 
-                                },
-                                error: function () {
-                                    alert("加入购物车失败，请稍后再试！");
-                                }
-                            });
-                            return false;
-                        }
-                    });
-                });
-            </script>
+        <div class="context_buy">
             <form method="get" class="context_buy_form">
                 <input class="context_buyNow" type="submit" value="立即购买"/>
             </form>
