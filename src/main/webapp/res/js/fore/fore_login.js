@@ -1,4 +1,5 @@
 $(function () {
+    getHomeCode();
     //二维码动画
     $("#qrcodeA").hover(
         function () {
@@ -36,12 +37,29 @@ $(function () {
     $(".loginForm").submit(function () {
         let yn = true;
         $(this).find(":text,:password").each(function () {
-            if ($.trim($(this).val()) === "") {
-                styleUtil.errorShow($("#error_message_p"), "请输入用户名和密码！");
+            let code = $("#code").val();
+            if ($("#name").val() === "") {
+                styleUtil.errorShow($("#error_message_p"), "请输入用户名！");
+                yn = false;
+                return yn;
+            }
+            if ($("#password").val() === "") {
+                styleUtil.errorShow($("#error_message_p"), "请输入密码！");
+                yn = false;
+                return yn;
+            }
+            if ($("#code").val() === "") {
+                styleUtil.errorShow($("#error_message_p"), "请输入验证码！");
+                yn = false;
+                return yn;
+            }
+            if (cookieUtil.getCookie("loginCode") != code) {
+                styleUtil.errorShow($("#error_message_p"), "验证码错误!");
                 yn = false;
                 return yn;
             }
         });
+
         if (yn) {
             $.ajax({
                 type: "POST",
@@ -52,6 +70,7 @@ $(function () {
                     $(".loginButton").val("登 录");
                     if (data.success) {
                         location.href = "/tmall";
+                        cookieUtil.removeCookie("loginCode");
                     } else {
                         styleUtil.errorShow($("#error_message_p"), "用户名和密码错误！");
                     }
@@ -67,7 +86,17 @@ $(function () {
         }
         return false;
     });
-    $(".loginForm :text,.loginForm :password").focus(function () {
+  /*  $(".loginForm :text,.loginForm :password").focus(function () {
         styleUtil.errorHide($("#error_message_p"));
-    });
+    });*/
 });
+
+//获取登录验证码
+function getHomeCode() {
+    $.getJSON("/tmall/login/code",function (data) {
+        if(data!== null){
+            $("#img_code").attr("src", data.img);
+            cookieUtil.setCookie("loginCode", data.code,1);
+        }
+    });
+}

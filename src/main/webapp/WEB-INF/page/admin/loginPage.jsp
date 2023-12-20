@@ -41,8 +41,7 @@
 
                 <input type="text" class="form-control form_control" placeholder="验证码" id="input_code"
                        title="请输入验证码"/>
-                <img id="img_code"
-                     alt="验证码" title="验证码" onclick="getHomeCode()"/>
+                <img id="img_code" alt="验证码" title="验证码" onclick="getHomeCode()"/>
                 <span id="txt_error_msg"></span>
                 <input type="button" class="btn btn-danger" id="btn_login" value="登录"/>
             </form>

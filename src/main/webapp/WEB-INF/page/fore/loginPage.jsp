@@ -32,7 +32,7 @@
 <body>
 <nav id="baseNavigator">
     <a href="${pageContext.request.contextPath}" target="_self">
-        <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallLogoA.png"/>
+        <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/tmallLogoC.png"/>
     </a>
 </nav>
 <div class="content">
@@ -47,28 +47,33 @@
         </div>
         <div class="pwdLogin">
             <span class="loginTitle">密码登录</span>
+            <div class="error_message">
+                <p id="error_message_p"></p>
+            </div>
             <form method="post" class="loginForm">
                 <div class="loginInputDiv">
                     <label for="name" class="loginLabel"><img
                             src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/2018-04-27_235518.png"
                             width="38px" height="39px" title="会员名"/></label>
-                    <input type="text" name="name" id="name" class="loginInput" placeholder="会员名/邮箱/手机号">
+                    <input type="text" name="name" id="name" class="loginInput" placeholder="账号名/邮箱/手机号">
                 </div>
                 <div class="loginInputDiv">
                     <label for="password" class="loginLabel"><img
                             src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/2018-04-27_235533.png"
                             width="38px" height="39px" title="登录密码"/></label>
-                    <input type="password" name="password" id="password" class="loginInput">
+                    <input type="password" name="password" id="password" class="loginInput" placeholder="请输入登录密码">
+                </div>
+                <div class="loginInputDiv">
+
+                    <input type="text" class="loginCode" id="code" placeholder="验证码">
+                    <img id="img_code" alt="验证码" title="验证码" onclick="getHomeCode()"/>
                 </div>
                 <input type="submit" class="loginButton" value="登 录">
             </form>
             <div class="loginLinks">
                 <a href="#">忘记密码</a>
-                <a href="#">忘记会员名</a>
+                <a href="#">忘记账号名</a>
                 <a href="${pageContext.request.contextPath}/register">免费注册</a>
-            </div>
-            <div class="error_message">
-                <p id="error_message_p"></p>
             </div>
         </div>
         <div class="qrcodeLogin">
