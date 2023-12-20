@@ -4,7 +4,7 @@ import com.xq.tmall.dao.PropertyValueMapper;
 import com.xq.tmall.entity.PropertyValue;
 import com.xq.tmall.service.PropertyValueService;
 import com.xq.tmall.util.PageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PropertyValueServiceImpl implements PropertyValueService {
-    @Autowired
-    private PropertyValueMapper propertyValueMapper;
+    private final PropertyValueMapper propertyValueMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
@@ -45,6 +45,7 @@ public class PropertyValueServiceImpl implements PropertyValueService {
     public boolean delete(Integer id) {
         return propertyValueMapper.deleteOne(id) > 0;
     }
+
     @Override
     public List<PropertyValue> getList(PropertyValue propertyValue, PageUtil pageUtil) {
         return propertyValueMapper.selectPropertyValueList(propertyValue, pageUtil);

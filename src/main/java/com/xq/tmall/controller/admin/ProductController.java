@@ -17,7 +17,7 @@ import com.xq.tmall.util.excel.ExportExcel;
 import com.xq.tmall.util.excel.ImportExcel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,19 +36,14 @@ import java.util.*;
  */
 @Api(tags = "后台管理-产品页")
 @Controller
+@RequiredArgsConstructor
 public class ProductController extends BaseController {
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private ProductImageService productImageService;
-    @Autowired
-    private PropertyService propertyService;
-    @Autowired
-    private PropertyValueService propertyValueService;
-    @Autowired
-    private LastIDService lastIDService;
+    private final CategoryService categoryService;
+    private final ProductService productService;
+    private final ProductImageService productImageService;
+    private final PropertyService propertyService;
+    private final PropertyValueService propertyValueService;
+    private final LastIDService lastIDService;
     public static final String URL = "admin/include/loginMessage";
 
     // 转到后台管理-产品页-ajax

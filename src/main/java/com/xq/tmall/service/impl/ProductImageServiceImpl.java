@@ -4,7 +4,7 @@ import com.xq.tmall.dao.ProductImageMapper;
 import com.xq.tmall.entity.ProductImage;
 import com.xq.tmall.service.ProductImageService;
 import com.xq.tmall.util.PageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductImageServiceImpl implements ProductImageService {
-    @Autowired
-    private ProductImageMapper productImageMapper;
+
+    private final ProductImageMapper productImageMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override

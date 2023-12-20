@@ -2,13 +2,13 @@ package com.xq.tmall.service.impl;
 
 import com.xq.tmall.dao.LastIDMapper;
 import com.xq.tmall.service.LastIDService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class LastIDServiceImpl implements LastIDService {
-    @Autowired
-    private LastIDMapper lastIDMapper;
+    private final LastIDMapper lastIDMapper;
 
     @Override
     public int selectLastID() {

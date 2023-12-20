@@ -4,7 +4,7 @@ import com.xq.tmall.dao.CategoryMapper;
 import com.xq.tmall.entity.Category;
 import com.xq.tmall.service.CategoryService;
 import com.xq.tmall.util.PageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private CategoryMapper categoryMapper;
+    private final CategoryMapper categoryMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override

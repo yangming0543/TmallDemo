@@ -11,7 +11,7 @@ import com.xq.tmall.service.UserService;
 import com.xq.tmall.util.Constants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +26,9 @@ import java.util.Map;
  */
 @Api(tags = "前台天猫-登陆页")
 @Controller
+@RequiredArgsConstructor
 public class ForeLoginController extends BaseController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     // 转到前台天猫-登录页
     @ApiOperation(value = "转到前台天猫-登录页", notes = "转到前台天猫-登录页")

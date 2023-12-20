@@ -11,7 +11,7 @@ import com.xq.tmall.service.AdminService;
 import com.xq.tmall.util.Constants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +25,9 @@ import javax.servlet.http.HttpSession;
  */
 @Api(tags = "后台管理-登录页")
 @Controller
+@RequiredArgsConstructor
 public class AdminLoginController extends BaseController {
-    @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
 
     // 转到后台管理-登录页
     @ApiOperation(value = "转到后台管理-登录页", notes = "转到后台管理-登录页")

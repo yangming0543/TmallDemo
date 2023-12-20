@@ -4,7 +4,7 @@ import com.xq.tmall.dao.AdminMapper;
 import com.xq.tmall.entity.Admin;
 import com.xq.tmall.service.AdminService;
 import com.xq.tmall.util.PageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
-    @Autowired
-    private AdminMapper adminMapper;
+    private final AdminMapper adminMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override

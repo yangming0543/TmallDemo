@@ -12,7 +12,6 @@ import java.io.Serializable;
 /**
  * 验证码
  *
- * @author Admin
  */
 @Data
 @AllArgsConstructor

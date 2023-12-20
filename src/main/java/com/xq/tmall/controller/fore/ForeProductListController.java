@@ -10,7 +10,7 @@ import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,31 +26,26 @@ import java.util.Map;
  */
 @Api(tags = "前台天猫-产品搜索列表")
 @Controller
+@RequiredArgsConstructor
 public class ForeProductListController extends BaseController {
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private ProductImageService productImageService;
-    @Autowired
-    private ReviewService reviewService;
-    @Autowired
-    private ProductOrderItemService productOrderItemService;
+    private final ProductService productService;
+    private final UserService userService;
+    private final CategoryService categoryService;
+    private final ProductImageService productImageService;
+    private final ReviewService reviewService;
+    private final ProductOrderItemService productOrderItemService;
 
 
-    //转到前台天猫-产品搜索列表页
+    // 转到前台天猫-产品搜索列表页
     @ApiOperation(value = "转到前台天猫-产品搜索列表页", notes = "转到前台天猫-产品搜索列表页")
     @GetMapping(value = "product")
     public String goToPage(HttpSession session, Map<String, Object> map,
                            @RequestParam(value = "category_id", required = false) Integer category_id/* 分类ID */,
                            @RequestParam(value = "product_name", required = false) String product_name/* 产品名称 */) throws UnsupportedEncodingException {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             User user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         }
@@ -60,7 +55,7 @@ public class ForeProductListController extends BaseController {
         if (product_name != null && "".equals(product_name.trim())) {
             return "redirect:/";
         }
-        //整合搜索信息
+        // 整合搜索信息
         Product product = new Product();
         String searchValue = null;
         Integer searchType = null;
@@ -70,41 +65,41 @@ public class ForeProductListController extends BaseController {
             product.setProduct_category(category);
             searchType = category_id;
         }
-        //关键词数组
+        // 关键词数组
         String[] product_name_split = null;
-        //产品列表
+        // 产品列表
         List<Product> productList;
-        //产品总数量
+        // 产品总数量
         Integer productCount;
-        //分页工具
+        // 分页工具
         PageUtil pageUtil = new PageUtil(0, 20);
         if (product_name != null) {
             product_name_split = product_name.split(" ");
-            //提取的关键词有{}, Arrays.toString(product_name_split)
+            // 提取的关键词有{}, Arrays.toString(product_name_split)
             product.setProduct_name(product_name);
             searchValue = product_name;
         }
         if (product_name_split != null && product_name_split.length > 1) {
-            //获取组合商品列表
+            // 获取组合商品列表
             productList = productService.getMoreList(product, new Byte[]{0, 2}, null, pageUtil, product_name_split);
-            //按组合条件获取产品总数量
+            // 按组合条件获取产品总数量
             productCount = productService.getMoreListTotal(product, new Byte[]{0, 2}, product_name_split);
         } else {
-            //获取商品列表
+            // 获取商品列表
             productList = productService.getList(product, new Byte[]{0, 2}, null, pageUtil);
-            //按条件获取产品总数量
+            // 按条件获取产品总数量
             productCount = productService.getTotal(product, new Byte[]{0, 2});
         }
-        //获取商品列表的对应信息
+        // 获取商品列表的对应信息
         for (Product p : productList) {
             p.setSingleProductImageList(productImageService.getList(p.getProduct_id(), (byte) 0, null));
             p.setProduct_sale_count(productOrderItemService.getSaleCountByProductId(p.getProduct_id()));
             p.setProduct_review_count(reviewService.getTotalByProductId(p.getProduct_id()));
             p.setProduct_category(categoryService.get(p.getProduct_category().getCategory_id()));
         }
-        //获取分类列表
+        // 获取分类列表
         List<Category> categoryList = categoryService.getList(null, new PageUtil(0, 5));
-        //获取分页信息
+        // 获取分页信息
         pageUtil.setTotal(productCount);
         map.put("categoryList", categoryList);
         map.put("totalPage", pageUtil.getTotalPage());
@@ -112,11 +107,11 @@ public class ForeProductListController extends BaseController {
         map.put("productList", productList);
         map.put("searchValue", searchValue);
         map.put("searchType", searchType);
-        //转到前台天猫-产品搜索列表页
+        // 转到前台天猫-产品搜索列表页
         return "fore/productListPage";
     }
 
-    //产品高级查询
+    // 产品高级查询
     @ApiOperation(value = "产品高级查询", notes = "产品高级查询")
     @GetMapping(value = "product/{index}/{count}")
     public String searchProduct(HttpSession session, Map<String, Object> map,
@@ -126,7 +121,7 @@ public class ForeProductListController extends BaseController {
                                 @RequestParam(value = "product_name", required = false) String product_name/* 产品名称 */,
                                 @RequestParam(required = false) String orderBy/* 排序字段 */,
                                 @RequestParam(required = false, defaultValue = "true") Boolean isDesc/* 是否倒序 */) {
-        //整合搜索信息
+        // 整合搜索信息
         Product product = new Product();
         OrderUtil orderUtil = null;
         String searchValue = null;
@@ -141,44 +136,44 @@ public class ForeProductListController extends BaseController {
             product.setProduct_name(product_name);
         }
         if (orderBy != null) {
-            //根据{}排序，是否倒序:{}, orderBy, isDesc
+            // 根据{}排序，是否倒序:{}, orderBy, isDesc
             orderUtil = new OrderUtil(orderBy, isDesc);
         }
-        //关键词数组
+        // 关键词数组
         String[] product_name_split = null;
-        //产品列表
+        // 产品列表
         List<Product> productList;
-        //产品总数量
+        // 产品总数量
         Integer productCount;
-        //分页工具
+        // 分页工具
         PageUtil pageUtil = new PageUtil(0, 20);
         if (product_name != null) {
             product_name_split = product_name.split(" ");
-            //提取的关键词有{}, Arrays.toString(product_name_split)
+            // 提取的关键词有{}, Arrays.toString(product_name_split)
             product.setProduct_name(product_name);
             searchValue = product_name;
         }
         if (product_name_split != null && product_name_split.length > 1) {
-            //获取组合商品列表
+            // 获取组合商品列表
             productList = productService.getMoreList(product, new Byte[]{0, 2}, orderUtil, pageUtil, product_name_split);
-            //按组合条件获取产品总数量
+            // 按组合条件获取产品总数量
             productCount = productService.getMoreListTotal(product, new Byte[]{0, 2}, product_name_split);
         } else {
-            //获取商品列表
+            // 获取商品列表
             productList = productService.getList(product, new Byte[]{0, 2}, orderUtil, pageUtil);
-            //按条件获取产品总数量
+            // 按条件获取产品总数量
             productCount = productService.getTotal(product, new Byte[]{0, 2});
         }
-        //获取商品列表的对应信息
+        // 获取商品列表的对应信息
         for (Product p : productList) {
             p.setSingleProductImageList(productImageService.getList(p.getProduct_id(), (byte) 0, null));
             p.setProduct_sale_count(productOrderItemService.getSaleCountByProductId(p.getProduct_id()));
             p.setProduct_review_count(reviewService.getTotalByProductId(p.getProduct_id()));
             p.setProduct_category(categoryService.get(p.getProduct_category().getCategory_id()));
         }
-        //获取分类列表
+        // 获取分类列表
         List<Category> categoryList = categoryService.getList(null, new PageUtil(0, 5));
-        //获取分页信息
+        // 获取分页信息
         pageUtil.setTotal(productCount);
         map.put("productCount", productCount);
         map.put("totalPage", pageUtil.getTotalPage());

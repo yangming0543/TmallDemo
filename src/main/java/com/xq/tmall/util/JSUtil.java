@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
 /**
- * @author wujing
  */
 @Slf4j
 public final class JSUtil {

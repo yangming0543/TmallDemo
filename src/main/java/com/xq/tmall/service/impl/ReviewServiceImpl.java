@@ -5,7 +5,7 @@ import com.xq.tmall.entity.Review;
 import com.xq.tmall.service.ReviewService;
 import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
-    @Autowired
-    private ReviewMapper reviewMapper;
+    private final ReviewMapper reviewMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override

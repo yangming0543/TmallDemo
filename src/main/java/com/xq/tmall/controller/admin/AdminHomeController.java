@@ -11,8 +11,8 @@ import com.xq.tmall.service.ProductService;
 import com.xq.tmall.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,15 +28,12 @@ import java.util.*;
  */
 @Api(tags = "后台管理-主页")
 @Controller
+@RequiredArgsConstructor
 public class AdminHomeController extends BaseController {
-    @Autowired
-    private AdminService adminService;
-    @Autowired
-    private ProductOrderService productOrderService;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private UserService userService;
+    private final AdminService adminService;
+    private final ProductOrderService productOrderService;
+    private final ProductService productService;
+    private final UserService userService;
 
     // 转到后台管理-主页
     @ApiOperation(value = "转到后台管理-主页", notes = "转到后台管理-主页")

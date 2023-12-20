@@ -5,7 +5,7 @@ import com.xq.tmall.entity.OrderGroup;
 import com.xq.tmall.entity.ProductOrderItem;
 import com.xq.tmall.service.ProductOrderItemService;
 import com.xq.tmall.util.PageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +14,10 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProductOrderItemServiceImpl implements ProductOrderItemService {
 
-    @Autowired
-    private ProductOrderItemMapper productOrderItemMapper;
+    private final ProductOrderItemMapper productOrderItemMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override

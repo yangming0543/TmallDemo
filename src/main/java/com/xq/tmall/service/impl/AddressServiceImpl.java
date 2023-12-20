@@ -3,7 +3,7 @@ package com.xq.tmall.service.impl;
 import com.xq.tmall.dao.AddressMapper;
 import com.xq.tmall.entity.Address;
 import com.xq.tmall.service.AddressService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
-    @Autowired
-    private AddressMapper addressMapper;
+    private final AddressMapper addressMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override

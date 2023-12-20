@@ -4,7 +4,6 @@ import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.toolkit.CollectionUtils;
-import com.thoughtworks.xstream.core.BaseException;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
 import com.xq.tmall.pay.PayFace;
@@ -12,14 +11,17 @@ import com.xq.tmall.pay.req.TradeOrderReq;
 import com.xq.tmall.pay.resp.TradeOrderResp;
 import com.xq.tmall.pay.util.PayModelEnum;
 import com.xq.tmall.service.*;
-import com.xq.tmall.util.*;
+import com.xq.tmall.util.Constants;
+import com.xq.tmall.util.OrderUtil;
+import com.xq.tmall.util.PageUtil;
+import com.xq.tmall.util.PayTypeEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,23 +40,23 @@ import java.util.*;
 @Api(tags = "前台天猫-订单")
 @Controller
 public class ForeOrderController extends BaseController {
-    @Autowired
+    @Resource
     private ProductService productService;
-    @Autowired
+    @Resource
     private UserService userService;
-    @Autowired
+    @Resource
     private ProductOrderItemService productOrderItemService;
-    @Autowired
+    @Resource
     private AddressService addressService;
-    @Autowired
+    @Resource
     private CategoryService categoryService;
-    @Autowired
+    @Resource
     private ProductImageService productImageService;
-    @Autowired
+    @Resource
     private ProductOrderService productOrderService;
-    @Autowired
+    @Resource
     private ReviewService reviewService;
-    @Autowired
+    @Resource
     private LastIDService lastIDService;
     public static final String URL = "redirect:/order/0/10";
 
@@ -69,7 +71,7 @@ public class ForeOrderController extends BaseController {
     }
 
 
-    //转到前台天猫-订单列表页
+    // 转到前台天猫-订单列表页
     @ApiOperation(value = "转到前台天猫-订单列表页", notes = "转到前台天猫-订单列表页")
     @GetMapping(value = "order")
     public String goToPageSimple() {
@@ -82,11 +84,11 @@ public class ForeOrderController extends BaseController {
                            @RequestParam(required = false) Byte status,
                            @PathVariable("index") Integer index/* 页数 */,
                            @PathVariable("count") Integer count/* 行数*/) {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         User user;
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
@@ -98,18 +100,18 @@ public class ForeOrderController extends BaseController {
         }
 
         PageUtil pageUtil = new PageUtil(index, count);
-        //根据用户ID:{}获取订单列表, userId
+        // 根据用户ID:{}获取订单列表, userId
         User user1 = new User();
         user1.setUser_id(Integer.valueOf(userId.toString()));
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_user(user1);
         List<ProductOrder> productOrderList = productOrderService.getList(productOrder, status_array, new OrderUtil("productOrder_id", true), pageUtil);
 
-        //订单总数量
+        // 订单总数量
         Integer orderCount = 0;
         if (CollectionUtils.isNotEmpty(productOrderList)) {
             orderCount = productOrderService.getTotal(productOrder, status_array);
-            //获取订单项信息及对应的产品信息
+            // 获取订单项信息及对应的产品信息
             if (CollectionUtils.isNotEmpty(productOrderList)) {
                 for (ProductOrder order : productOrderList) {
                     List<ProductOrderItem> productOrderItemList = productOrderItemService.getListByOrderId(order.getProductOrder_id(), null);
@@ -130,18 +132,18 @@ public class ForeOrderController extends BaseController {
         }
         pageUtil.setTotal(orderCount);
 
-        //获取产品分类列表信息
+        // 获取产品分类列表信息
         List<Category> categoryList = categoryService.getList(null, new PageUtil(0, 5));
         map.put("pageUtil", pageUtil);
         map.put("productOrderList", productOrderList);
         map.put("categoryList", categoryList);
         map.put("status", status);
 
-        //转到前台天猫-订单列表页
+        // 转到前台天猫-订单列表页
         return "fore/orderListPage";
     }
 
-    //转到前台天猫-订单建立页
+    // 转到前台天猫-订单建立页
     @ApiOperation(value = "转到前台天猫-订单建立页", notes = "转到前台天猫-订单建立页")
     @GetMapping(value = "order/create/{product_id}")
     public String goToOrderConfirmPage(@PathVariable("product_id") Integer product_id,
@@ -149,26 +151,26 @@ public class ForeOrderController extends BaseController {
                                        Map<String, Object> map,
                                        HttpSession session,
                                        HttpServletRequest request) throws UnsupportedEncodingException {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         User user;
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
             return LOGIN;
         }
-        //通过产品ID获取产品信息：{}, product_id
+        // 通过产品ID获取产品信息：{}, product_id
         Product product = productService.get(product_id);
         if (product == null) {
             return "redirect:/";
         }
-        //获取产品的详细信息
+        // 获取产品的详细信息
         product.setProduct_category(categoryService.get(product.getProduct_category().getCategory_id()));
         product.setSingleProductImageList(productImageService.getList(product_id, (byte) 0, new PageUtil(0, 1)));
 
-        //封装订单项对象
+        // 封装订单项对象
         ProductOrderItem productOrderItem = new ProductOrderItem();
         productOrderItem.setProductOrderItem_product(product);
         productOrderItem.setProductOrderItem_number(product_number);
@@ -215,11 +217,11 @@ public class ForeOrderController extends BaseController {
                 }
             }
         }
-        //获取省份信息
+        // 获取省份信息
         List<Address> addressList = addressService.getRoot();
-        //获取addressId为{}的市级地址信息, addressId
+        // 获取addressId为{}的市级地址信息, addressId
         List<Address> cityAddress = addressService.getList(null, addressId);
-        //获取cityAddressId为{}的区级地址信息, cityAddressId
+        // 获取cityAddressId为{}的区级地址信息, cityAddressId
         List<Address> districtAddress = addressService.getList(null, cityAddressId);
 
         List<ProductOrderItem> productOrderItemList = new ArrayList<>();
@@ -239,51 +241,51 @@ public class ForeOrderController extends BaseController {
         map.put("order_phone", order_phone);
         map.put("detailsAddress", detailsAddress);
 
-        //转到前台天猫-订单建立页
+        // 转到前台天猫-订单建立页
         return "fore/productBuyPage";
     }
 
-    //转到前台天猫-购物车订单建立页
+    // 转到前台天猫-购物车订单建立页
     @ApiOperation(value = "转到前台天猫-购物车订单建立页", notes = "转到前台天猫-购物车订单建立页")
     @GetMapping(value = "order/create/byCart")
     public String goToOrderConfirmPageByCart(Map<String, Object> map,
                                              HttpSession session, HttpServletRequest request,
                                              @RequestParam(required = false) Integer[] order_item_list) throws UnsupportedEncodingException {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         User user;
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
             return LOGIN;
         }
         if (order_item_list == null || order_item_list.length == 0) {
-            //用户订单项数组不存在，回到购物车页
+            // 用户订单项数组不存在，回到购物车页
             return CART;
         }
-        //通过订单项ID数组获取订单信息
+        // 通过订单项ID数组获取订单信息
         List<ProductOrderItem> orderItemList = new ArrayList<>(order_item_list.length);
         for (Integer orderItem_id : order_item_list) {
             orderItemList.add(productOrderItemService.get(orderItem_id));
         }
         //------检查订单项合法性------
         if (orderItemList.size() == 0) {
-            //用户订单项获取失败，回到购物车页
+            // 用户订单项获取失败，回到购物车页
             return CART;
         }
         for (ProductOrderItem orderItem : orderItemList) {
             if (orderItem.getProductOrderItem_user().getUser_id() != userId) {
-                //用户订单项与用户不匹配，回到购物车页
+                // 用户订单项与用户不匹配，回到购物车页
                 return CART;
             }
             if (orderItem.getProductOrderItem_order() != null) {
-                //用户订单项不属于购物车，回到购物车页
+                // 用户订单项不属于购物车，回到购物车页
                 return CART;
             }
         }
-        //验证通过，获取订单项的产品信息
+        // 验证通过，获取订单项的产品信息
         double orderTotalPrice = 0.0;
         for (ProductOrderItem orderItem : orderItemList) {
             Product product = productService.get(orderItem.getProductOrderItem_product().getProduct_id());
@@ -330,11 +332,11 @@ public class ForeOrderController extends BaseController {
                 }
             }
         }
-        //获取省份信息
+        // 获取省份信息
         List<Address> addressList = addressService.getRoot();
-        //获取addressId为{}的市级地址信息, addressId
+        // 获取addressId为{}的市级地址信息, addressId
         List<Address> cityAddress = addressService.getList(null, addressId);
-        //获取cityAddressId为{}的区级地址信息, cityAddressId
+        // 获取cityAddressId为{}的区级地址信息, cityAddressId
         List<Address> districtAddress = addressService.getList(null, cityAddressId);
 
         map.put("orderItemList", orderItemList);
@@ -350,40 +352,40 @@ public class ForeOrderController extends BaseController {
         map.put("order_phone", order_phone);
         map.put("detailsAddress", detailsAddress);
 
-        //转到前台天猫-订单建立页
+        // 转到前台天猫-订单建立页
         return "fore/productBuyPage";
     }
 
-    //转到前台天猫-订单支付页
+    // 转到前台天猫-订单支付页
     @ApiOperation(value = "转到前台天猫-订单支付页", notes = "转到前台天猫-订单支付页")
     @GetMapping(value = "order/pay/{order_code}")
     public String goToOrderPayPage(Map<String, Object> map, HttpSession session,
                                    @PathVariable("order_code") String order_code) {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         User user;
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
             return LOGIN;
         }
         //------验证订单信息------
-        //查询订单是否存在
+        // 查询订单是否存在
         ProductOrder order = productOrderService.getByCode(order_code);
         if (order == null) {
-            //订单不存在，返回订单列表页
+            // 订单不存在，返回订单列表页
             return URL;
         }
-        //验证订单状态
+        // 验证订单状态
         if (order.getProductOrder_status() != 0) {
-            //订单状态不正确，返回订单列表页
+            // 订单状态不正确，返回订单列表页
             return URL;
         }
-        //验证用户与订单是否一致
+        // 验证用户与订单是否一致
         if (order.getProductOrder_user().getUser_id() != Integer.parseInt(userId.toString())) {
-            //用户与订单信息不一致，返回订单列表页
+            // 用户与订单信息不一致，返回订单列表页
             return URL;
         }
 
@@ -391,7 +393,7 @@ public class ForeOrderController extends BaseController {
 
         double orderTotalPrice = 0.00;
         if (order.getProductOrderItemList().size() == 1) {
-            //获取单订单项的产品信息
+            // 获取单订单项的产品信息
             ProductOrderItem productOrderItem = order.getProductOrderItemList().get(0);
             Product product = productService.get(productOrderItem.getProductOrderItem_product().getProduct_id());
             product.setProduct_category(categoryService.get(product.getProduct_category().getCategory_id()));
@@ -402,7 +404,7 @@ public class ForeOrderController extends BaseController {
                 orderTotalPrice += productOrderItem.getProductOrderItem_price();
             }
         }
-        //订单总金额为：{}元, orderTotalPrice
+        // 订单总金额为：{}元, orderTotalPrice
         // 创建支付
        /* TradeOrderResp orderResp = createPay(1, "", order,orderTotalPrice);
         if (orderResp.isSuccess()) {
@@ -413,7 +415,7 @@ public class ForeOrderController extends BaseController {
         map.put("productOrder", order);
         map.put("orderTotalPrice", orderTotalPrice);
 
-        //转到前台天猫-订单支付页
+        // 转到前台天猫-订单支付页
         return "fore/productPayPage";
     }
 
@@ -430,7 +432,7 @@ public class ForeOrderController extends BaseController {
         orderReq.setTradeSerialNo(order.getProductOrder_code());
         orderReq.setAmount(BigDecimal.valueOf(orderTotalPrice));
         orderReq.setGoodsName("商品");
-        //orderReq.setUserClientIp(userClientIp);
+        // orderReq.setUserClientIp(userClientIp);
         orderReq.setNotifyUrl("fore/productPayPage");
         if (StringUtils.hasText(quitUrl)) {
             orderReq.setQuitUrl(quitUrl + "?tradeSerialNo=" + orderReq.getTradeSerialNo());
@@ -438,43 +440,43 @@ public class ForeOrderController extends BaseController {
         return payFace.tradeOrder(orderReq);
     }
 
-    //转到前台天猫-订单支付成功页
+    // 转到前台天猫-订单支付成功页
     @ApiOperation(value = "转到前台天猫-订单支付成功页", notes = "转到前台天猫-订单支付成功页")
     @GetMapping(value = "order/pay/success/{order_code}")
     public String goToOrderPaySuccessPage(Map<String, Object> map, HttpSession session,
                                           @PathVariable("order_code") String order_code) {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         User user;
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
             return LOGIN;
         }
         //------验证订单信息------
-        //查询订单是否存在
+        // 查询订单是否存在
         ProductOrder order = productOrderService.getByCode(order_code);
         if (order == null) {
-            //订单不存在，返回订单列表页
+            // 订单不存在，返回订单列表页
             return URL;
         }
-        //验证订单状态
+        // 验证订单状态
         if (order.getProductOrder_status() != 1) {
-            //订单状态不正确，返回订单列表页
+            // 订单状态不正确，返回订单列表页
             return URL;
         }
-        //验证用户与订单是否一致
+        // 验证用户与订单是否一致
         if (order.getProductOrder_user().getUser_id() != Integer.parseInt(userId.toString())) {
-            //用户与订单信息不一致，返回订单列表页
+            // 用户与订单信息不一致，返回订单列表页
             return URL;
         }
         order.setProductOrderItemList(productOrderItemService.getListByOrderId(order.getProductOrder_id(), null));
 
         double orderTotalPrice = 0.00;
         if (order.getProductOrderItemList().size() == 1) {
-            //获取单订单项的产品信息
+            // 获取单订单项的产品信息
             ProductOrderItem productOrderItem = order.getProductOrderItemList().get(0);
             orderTotalPrice = productOrderItem.getProductOrderItem_price();
         } else {
@@ -482,16 +484,16 @@ public class ForeOrderController extends BaseController {
                 orderTotalPrice += productOrderItem.getProductOrderItem_price();
             }
         }
-        //订单总金额为：{}元, orderTotalPrice
+        // 订单总金额为：{}元, orderTotalPrice
 
-        //获取订单详情-地址信息
+        // 获取订单详情-地址信息
         Address address = addressService.get(order.getProductOrder_address().getAddress_areaId());
         Stack<String> addressStack = new Stack<>();
-        //详细地址
+        // 详细地址
         addressStack.push(order.getProductOrder_detail_address());
-        //最后一级地址
+        // 最后一级地址
         addressStack.push(address.getAddress_name() + " ");
-        //如果不是第一级地址
+        // 如果不是第一级地址
         while (!address.getAddress_areaId().equals(address.getAddress_regionId().getAddress_areaId())) {
             address = addressService.get(address.getAddress_regionId().getAddress_areaId());
             addressStack.push(address.getAddress_name() + " ");
@@ -500,53 +502,53 @@ public class ForeOrderController extends BaseController {
         while (!addressStack.empty()) {
             builder.append(addressStack.pop());
         }
-        //订单地址字符串：{}, builder
+        // 订单地址字符串：{}, builder
         order.setProductOrder_detail_address(builder.toString());
 
         map.put("productOrder", order);
         map.put("orderTotalPrice", orderTotalPrice);
 
-        //转到前台天猫-订单支付成功页
+        // 转到前台天猫-订单支付成功页
         return "fore/productPaySuccessPage";
     }
 
-    //转到前台天猫-订单确认页
+    // 转到前台天猫-订单确认页
     @ApiOperation(value = "转到前台天猫-订单确认页", notes = "转到前台天猫-订单确认页")
     @GetMapping(value = "order/confirm/{order_code}")
     public String goToOrderConfirmPage(Map<String, Object> map, HttpSession session,
                                        @PathVariable("order_code") String order_code) {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         User user;
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
             return LOGIN;
         }
         //------验证订单信息------
-        //查询订单是否存在
+        // 查询订单是否存在
         ProductOrder order = productOrderService.getByCode(order_code);
         if (order == null) {
-            //订单不存在，返回订单列表页
+            // 订单不存在，返回订单列表页
             return URL;
         }
-        //验证订单状态
+        // 验证订单状态
         if (order.getProductOrder_status() != 2) {
-            //订单状态不正确，返回订单列表页
+            // 订单状态不正确，返回订单列表页
             return URL;
         }
-        //验证用户与订单是否一致
+        // 验证用户与订单是否一致
         if (order.getProductOrder_user().getUser_id() != Integer.parseInt(userId.toString())) {
-            //用户与订单信息不一致，返回订单列表页
+            // 用户与订单信息不一致，返回订单列表页
             return URL;
         }
         order.setProductOrderItemList(productOrderItemService.getListByOrderId(order.getProductOrder_id(), null));
 
         double orderTotalPrice = 0.00;
         if (order.getProductOrderItemList().size() == 1) {
-            //获取单订单项的产品信息
+            // 获取单订单项的产品信息
             ProductOrderItem productOrderItem = order.getProductOrderItemList().get(0);
             Integer product_id = productOrderItem.getProductOrderItem_product().getProduct_id();
             Product product = productService.get(product_id);
@@ -554,7 +556,7 @@ public class ForeOrderController extends BaseController {
             productOrderItem.setProductOrderItem_product(product);
             orderTotalPrice = productOrderItem.getProductOrderItem_price();
         } else {
-            //获取多订单项的产品信息
+            // 获取多订单项的产品信息
             for (ProductOrderItem productOrderItem : order.getProductOrderItemList()) {
                 Integer product_id = productOrderItem.getProductOrderItem_product().getProduct_id();
                 Product product = productService.get(product_id);
@@ -563,57 +565,57 @@ public class ForeOrderController extends BaseController {
                 orderTotalPrice += productOrderItem.getProductOrderItem_price();
             }
         }
-        //订单总金额为：{}元, orderTotalPrice
+        // 订单总金额为：{}元, orderTotalPrice
         map.put("productOrder", order);
         map.put("orderTotalPrice", orderTotalPrice);
 
-        //转到前台天猫-订单确认页
+        // 转到前台天猫-订单确认页
         return "fore/orderConfirmPage";
     }
 
-    //转到前台天猫-订单完成页
+    // 转到前台天猫-订单完成页
     @ApiOperation(value = "转到前台天猫-订单完成页", notes = "转到前台天猫-订单完成页")
     @GetMapping(value = "order/success/{order_code}")
     public String goToOrderSuccessPage(Map<String, Object> map, HttpSession session,
                                        @PathVariable("order_code") String order_code) {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         User user;
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
             return LOGIN;
         }
         //------验证订单信息------
-        //查询订单是否存在
+        // 查询订单是否存在
         ProductOrder order = productOrderService.getByCode(order_code);
         if (order == null) {
-            //订单不存在，返回订单列表页
+            // 订单不存在，返回订单列表页
             return URL;
         }
-        //验证订单状态
+        // 验证订单状态
         if (order.getProductOrder_status() != 3) {
-            //订单状态不正确，返回订单列表页
+            // 订单状态不正确，返回订单列表页
             return URL;
         }
-        //验证用户与订单是否一致
+        // 验证用户与订单是否一致
         if (order.getProductOrder_user().getUser_id() != Integer.parseInt(userId.toString())) {
-            //用户与订单信息不一致，返回订单列表页
+            // 用户与订单信息不一致，返回订单列表页
             return URL;
         }
-        //获取订单中订单项数量
+        // 获取订单中订单项数量
         Integer count = productOrderItemService.getTotalByOrderId(order.getProductOrder_id());
         Product product = null;
         if (count == 1) {
-            //获取订单中的唯一订单项
+            // 获取订单中的唯一订单项
             ProductOrderItem productOrderItem = productOrderItemService.getListByOrderId(order.getProductOrder_id(), new PageUtil(0, 1)).get(0);
             if (productOrderItem != null) {
-                //获取订单项评论数量
+                // 获取订单项评论数量
                 count = reviewService.getTotalByOrderItemId(productOrderItem.getProductOrderItem_id());
                 if (count == 0) {
-                    //获取订单项产品信息
+                    // 获取订单项产品信息
                     product = productService.get(productOrderItem.getProductOrderItem_product().getProduct_id());
                     if (product != null) {
                         product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), (byte) 0, new PageUtil(0, 1)));
@@ -623,31 +625,31 @@ public class ForeOrderController extends BaseController {
             map.put("orderItem", productOrderItem);
         }
         map.put("product", product);
-        //转到前台天猫-订单完成页
+        // 转到前台天猫-订单完成页
         return "fore/orderSuccessPage";
     }
 
-    //转到前台天猫-购物车页
+    // 转到前台天猫-购物车页
     @ApiOperation(value = "转到前台天猫-购物车页", notes = "转到前台天猫-购物车页")
     @GetMapping(value = "cart")
     public String goToCartPage(Map<String, Object> map, HttpSession session) {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         User user;
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         } else {
             return LOGIN;
         }
-        //获取用户购物车信息
+        // 获取用户购物车信息
         List<ProductOrderItem> orderItemList = productOrderItemService.getListByUserId(Integer.valueOf(userId.toString()), null);
         Integer orderItemTotal = 0;
         if (CollectionUtils.isNotEmpty(orderItemList)) {
-            //获取用户购物车的商品总数
+            // 获取用户购物车的商品总数
             orderItemTotal = productOrderItemService.getTotalByUserId(Integer.valueOf(userId.toString()));
-            //获取用户购物车内的商品信息
+            // 获取用户购物车内的商品信息
             for (ProductOrderItem orderItem : orderItemList) {
                 Integer product_id = orderItem.getProductOrderItem_product().getProduct_id();
                 Product product = productService.get(product_id);
@@ -658,17 +660,17 @@ public class ForeOrderController extends BaseController {
         }
         map.put("orderItemList", orderItemList);
         map.put("orderItemTotal", orderItemTotal);
-        //转到前台天猫-购物车页
+        // 转到前台天猫-购物车页
         return "fore/productBuyCarPage";
     }
 
-    //更新订单信息为已支付，待发货-ajax
+    // 更新订单信息为已支付，待发货-ajax
     @ApiOperation(value = "更新订单信息为已支付，待发货", notes = "更新订单信息为已支付，待发货")
     @ResponseBody
     @PutMapping(value = "order/pay/{order_code}")
     public String orderPay(HttpSession session, @PathVariable("order_code") String order_code) {
         JSONObject object = new JSONObject();
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             object.put(Constants.SUCCESS, false);
@@ -676,38 +678,38 @@ public class ForeOrderController extends BaseController {
             return String.valueOf(object);
         }
         //------验证订单信息------
-        //查询订单是否存在
+        // 查询订单是否存在
         ProductOrder order = productOrderService.getByCode(order_code);
         if (order == null) {
-            //订单不存在，返回订单列表页
+            // 订单不存在，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
-        //验证订单状态
+        // 验证订单状态
         if (order.getProductOrder_status() != 0) {
-            //订单状态不正确，返回订单列表页
+            // 订单状态不正确，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
-        //验证用户与订单是否一致
+        // 验证用户与订单是否一致
         if (order.getProductOrder_user().getUser_id() != Integer.parseInt(userId.toString())) {
-            //用户与订单信息不一致，返回订单列表页
+            // 用户与订单信息不一致，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
         order.setProductOrderItemList(productOrderItemService.getListByOrderId(order.getProductOrder_id(), null));
         if (order.getProductOrderItemList().size() == 1) {
-            //获取单订单项的产品信息
+            // 获取单订单项的产品信息
             ProductOrderItem productOrderItem = order.getProductOrderItemList().get(0);
             Product product = productService.get(productOrderItem.getProductOrderItem_product().getProduct_id());
             product.setProduct_category(categoryService.get(product.getProduct_category().getCategory_id()));
             productOrderItem.setProductOrderItem_product(product);
         }
-        //总共支付金额为：{}元, orderTotalPrice
-        //更新订单信息
+        // 总共支付金额为：{}元, orderTotalPrice
+        // 更新订单信息
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(order.getProductOrder_id());
         SimpleDateFormat time = new SimpleDateFormat(Constants.DATE, Locale.UK);
@@ -724,33 +726,33 @@ public class ForeOrderController extends BaseController {
         return String.valueOf(object);
     }
 
-    //更新订单信息为已发货，待确认-ajax
+    // 更新订单信息为已发货，待确认-ajax
     @ApiOperation(value = "更新订单信息为已发货，待确认", notes = "更新订单信息为已发货，待确认")
     @GetMapping(value = "order/delivery/{order_code}")
     public String orderDelivery(HttpSession session, @PathVariable("order_code") String order_code) {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             return URL;
         }
         //------验证订单信息------
-        //查询订单是否存在
+        // 查询订单是否存在
         ProductOrder order = productOrderService.getByCode(order_code);
         if (order == null) {
-            //订单不存在，返回订单列表页
+            // 订单不存在，返回订单列表页
             return URL;
         }
-        //验证订单状态
+        // 验证订单状态
         if (order.getProductOrder_status() != 1) {
-            //订单状态不正确，返回订单列表页
+            // 订单状态不正确，返回订单列表页
             return URL;
         }
-        //验证用户与订单是否一致
+        // 验证用户与订单是否一致
         if (order.getProductOrder_user().getUser_id() != Integer.parseInt(userId.toString())) {
-            //用户与订单信息不一致，返回订单列表页
+            // 用户与订单信息不一致，返回订单列表页
             return URL;
         }
-        //更新订单信息
+        // 更新订单信息
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(order.getProductOrder_id());
         SimpleDateFormat time = new SimpleDateFormat(Constants.DATE, Locale.UK);
@@ -760,13 +762,13 @@ public class ForeOrderController extends BaseController {
         return URL;
     }
 
-    //更新订单信息为交易成功-ajax
+    // 更新订单信息为交易成功-ajax
     @ApiOperation(value = "更新订单信息为交易成功", notes = "更新订单信息为交易成功")
     @ResponseBody
     @PutMapping(value = "order/success/{order_code}", produces = "application/json;charset=utf-8")
     public String orderSuccess(HttpSession session, @PathVariable("order_code") String order_code) {
         JSONObject object = new JSONObject();
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             object.put(Constants.SUCCESS, false);
@@ -774,29 +776,29 @@ public class ForeOrderController extends BaseController {
             return String.valueOf(object);
         }
         //------验证订单信息------
-        //查询订单是否存在
+        // 查询订单是否存在
         ProductOrder order = productOrderService.getByCode(order_code);
         if (order == null) {
-            //订单不存在，返回订单列表页
+            // 订单不存在，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
-        //验证订单状态
+        // 验证订单状态
         if (order.getProductOrder_status() != 2) {
-            //订单状态不正确，返回订单列表页
+            // 订单状态不正确，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
-        //验证用户与订单是否一致
+        // 验证用户与订单是否一致
         if (order.getProductOrder_user().getUser_id() != Integer.parseInt(userId.toString())) {
-            //用户与订单信息不一致，返回订单列表页
+            // 用户与订单信息不一致，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
-        //更新订单信息
+        // 更新订单信息
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(order.getProductOrder_id());
         productOrder.setProductOrder_status((byte) 3);
@@ -811,13 +813,13 @@ public class ForeOrderController extends BaseController {
         return String.valueOf(object);
     }
 
-    //更新订单信息为交易关闭-ajax
+    // 更新订单信息为交易关闭-ajax
     @ApiOperation(value = "更新订单信息为交易关闭", notes = "更新订单信息为交易关闭")
     @ResponseBody
     @PutMapping(value = "order/close/{order_code}", produces = "application/json;charset=utf-8")
     public String orderClose(HttpSession session, @PathVariable("order_code") String order_code) {
         JSONObject object = new JSONObject();
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             object.put(Constants.SUCCESS, false);
@@ -825,29 +827,29 @@ public class ForeOrderController extends BaseController {
             return String.valueOf(object);
         }
         //------验证订单信息------
-        //查询订单是否存在
+        // 查询订单是否存在
         ProductOrder order = productOrderService.getByCode(order_code);
         if (order == null) {
-            //订单不存在，返回订单列表页
+            // 订单不存在，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
-        //验证订单状态
+        // 验证订单状态
         if (order.getProductOrder_status() != 0) {
-            //订单状态不正确，返回订单列表页
+            // 订单状态不正确，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
-        //验证用户与订单是否一致
+        // 验证用户与订单是否一致
         if (order.getProductOrder_user().getUser_id() != Integer.parseInt(userId.toString())) {
-            //用户与订单信息不一致，返回订单列表页
+            // 用户与订单信息不一致，返回订单列表页
             object.put(Constants.SUCCESS, false);
             object.put("url", ORDER);
             return String.valueOf(object);
         }
-        //更新订单信息
+        // 更新订单信息
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_id(order.getProductOrder_id());
         productOrder.setProductOrder_status((byte) 4);
@@ -860,14 +862,14 @@ public class ForeOrderController extends BaseController {
         return String.valueOf(object);
     }
 
-    //更新购物车订单项数量-ajax
+    // 更新购物车订单项数量-ajax
     @ApiOperation(value = "更新购物车订单项数量", notes = "更新购物车订单项数量")
     @ResponseBody
     @PutMapping(value = "orderItem", produces = "application/json;charset=utf-8")
     public String updateOrderItem(HttpSession session, Map<String, Object> map, HttpServletResponse response,
                                   @RequestParam String orderItemMap) {
         JSONObject object = new JSONObject();
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             object.put(Constants.SUCCESS, false);
@@ -876,21 +878,21 @@ public class ForeOrderController extends BaseController {
         JSONObject orderItemString = JSON.parseObject(orderItemMap);
         Set<String> orderItemIDSet = orderItemString.keySet();
         if (CollectionUtils.isNotEmpty(orderItemIDSet)) {
-            //更新产品订单项数量
+            // 更新产品订单项数量
             for (String key : orderItemIDSet) {
                 ProductOrderItem productOrderItem = productOrderItemService.get(Integer.valueOf(key));
                 if (productOrderItem == null || !productOrderItem.getProductOrderItem_user().getUser_id().equals(userId)) {
-                    //订单项为空或用户状态不一致！
+                    // 订单项为空或用户状态不一致！
                     object.put(Constants.SUCCESS, false);
                     return String.valueOf(object);
                 }
                 if (productOrderItem.getProductOrderItem_order() != null) {
-                    //用户订单项不属于购物车，回到购物车页
+                    // 用户订单项不属于购物车，回到购物车页
                     return CART;
                 }
                 Short number = Short.valueOf(orderItemString.getString(key));
                 if (number <= 0 || number > 500) {
-                    //订单项产品数量不合法！
+                    // 订单项产品数量不合法！
                     object.put(Constants.SUCCESS, false);
                     return String.valueOf(object);
                 }
@@ -909,13 +911,13 @@ public class ForeOrderController extends BaseController {
             object.put("orderItemIDArray", orderItemIDArray);
             return String.valueOf(object);
         } else {
-            //无订单项可以处理
+            // 无订单项可以处理
             object.put(Constants.SUCCESS, false);
             return String.valueOf(object);
         }
     }
 
-    //创建新订单-单订单项-ajax
+    // 创建新订单-单订单项-ajax
     @ApiOperation(value = "创建新订单-单订单项", notes = "创建新订单-单订单项")
     @ResponseBody
     @PostMapping(value = "order", produces = "application/json;charset=utf-8")
@@ -931,7 +933,7 @@ public class ForeOrderController extends BaseController {
                                    @RequestParam Integer orderItem_product_id,
                                    @RequestParam Short orderItem_number) throws UnsupportedEncodingException {
         JSONObject object = new JSONObject();
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             object.put(Constants.SUCCESS, false);
@@ -944,7 +946,7 @@ public class ForeOrderController extends BaseController {
             object.put("url", "/");
             return String.valueOf(object);
         }
-        //将收货地址等相关信息存入Cookie中
+        // 将收货地址等相关信息存入Cookie中
         Cookie cookie1 = new Cookie("addressId", addressId);
         Cookie cookie2 = new Cookie("cityAddressId", cityAddressId);
         Cookie cookie3 = new Cookie("districtAddressId", districtAddressId);
@@ -952,7 +954,7 @@ public class ForeOrderController extends BaseController {
         Cookie cookie5 = new Cookie("order_receiver", URLEncoder.encode(productOrder_receiver, Constants.UTF));
         Cookie cookie6 = new Cookie("order_phone", URLEncoder.encode(productOrder_mobile, Constants.UTF));
         Cookie cookie7 = new Cookie("detailsAddress", URLEncoder.encode(productOrder_detail_address, Constants.UTF));
-        //设置过期时间为一年
+        // 设置过期时间为一年
         int maxAge = 60 * 60 * 24 * 365;
         cookie1.setMaxAge(maxAge);
         cookie2.setMaxAge(maxAge);
@@ -972,8 +974,8 @@ public class ForeOrderController extends BaseController {
                 .append(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
                 .append(0)
                 .append(userId);
-        //生成的订单号为：{}, productOrder_code
-        //整合订单对象
+        // 生成的订单号为：{}, productOrder_code
+        // 整合订单对象
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_status((byte) 0);
         Address address = new Address();
@@ -994,7 +996,7 @@ public class ForeOrderController extends BaseController {
             throw new RuntimeException();
         }
         Integer order_id = lastIDService.selectLastID();
-        //整合订单项对象
+        // 整合订单项对象
         ProductOrderItem productOrderItem = new ProductOrderItem();
         productOrderItem.setProductOrderItem_user(user);
         productOrderItem.setProductOrderItem_product(productService.get(orderItem_product_id));
@@ -1013,7 +1015,7 @@ public class ForeOrderController extends BaseController {
         return String.valueOf(object);
     }
 
-    //创建新订单-多订单项-ajax
+    // 创建新订单-多订单项-ajax
     @ApiOperation(value = "创建新订单-多订单项", notes = "创建新订单-多订单项")
     @ResponseBody
     @PostMapping(value = "order/list", produces = "application/json;charset=utf-8")
@@ -1027,7 +1029,7 @@ public class ForeOrderController extends BaseController {
                                     @RequestParam String productOrder_mobile,
                                     @RequestParam String orderItemJSON) throws UnsupportedEncodingException {
         JSONObject object = new JSONObject();
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             object.put(Constants.SUCCESS, false);
@@ -1041,13 +1043,13 @@ public class ForeOrderController extends BaseController {
             for (String id : orderItem_id) {
                 ProductOrderItem orderItem = productOrderItemService.get(Integer.valueOf(id));
                 if (orderItem == null || !orderItem.getProductOrderItem_user().getUser_id().equals(userId)) {
-                    //订单项为空或用户状态不一致！
+                    // 订单项为空或用户状态不一致！
                     object.put(Constants.SUCCESS, false);
                     object.put("url", "/cart");
                     return String.valueOf(object);
                 }
                 if (orderItem.getProductOrderItem_order() != null) {
-                    //用户订单项不属于购物车，回到购物车页
+                    // 用户订单项不属于购物车，回到购物车页
                     object.put(Constants.SUCCESS, false);
                     object.put("url", "/cart");
                     return String.valueOf(object);
@@ -1067,7 +1069,7 @@ public class ForeOrderController extends BaseController {
             object.put("url", "/cart");
             return String.valueOf(object);
         }
-        //将收货地址等相关信息存入Cookie中
+        // 将收货地址等相关信息存入Cookie中
         Cookie cookie1 = new Cookie("addressId", addressId);
         Cookie cookie2 = new Cookie("cityAddressId", cityAddressId);
         Cookie cookie3 = new Cookie("districtAddressId", districtAddressId);
@@ -1075,7 +1077,7 @@ public class ForeOrderController extends BaseController {
         Cookie cookie5 = new Cookie("order_receiver", URLEncoder.encode(productOrder_receiver, Constants.UTF));
         Cookie cookie6 = new Cookie("order_phone", URLEncoder.encode(productOrder_mobile, Constants.UTF));
         Cookie cookie7 = new Cookie("detailsAddress", URLEncoder.encode(productOrder_detail_address, Constants.UTF));
-        //设置过期时间为一年
+        // 设置过期时间为一年
         int maxAge = 60 * 60 * 24 * 365;
         cookie1.setMaxAge(maxAge);
         cookie2.setMaxAge(maxAge);
@@ -1095,15 +1097,15 @@ public class ForeOrderController extends BaseController {
                 .append(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
                 .append(0)
                 .append(userId);
-        //生成的订单号为：{}, productOrder_code
-        //整合订单对象
+        // 生成的订单号为：{}, productOrder_code
+        // 整合订单对象
         ProductOrder productOrder = new ProductOrder();
         productOrder.setProductOrder_status((byte) 0);
         Address address = new Address();
         address.setAddress_areaId(districtAddressId);
         productOrder.setProductOrder_address(address);
         productOrder.setProductOrder_post(productOrder_post);
-        //用户
+        // 用户
         User user = new User();
         user.setUser_id(Integer.valueOf(userId.toString()));
         productOrder.setProductOrder_user(user);
@@ -1118,7 +1120,7 @@ public class ForeOrderController extends BaseController {
             throw new RuntimeException();
         }
         Integer order_id = lastIDService.selectLastID();
-        //整合订单项对象
+        // 整合订单项对象
         for (ProductOrderItem orderItem : productOrderItemList) {
             ProductOrder productOrder1 = new ProductOrder();
             productOrder1.setProductOrder_id(order_id);
@@ -1133,7 +1135,7 @@ public class ForeOrderController extends BaseController {
         return String.valueOf(object);
     }
 
-    //创建订单项-购物车-ajax
+    // 创建订单项-购物车-ajax
     @ApiOperation(value = "创建订单项-购物车", notes = "创建订单项-购物车")
     @ResponseBody
     @PostMapping(value = "orderItem/create/{product_id}", produces = "application/json;charset=utf-8")
@@ -1142,28 +1144,28 @@ public class ForeOrderController extends BaseController {
                                   HttpSession session,
                                   HttpServletRequest request) {
         JSONObject object = new JSONObject();
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             object.put("url", Constants.LOGIN);
             object.put(Constants.SUCCESS, false);
             return String.valueOf(object);
         }
-        //通过产品ID获取产品信息：{}, product_id
+        // 通过产品ID获取产品信息：{}, product_id
         Product product = productService.get(product_id);
         if (product == null) {
             object.put("url", Constants.LOGIN);
             object.put(Constants.SUCCESS, false);
             return String.valueOf(object);
         }
-        //产品订单项
+        // 产品订单项
         ProductOrderItem productOrderItem = new ProductOrderItem();
-        //检查用户的购物车项
+        // 检查用户的购物车项
         List<ProductOrderItem> orderItemList = productOrderItemService.getListByUserId(Integer.valueOf(userId.toString()), null);
         if (CollectionUtils.isNotEmpty(orderItemList)) {
             for (ProductOrderItem orderItem : orderItemList) {
                 if (orderItem.getProductOrderItem_product().getProduct_id().equals(product_id)) {
-                    //找到已有的产品，进行数量追加
+                    // 找到已有的产品，进行数量追加
                     int number = orderItem.getProductOrderItem_number();
                     number += 1;
                     productOrderItem.setProductOrderItem_id(orderItem.getProductOrderItem_id());
@@ -1179,7 +1181,7 @@ public class ForeOrderController extends BaseController {
                 }
             }
         }
-        //封装订单项对象
+        // 封装订单项对象
         productOrderItem.setProductOrderItem_product(product);
         productOrderItem.setProductOrderItem_number(product_number);
         productOrderItem.setProductOrderItem_price(product.getProduct_sale_price() * product_number);
@@ -1195,7 +1197,7 @@ public class ForeOrderController extends BaseController {
         return String.valueOf(object);
     }
 
-    //删除订单项-购物车-ajax
+    // 删除订单项-购物车-ajax
     @ApiOperation(value = "删除订单项-购物车", notes = "删除订单项-购物车")
     @ResponseBody
     @DeleteMapping(value = "orderItem/{orderItem_id}", produces = "application/json;charset=utf-8")
@@ -1203,25 +1205,25 @@ public class ForeOrderController extends BaseController {
                                   HttpSession session,
                                   HttpServletRequest request) {
         JSONObject object = new JSONObject();
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId == null) {
             object.put("url", Constants.LOGIN);
             object.put(Constants.SUCCESS, false);
             return String.valueOf(object);
         }
-        //检查用户的购物车项
+        // 检查用户的购物车项
         List<ProductOrderItem> orderItemList = productOrderItemService.getListByUserId(Integer.valueOf(userId.toString()), null);
         boolean isMine = false;
         for (ProductOrderItem orderItem : orderItemList) {
-            //找到匹配的购物车项
+            // 找到匹配的购物车项
             if (orderItem.getProductOrderItem_id().equals(orderItem_id)) {
                 isMine = true;
                 break;
             }
         }
         if (isMine) {
-            //删除订单项信息
+            // 删除订单项信息
             boolean yn = productOrderItemService.deleteList(new Integer[]{orderItem_id});
             if (yn) {
                 object.put(Constants.SUCCESS, true);

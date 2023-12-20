@@ -4,7 +4,7 @@ import com.xq.tmall.dao.PropertyMapper;
 import com.xq.tmall.entity.Property;
 import com.xq.tmall.service.PropertyService;
 import com.xq.tmall.util.PageUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PropertyServiceImpl implements PropertyService {
-    @Autowired
-    private PropertyMapper propertyMapper;
+    private final PropertyMapper propertyMapper;
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override

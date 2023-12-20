@@ -15,7 +15,7 @@ import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,39 +31,36 @@ import java.util.Map;
  */
 @Api(tags = "前台天猫-主页")
 @Controller
+@RequiredArgsConstructor
 public class ForeHomeController extends BaseController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private ProductImageService productImageService;
+    private final UserService userService;
+    private final CategoryService categoryService;
+    private final ProductService productService;
+    private final ProductImageService productImageService;
 
-    //转到前台天猫-主页
+    // 转到前台天猫-主页
     @ApiOperation(value = "转到前台天猫-主页", notes = "转到前台天猫-主页")
     @GetMapping(value = "/")
     public String goToPage(HttpSession session, Map<String, Object> map) {
-        //检查用户是否登录
+        // 检查用户是否登录
         Object userId = checkUser(session);
         if (userId != null) {
-            //获取用户信息
+            // 获取用户信息
             User user = userService.get(Integer.parseInt(userId.toString()));
             map.put("user", user);
         }
-        //获取产品分类列表
+        // 获取产品分类列表
         List<Category> categoryList = categoryService.getList(null, null);
-        //获取每个分类下的产品列表
+        // 获取每个分类下的产品列表
         if (CollectionUtils.isNotEmpty(categoryList)) {
             for (Category category : categoryList) {
-                //获取分类id为{}的产品集合，按产品ID倒序排序, category.getCategory_id()
+                // 获取分类id为{}的产品集合，按产品ID倒序排序, category.getCategory_id()
                 Product product1 = new Product();
                 product1.setProduct_category(category);
                 List<Product> productList = productService.getList(product1, new Byte[]{0, 2}, new OrderUtil("product_id", true), new PageUtil(0, 8));
                 if (CollectionUtils.isNotEmpty(productList)) {
                     for (Product product : productList) {
-                        //获取产品id为{}的产品预览图片信息, product_id
+                        // 获取产品id为{}的产品预览图片信息, product_id
                         product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), (byte) 0, new PageUtil(0, 1)));
                     }
                 }
@@ -71,22 +68,22 @@ public class ForeHomeController extends BaseController {
             }
         }
         map.put("categoryList", categoryList);
-        //获取促销产品列表
+        // 获取促销产品列表
         List<Product> specialProductList = productService.getList(null, new Byte[]{2}, null, new PageUtil(0, 6));
         map.put("specialProductList", specialProductList);
 
-        //转到前台主页
+        // 转到前台主页
         return "fore/homePage";
     }
 
-    //转到前台天猫-错误页
+    // 转到前台天猫-错误页
     @ApiOperation(value = "转到前台天猫-错误页", notes = "转到前台天猫-错误页")
     @GetMapping(value = "error")
     public String goToErrorPage() {
         return "fore/errorPage";
     }
 
-    //获取主页分类下产品信息-ajax
+    // 获取主页分类下产品信息-ajax
     @ApiOperation(value = "获取主页分类下产品信息", notes = "获取主页分类下产品信息")
     @ResponseBody
     @GetMapping(value = "product/nav/{category_id}", produces = "application/json;charset=utf-8")
@@ -96,7 +93,7 @@ public class ForeHomeController extends BaseController {
             object.put(Constants.SUCCESS, false);
             return String.valueOf(object);
         }
-        //获取分类ID为{}的产品标题数据, category_id
+        // 获取分类ID为{}的产品标题数据, category_id
         Category category1 = new Category();
         category1.setCategory_id(category_id);
         Product product = new Product();
@@ -106,7 +103,7 @@ public class ForeHomeController extends BaseController {
         List<Product> products = new ArrayList<>(5);
         if (CollectionUtils.isNotEmpty(productList)) {
             for (int i = 0; i < productList.size(); i++) {
-                //如果临时集合中产品数达到5个，加入到产品二维集合中，并重新实例化临时集合
+                // 如果临时集合中产品数达到5个，加入到产品二维集合中，并重新实例化临时集合
                 if (i % 5 == 0) {
                     complexProductList.add(products);
                     products = new ArrayList<>(5);
