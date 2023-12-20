@@ -71,7 +71,6 @@ public class ForeLoginController extends BaseController {
         return "redirect:/login";
     }
 
-
     @ApiOperation(value = "登录验证码", notes = "登录验证码")
     @ResponseBody
     @GetMapping(value = "login/code")
