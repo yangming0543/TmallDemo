@@ -229,7 +229,7 @@
         }
 
         //文件赋值
-        let fileDom;
+        var fileDom;
 
         function uploadFile(fileDom) {
             this.fileDom = fileDom;
@@ -241,6 +241,7 @@
         })
         //关闭事件
         $("#btn-import-close").unbind("click").click(function () {
+            this.fileDom =null;
             //清空值
             $(fileDom).val('');
         })
@@ -262,10 +263,12 @@
                 processData: false,//禁止对jquery数据进行处理，因为formData已经做了处理
                 mimeType: "multipart/form-data",
                 success: function (data) {
+                    this.fileDom =null;
+                    //清空值
+                    $(fileDom).val('');
+                    $(fileDom).attr("disabled", false);
+                    $("#modalFileDiv").modal("hide");
                     if (data.success) {
-                        $("#modalFileDiv").modal("hide");
-                        //清空值
-                        $(fileDom).val('');
                         alert("导入成功！");
                         //获取数据
                         getData($(this), "admin/product/0/10", null);
