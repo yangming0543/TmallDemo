@@ -59,4 +59,13 @@ public interface AdminMapper {
      * @return
      */
     Integer selectTotal(String admin_name);
+
+    /**
+     * 查询管理员-通过用户名和密码
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
+    Admin getAdmin(@Param("userName") String userName, @Param("password") String password);
 }

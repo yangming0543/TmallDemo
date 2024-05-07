@@ -60,4 +60,8 @@
             <if test="admin_name != null">admin_name LIKE concat('%',#{admin_name},'%')</if>
         </where>
     </select>
+    <select id="getAdmin" resultType="com.xq.tmall.entity.Admin">
+        SELECT admin_id,admin_name,admin_nickname,admin_profile_picture_src FROM admin
+        where admin_name = #{userName} and admin_password = #{password}
+    </select>
 </mapper>

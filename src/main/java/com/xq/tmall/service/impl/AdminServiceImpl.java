@@ -47,4 +47,9 @@ public class AdminServiceImpl implements AdminService {
     public Integer getTotal(String admin_name) {
         return adminMapper.selectTotal(admin_name);
     }
+
+    @Override
+    public Admin getAdmin(String userName, String password) {
+        return adminMapper.getAdmin(userName, password);
+    }
 }

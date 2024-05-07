@@ -56,4 +56,13 @@ public interface AdminService {
      * @return
      */
     Integer getTotal(String admin_name);
+
+    /**
+     * 查询管理员-通过用户名和密码
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
+    Admin getAdmin(String userName, String password);
 }

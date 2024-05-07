@@ -2,6 +2,7 @@ package com.xq.tmall.controller.admin;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.xq.tmall.controller.BaseController;
@@ -43,14 +44,14 @@ public class AdminLoginController extends BaseController {
     @PostMapping(value = "admin/login/doLogin", produces = "application/json;charset=utf-8")
     public String checkLogin(HttpSession session, @RequestParam String username, @RequestParam String password) {
         // 管理员登录验证
-        Integer admin = adminService.login(username, password);
+        Admin admin = adminService.getAdmin(username, password);
         JSONObject object = new JSONObject();
-        if (admin == 0) {
+        if (ObjectUtil.isEmpty(admin)) {
             // 登录验证失败
             object.put(Constants.SUCCESS, false);
         } else {
             // 登录验证成功，管理员ID传入会话
-            session.setAttribute(Constants.ADMIN_ID, admin);
+            session.setAttribute(Constants.ADMIN_ID, admin.getAdmin_id());
             object.put(Constants.SUCCESS, true);
         }
         return String.valueOf(object);
