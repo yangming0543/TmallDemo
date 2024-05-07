@@ -8,13 +8,14 @@
         <result property="property_name" column="property_name"/>
         <association property="property_category" javaType="com.xq.tmall.entity.Category">
             <id property="category_id" column="property_category_id"/>
+            <id property="category_name" column="category_name"/>
         </association>
     </resultMap>
 
     <insert id="insertOne" parameterType="com.xq.tmall.entity.Property">
         INSERT property (property_name,property_category_id)
             VALUES(#{property.property_name},
-            #{property.property_category_id})
+            #{property.property_category.category_id})
     </insert>
     <insert id="insertList" parameterType="list">
         INSERT property (property_name,property_category_id)
@@ -42,13 +43,17 @@
             </foreach>
         </where>
     </delete>
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM property where property_id = #{propertyId}
+    </delete>
     <select id="selectPropertyList" resultMap="propertyMap">
-        SELECT property_id,property_name,property_category_id FROM property
+        SELECT pr.property_id,pr.property_name,pr.property_category_id,ca.category_name FROM property pr
+        left join category ca on pr.property_category_id=ca.category_id
         <if test="property != null">
             <where>
-                <if test="property.property_name != null">property_name LIKE concat('%',#{property.property_name},'%')</if>
+                <if test="property.property_name != null">pr.property_name LIKE concat('%',#{property.property_name},'%')</if>
                 <if test="property.property_category != null">
-                    <if test="property.property_category.category_id != null">property_category_id = #{property.property_category.category_id}</if>
+                    <if test="property.property_category.category_id != null">pr.property_category_id = #{property.property_category.category_id}</if>
                 </if>
             </where>
         </if>
@@ -57,21 +62,20 @@
         </if>
     </select>
     <select id="selectOne" resultMap="propertyMap" parameterType="java.lang.Integer">
-        SELECT property_id,property_name,property_category_id FROM property
+        SELECT pr.property_id,pr.property_name,pr.property_category_id,ca.category_name FROM property pr
+        left join category ca on pr.property_category_id=ca.category_id
         <where>
-            property_id = #{property_id}
+            pr.property_id = #{property_id}
         </where>
     </select>
     <select id="selectTotal" resultType="java.lang.Integer" parameterType="com.xq.tmall.entity.Property">
         SELECT COUNT(*) FROM property
         <if test="property != null">
             <where>
-                <where>
-                    <if test="property.property_name != null">property_name LIKE concat('%',#{property.property_name},'%')</if>
-                    <if test="property.property_category != null">
-                        <if test="property.property_category.category_id != null">property_category_id = #{property.property_category.category_id}</if>
-                    </if>
-                </where>
+                <if test="property.property_name != null">property_name LIKE concat('%',#{property.property_name},'%')</if>
+                <if test="property.property_category != null">
+                    <if test="property.property_category.category_id != null">property_category_id = #{property.property_category.category_id}</if>
+                </if>
             </where>
         </if>
     </select>

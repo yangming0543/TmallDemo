@@ -99,8 +99,9 @@
                             const user_nickname = data.userList[i].user_nickname;
                             const user_realname = data.userList[i].user_realname;
                             const user_birthday = data.userList[i].user_birthday;
+                            const num = i + 1 + (data.pageUtil.index) * 10;
                             //显示用户数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + user_id + "'><label for='cbx_user_select_" + user_id + "'></label></td><td title='" + user_name + "'>" + user_name + "</td><td title='" + user_nickname + "'>" + user_nickname + "</td><td title='" + user_realname + "'>" + user_realname + "</td><td title='" + user_birthday + "'>" + user_birthday + "</td><td title='" + gender + "'>" + gender + "</td>" +
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_user_select_" + user_id + "'><label for='cbx_user_select_" + user_id + "'></label></td><td>"+num+"</td><td title='" + user_name + "'>" + user_name + "</td><td title='" + user_nickname + "'>" + user_nickname + "</td><td title='" + user_realname + "'>" + user_realname + "</td><td title='" + user_birthday + "'>" + user_birthday + "</td><td title='" + gender + "'>" + gender + "</td>" +
                                 "<td><span class='td_special' title='查看用户详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>修改</a></span>" +
                                 "&nbsp;&nbsp;<span class='td_special' title='删除用户'><a href='javascript:void(0);' onclick='delUserChildPage(this)'>删除</a></span>"+
                                 "</td><td hidden  class='user_id'>" + user_id + "</td></tr>");
@@ -221,6 +222,7 @@
         <thead class="text_info">
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
+            <th class="data_info">编号</th>
             <th class="data_info" data-sort="asc" data-name="user_name">
                 <span>用户名</span>
                 <span class="orderByDesc"></span>
@@ -251,9 +253,10 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requestScope.userList}" var="user">
+        <c:forEach items="${requestScope.userList}" var="user" varStatus="index">
             <tr>
                 <td><input type="checkbox" class="cbx_select" id="cbx_user_select_${user.user_id}"><label for="cbx_user_select_${user.user_id}"></label></td>
+                <td title="编号">${index.index + 1}</td>
                 <td title="${user.user_name}">${user.user_name}</td>
                 <td title="${user.user_nickname}">${user.user_nickname}</td>
                 <td title="${user.user_realname}">${user.user_realname}</td>

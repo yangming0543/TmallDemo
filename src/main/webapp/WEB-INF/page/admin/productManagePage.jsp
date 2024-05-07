@@ -133,8 +133,9 @@
                             const product_name = data.productList[i].product_name;
                             const product_title = data.productList[i].product_title;
                             const product_create_date = data.productList[i].product_create_date;
+                            const num = i + 1 + (data.pageUtil.index) * 10;
                             //显示产品数据
-                            let centent="<tr><td><input type='checkbox' class='cbx_select' id='cbx_product_select_" + product_id + "'><label for='cbx_product_select_" + product_id + "'></label></td><td title='"+product_name+"'>" + product_name + "</td><td title='"+product_title+"'>" + product_title + "</td><td title='"+product_price+"'>" + product_price + "</td><td title='"+product_sale_price+"'>" + product_sale_price + "</td><td title='"+product_create_date+"'>" + product_create_date + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td>" +
+                            let centent="<tr><td><input type='checkbox' class='cbx_select' id='cbx_product_select_" + product_id + "'><label for='cbx_product_select_" + product_id + "'></label></td><td>"+num+"</td><td title='"+product_name+"'>" + product_name + "</td><td title='"+product_title+"'>" + product_title + "</td><td title='"+product_price+"'>" + product_price + "</td><td title='"+product_sale_price+"'>" + product_sale_price + "</td><td title='"+product_create_date+"'>" + product_create_date + "</td><td><span class='" + isEnabledClass + "' title='"+isEnabledTitle+"'>"+ isEnabled + "</span></td>" +
                                 "<td><span class='td_special' title='查看产品详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>修改</a></span>";
                             if (data.productList[i].product_isEnabled == 1) {
                                 centent+="&nbsp;&nbsp;<span class='td_special' title='删除产品'><a href='javascript:void(0);' onclick='delChildPage(this)'>删除</a></span>";
@@ -316,9 +317,7 @@
     </div>
     <%-- /.modal --%>
 </div>
-
-<div class="frm_div text_info">
-    <input class="frm_group">
+    <div class="frm_div text_info">
         <label class="frm_label" id="lbl_product_name" for="input_product_name">产品名称</label>
         <input class="frm_input" id="input_product_name" type="text" maxlength="50"/>
         <label class="frm_label" id="lbl_product_category_id" for="select_product_category">产品类型</label>
@@ -371,6 +370,7 @@
         <thead class="text_info">
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
+            <th class="data_info">编号</th>
             <th class="data_info" data-sort="asc" data-name="product_name">
                 <span>产品名称</span>
                 <span class="orderByDesc"></span>
@@ -406,9 +406,10 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requestScope.productList}" var="product">
+        <c:forEach items="${requestScope.productList}" var="product" varStatus="index">
             <tr>
                 <td><input type="checkbox" class="cbx_select" id="cbx_product_select_${product.product_id}"><label for="cbx_product_select_${product.product_id}"></label></td>
+                <td title="编号">${index.index + 1}</td>
                 <td title="${product.product_name}">${product.product_name}</td>
                 <td title="${product.product_title}">${product.product_title}</td>
                 <td title="${product.product_price}">${product.product_price}</td>

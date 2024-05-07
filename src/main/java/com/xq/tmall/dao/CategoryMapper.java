@@ -48,5 +48,5 @@ public interface CategoryMapper {
      * @param category_name
      * @return
      */
-    Integer selectTotal(String category_name);
+    Integer selectTotal(@Param("category_name") String category_name);
 }

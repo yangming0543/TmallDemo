@@ -54,4 +54,9 @@ public class PropertyServiceImpl implements PropertyService {
     public Integer getTotal(Property property) {
         return propertyMapper.selectTotal(property);
     }
+
+    @Override
+    public boolean delete(Integer propertyId) {
+        return propertyMapper.delete(propertyId);
+    }
 }

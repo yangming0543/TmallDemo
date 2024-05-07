@@ -62,4 +62,11 @@ public interface PropertyService {
      * @return
      */
     Integer getTotal(Property property);
+
+    /**
+     * 删除类别属性
+     * @param propertyId
+     * @return
+     */
+    boolean delete(Integer propertyId);
 }

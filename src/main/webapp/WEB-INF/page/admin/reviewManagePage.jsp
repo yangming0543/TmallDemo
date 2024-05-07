@@ -91,8 +91,9 @@
                             const review_createDate = data.reviewList[i].review_createDate;
                             const user_id = data.reviewList[i].review_user.user_name;
                             const product_id = data.reviewList[i].review_product.product_name;
+                            const num = i + 1 + (data.pageUtil.index) * 10;
                             //显示评论数据
-                            let centent="<tr><td><input type='checkbox' class='cbx_select' id='cbx_review_select_" + review_id + "'><label for='cbx_review_select_" + review_id + "'></label></td><td title='"+product_id+"'>" + product_id + "</td><td title='"+review_content+"'>" + review_content + "</td><td title='"+user_id+"'>" + user_id + "</td><td title='"+review_createDate+"'>" + review_createDate + "</td>" +
+                            let centent="<tr><td><input type='checkbox' class='cbx_select' id='cbx_review_select_" + review_id + "'><label for='cbx_review_select_" + review_id + "'></label></td><td>"+num+"</td><td title='"+product_id+"'>" + product_id + "</td><td title='"+review_content+"'>" + review_content + "</td><td title='"+user_id+"'>" + user_id + "</td><td title='"+review_createDate+"'>" + review_createDate + "</td>" +
                                 "<td><span class='td_special' title='查看评论详情'><a href='javascript:void(0);' onclick='getChildPage(this)'>详情</a></span>"+"&nbsp;&nbsp;<span class='td_special' title='删除评论'><a href='javascript:void(0);' onclick='delChildPage(this)'>删除</a></span>";
                             centent+="</td><td hidden><span class='review_id'>" + review_id + "</span></td></tr>";
                             tbody.append(centent);
@@ -225,6 +226,7 @@
         <thead class="text_info">
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
+            <th class="data_info">编号</th>
             <th class="data_info" data-sort="asc" data-name="review_product_id">
                 <span>评论产品</span>
                 <span class="orderByDesc"></span>
@@ -250,9 +252,10 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requestScope.reviewList}" var="review">
+        <c:forEach items="${requestScope.reviewList}" var="review" varStatus="index">
             <tr>
                 <td><input type="checkbox" class="cbx_select" id="cbx_review_select_${review.review_id}"><label for="cbx_review_select_${review.review_id}"></label></td>
+                <td title="编号">${index.index + 1}</td>
                 <td title="${review.review_product.product_name}">${review.review_product.product_name}</td>
                 <td title="${review.review_content}">${review.review_content}</td>
                 <td title="${review.review_user.user_name}">${review.review_user.user_name}</td>

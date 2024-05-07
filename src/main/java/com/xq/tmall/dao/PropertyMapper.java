@@ -65,4 +65,11 @@ public interface PropertyMapper {
      * @return
      */
     Integer selectTotal(@Param("property") Property property);
+
+    /**
+     * 删除类别属性
+     * @param propertyId
+     * @return
+     */
+    boolean delete(Integer propertyId);
 }

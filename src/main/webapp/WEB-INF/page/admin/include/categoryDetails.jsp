@@ -188,10 +188,6 @@
         }
     </script>
     <style rel="stylesheet">
-        .details_property_list {
-
-        }
-
         .details_property_list > li {
             list-style: none;
             padding: 5px 0;
@@ -243,12 +239,12 @@
         <c:forEach items="${requestScope.category.propertyList}" var="property" varStatus="status">
             <c:choose>
                 <c:when test="${status.index % 2 == 0}">
-                    <input class="frm_input" id="input_category_property_${property.property_id}" type="text"
+                    <input disabled class="frm_input" id="input_category_property_${property.property_id}" type="text"
                            maxlength="50" value="${property.property_name}"
                            data-pvid="${property.property_id}"/>
                 </c:when>
                 <c:otherwise>
-                    <input class="frm_input" id="input_category_property_${property.property_id}" type="text"
+                    <input disabled class="frm_input" id="input_category_property_${property.property_id}" type="text"
                            maxlength="50" value="${property.property_name}"
                            data-pvid="${property.property_id}"/>
                     <div class="br"></div>

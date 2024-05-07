@@ -151,9 +151,10 @@
                             if (data.productOrderList[i].productOrder_delivery_date) {
                                 productOrder_delivery_date = data.productOrderList[i].productOrder_delivery_date;
                             }
+                            const num = i + 1 + (data.pageUtil.index) * 10;
                             //var productOrder_userMessage = data.productOrderList[i].productOrder_userMessage;
                             //显示用户数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_productOrder_select_" + productOrder_id + "'><label for='cbx_productOrder_select_" + productOrder_id + "'></label></td><td title='" + productOrder_code + "'>" + productOrder_code + "</td><td title='" + productOrder_post + "'>" + productOrder_post + "</td><td title='" + productOrder_receiver + "'>" + productOrder_receiver + "</td><td title='" + productOrder_mobile + "'>" + productOrder_mobile + "</td><td title='" + productOrder_pay_date + "'>" + productOrder_pay_date + "</td><td title='" + productOrder_delivery_date + "'>" + productOrder_delivery_date + "</td><td><span class='" + productOrderStatusClass + "' title= '" + productOrderStatusTitle + "'>" + productOrderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + productOrder_id + "</td></tr>");
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_productOrder_select_" + productOrder_id + "'><label for='cbx_productOrder_select_" + productOrder_id + "'></label></td><td>"+num+"</td><td title='" + productOrder_code + "'>" + productOrder_code + "</td><td title='" + productOrder_post + "'>" + productOrder_post + "</td><td title='" + productOrder_receiver + "'>" + productOrder_receiver + "</td><td title='" + productOrder_mobile + "'>" + productOrder_mobile + "</td><td title='" + productOrder_pay_date + "'>" + productOrder_pay_date + "</td><td title='" + productOrder_delivery_date + "'>" + productOrder_delivery_date + "</td><td><span class='" + productOrderStatusClass + "' title= '" + productOrderStatusTitle + "'>" + productOrderStatus + "</span></td><td><span class='td_special' title='查看订单详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>详情</a></span></td><td hidden class='order_id'>" + productOrder_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -251,6 +252,7 @@
     <thead class="text_info">
     <tr>
         <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
+        <th class="data_info">编号</th>
         <th class="data_info" data-sort="asc" data-name="productOrder_code">
             <span>订单号</span>
             <span class="orderByDesc"></span>
@@ -291,9 +293,10 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${requestScope.productOrderList}" var="productOrder">
+    <c:forEach items="${requestScope.productOrderList}" var="productOrder" varStatus="index">
         <tr>
             <td><input type="checkbox" class="cbx_select" id="cbx_productOrder_select_${productOrder.productOrder_id}"><label for="cbx_productOrder_select_${productOrder.productOrder_id}"></label></td>
+            <td title="编号">${index.index + 1}</td>
             <td title="${productOrder.productOrder_code}">${productOrder.productOrder_code}</td>
             <td title="${productOrder.productOrder_post}">${productOrder.productOrder_post}</td>
             <td title="${productOrder.productOrder_receiver}">${productOrder.productOrder_receiver}</td>

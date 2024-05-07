@@ -5,32 +5,32 @@
     <script>
         //检索数据集
         var dataList = {
-            "category_name": null
+            "property_name": null
         };
         $(function () {
             //点击查询按钮时
-            $("#btn_category_submit").click(function () {
-                const category_name = $.trim($("#input_category_name").val());
+            $("#btn_property_submit").click(function () {
+                const property_name = $.trim($("#input_property_name").val());
                 //封装数据
-                dataList.category_name = encodeURI(category_name);
+                dataList.property_name = encodeURI(property_name);
 
-                getData($(this), "admin/category/0/10", dataList);
+                getData($(this), "admin/property/0/10", dataList);
             });
             //点击刷新按钮时
-            $("#btn_category_refresh").click(function () {
+            $("#btn_property_refresh").click(function () {
                 //清除数据
-                dataList.category_name = null;
+                dataList.property_name = null;
                 //获取数据
-                getData($(this), "admin/category/0/10", null);
+                getData($(this), "admin/property/0/10", null);
             });
             //点击table中的数据时
-            $("#table_category_list").find(">tbody>tr").click(function () {
+            $("#table_property_list").find(">tbody>tr").click(function () {
                 trDataStyle($(this));
             });
         });
-        //获取分类数据
+        //获取属性数据
         function getData(object, url, dataObject) {
-            const table = $("#table_category_list");
+            const table = $("#table_property_list");
             const tbody = table.children("tbody").first();
             $.ajax({
                 url: url,
@@ -42,18 +42,19 @@
                     //设置样式
                     $(".loader").css("display","none");
                     object.attr("disabled",false);
-                    //显示分类统计数据
-                    $("#category_count_data").text(data.categoryCount);
-                    if(data.categoryList.length > 0) {
-                        for (let i = 0; i < data.categoryList.length; i++) {
-                            const category_id = data.categoryList[i].category_id;
-                            const category_name = data.categoryList[i].category_name;
+                    //显示属性统计数据
+                    $("#property_count_data").text(data.propertyCount);
+                    if(data.propertyList.length > 0) {
+                        for (let i = 0; i < data.propertyList.length; i++) {
+                            const property_id = data.propertyList[i].property_id;
+                            const property_name = data.propertyList[i].property_name;
+                            const category_name = data.propertyList[i].property_category.category_name;
                             const num = i + 1 + (data.pageUtil.index) * 10;
-                            //显示分类数据
-                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_category_select_" + category_id + "'><label for='cbx_category_select_" + category_id + "'></label></td><td>"+num+"</td><td title='" + category_name + "'>" + category_name + "</td>" +
-                                "<td><span class='td_special' title='查看分类详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>修改</a></span>" +
-                                "&nbsp;&nbsp;<span class='td_special' title='删除分类'><a href='javascript:void(0)' onclick='delCategoryChildPage(this)'>删除</a></span>"+
-                                "</td><td hidden class='category_id'>" + category_id + "</td></tr>");
+                            //显示属性数据
+                            tbody.append("<tr><td><input type='checkbox' class='cbx_select' id='cbx_property_select_" + property_id + "'><label for='cbx_property_select_" + property_id + "'></label></td><td>"+num+"</td><td title='" + property_name + "'>" + property_name + "</td><td title='" + category_name + "'>" + category_name + "</td>"+
+                                "<td><span class='td_special' title='查看属性详情'><a href='javascript:void(0)' onclick='getChildPage(this)'>修改</a></span>" +
+                                "&nbsp;&nbsp;<span class='td_special' title='删除属性'><a href='javascript:void(0)' onclick='delpropertyChildPage(this)'>删除</a></span>"+
+                                "</td><td hidden class='property_id'>" + property_id + "</td></tr>");
                         }
                         //绑定事件
                         tbody.children("tr").click(function () {
@@ -79,16 +80,16 @@
             });
         }
 
-        // 获取产品分类子界面
+        // 获取产品属性子界面
         function getChildPage(obj) {
             let url;
             let title;
             if (obj === null) {
-                title = "添加分类";
-                url = "category/new";
+                title = "添加属性";
+                url = "property/new";
             } else {
-                title = "分类详情";
-                url = "category/" + $(obj).parents("tr").find(".category_id").text();
+                title = "属性详情";
+                url = "property/" + $(obj).parents("tr").find(".property_id").text();
             }
 
             //设置样式
@@ -98,10 +99,10 @@
             ajaxUtil.getPage(url, null, true);
         }
 
-        //删除分类
-        function delCategoryChildPage(obj) {
-            let url = "admin/category/del/" + $(obj).parents("tr").find(".category_id").text();
-            $(".modal-body").text("您确定要删除该分类吗？");
+        //删除属性
+        function delpropertyChildPage(obj) {
+            let url = "admin/property/del/" + $(obj).parents("tr").find(".property_id").text();
+            $(".modal-body").text("您确定要删除该属性吗？");
             $('#modalDiv').modal();
             $("#btn-ok").unbind("click").click(function () {
                 $.ajax({
@@ -112,9 +113,9 @@
                         if (data.success) {
                             $('#modalDiv').modal("hide");
                             //清除数据
-                            dataList.category_name = null;
+                            dataList.property_name = null;
                             //获取数据
-                            getData($(this), "admin/category/0/10", null);
+                            getData($(this), "admin/property/0/10", null);
                         } else {
                             $(".modal-body").text("删除失败！");
                         }
@@ -125,21 +126,21 @@
 
         //获取页码数据
         function getPage(index) {
-            getData($(this), "admin/category/" + index + "/10", dataList);
+            getData($(this), "admin/property/" + index + "/10", dataList);
         }
     </script>
 </head>
 <body>
 <div class="frm_div text_info">
     <div class="frm_group">
-        <label class="frm_label" id="lbl_category_name" for="input_category_name">分类名称</label>
-        <input class="frm_input" id="input_category_name" type="text" maxlength="50"/>
-        <input class="frm_btn" id="btn_category_submit" type="button" value="查询"/>
+        <label class="frm_label" id="lbl_property_name" for="input_property_name">属性名称</label>
+        <input class="frm_input" id="input_property_name" type="text" maxlength="50"/>
+        <input class="frm_btn" id="btn_property_submit" type="button" value="查询"/>
         <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
     </div>
     <div class="frm_group_last">
-        <input class="frm_btn frm_add" id="btn_category_add" type="button" value="添加一个分类" onclick="getChildPage(null)"/>
-        <input class="frm_btn frm_refresh" id="btn_category_refresh" type="button" value="刷新分类列表"/>
+      <%--  <input class="frm_btn frm_add" id="btn_property_add" type="button" value="添加一个属性" onclick="getChildPage(null)"/>--%>
+        <input class="frm_btn frm_refresh" id="btn_property_refresh" type="button" value="刷新属性列表"/>
     </div>
 </div>
 <div class="data_count_div text_info">
@@ -153,33 +154,35 @@
         </path>
     </svg>
     <span class="data_count_title">查看合计</span>
-    <span>分类总数:</span>
-    <span class="data_count_value" id="category_count_data">${requestScope.categoryCount}</span>
+    <span>属性总数:</span>
+    <span class="data_count_value" id="property_count_data">${requestScope.propertyCount}</span>
     <span class="data_count_unit">种</span>
 </div>
 <div class="table_normal_div">
-    <table class="table_normal" id="table_category_list">
+    <table class="table_normal" id="table_property_list">
         <thead class="text_info">
         <tr>
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
             <th>编号</th>
+            <th>属性名称</th>
             <th>分类名称</th>
             <th>操作</th>
-            <th hidden class="category_id">分类ID</th>
+            <th hidden class="property_id">属性ID</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requestScope.categoryList}" var="category" varStatus="index">
+        <c:forEach items="${requestScope.propertyList}" var="property" varStatus="index">
             <tr>
-                <td><input type="checkbox" class="cbx_select" id="cbx_category_select_${category.category_id}"><label for="cbx_category_select_${category.category_id}"></label></td>
+                <td><input type="checkbox" class="cbx_select" id="cbx_property_select_${property.property_id}"><label for="cbx_property_select_${property.property_id}"></label></td>
                 <td title="编号">${index.index + 1}</td>
-                <td title="${category.category_name}">${category.category_name}</td>
-                <td><span class="td_special" title="查看分类详情"><a href="javascript:void(0)"
+                <td title="${property.property_name}">${property.property_name}</td>
+                <td title="${property.property_category.category_name}">${property.property_category.category_name}</td>
+                <td><span class="td_special" title="查看属性详情"><a href="javascript:void(0)"
                                                                onclick="getChildPage(this)">修改</a></span>
-                    &nbsp;&nbsp;<span class="td_special" title="删除分类"><a href="javascript:void(0)"
-                                                               onclick="delCategoryChildPage(this)">删除</a></span>
+                    &nbsp;&nbsp;<span class="td_special" title="删除属性"><a href="javascript:void(0)"
+                                                               onclick="delpropertyChildPage(this)">删除</a></span>
                 </td>
-                <td hidden><span class="category_id">${category.category_id}</span></td>
+                <td hidden><span class="property_id">${property.property_id}</span></td>
             </tr>
         </c:forEach>
         </tbody>
