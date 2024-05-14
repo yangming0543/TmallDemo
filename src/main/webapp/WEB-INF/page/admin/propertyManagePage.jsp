@@ -139,8 +139,8 @@
         <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
     </div>
     <div class="frm_group_last">
-      <%--  <input class="frm_btn frm_add" id="btn_property_add" type="button" value="添加一个属性" onclick="getChildPage(null)"/>--%>
-        <input class="frm_btn frm_refresh" id="btn_property_refresh" type="button" value="刷新属性列表"/>
+      <input class="frm_btn frm_add" id="btn_property_add" type="button" value="添加一个属性" onclick="getChildPage(null)"/>
+      <input class="frm_btn frm_refresh" id="btn_property_refresh" type="button" value="刷新属性列表"/>
     </div>
 </div>
 <div class="data_count_div text_info">

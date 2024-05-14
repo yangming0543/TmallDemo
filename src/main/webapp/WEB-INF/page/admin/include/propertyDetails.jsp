@@ -5,6 +5,8 @@
 <head>
     <script>
         $(function () {
+            //刷新下拉框
+            $('#select_product_category').selectpicker('refresh');
             if ($("#details_property_id").val() === "") {
                 /******
                  * event
@@ -12,11 +14,15 @@
                 //单击保存按钮时
                 $("#btn_property_save").click(function () {
                     const property_name = $.trim($("#input_property_name").val());
-                    const category_id = $("#details_category_id").val();
+                    const category_id = parseInt($("#select_product_category").val());
                     //校验数据合法性
                     let yn = true;
                     if (property_name === "") {
                         styleUtil.basicErrorShow($("#lbl_property_name"));
+                        yn = false;
+                    }
+                    if (category_id === 0) {
+                        styleUtil.basicErrorShow($("#lbl_product_category_id"));
                         yn = false;
                     }
                     if (!yn) {
@@ -35,10 +41,15 @@
                 $("#btn_property_save").click(function () {
                     const property_id = $("#details_property_id").val();
                     const property_name = $.trim($("#input_property_name").val());
+                    const category_id = parseInt($("#select_product_category").val());
                     //校验数据合法性
                     let yn = true;
                     if (property_name === "") {
                         styleUtil.basicErrorShow($("#lbl_property_name"));
+                        yn = false;
+                    }
+                    if (category_id === 0) {
+                        styleUtil.basicErrorShow($("#lbl_product_category_id"));
                         yn = false;
                     }
                     if (!yn) {
@@ -48,7 +59,7 @@
                     const dataList = {
                         "property_name": property_name
                     };
-                    doAction(dataList, "admin/property/" + property_id, "PUT");
+                    doAction(dataList, "admin/property/" + property_id+"/"+category_id, "PUT");
                 });
             }
 
@@ -107,7 +118,6 @@
 <body>
 <div class="details_div_first">
     <input type="hidden" value="${requestScope.property.property_id}" id="details_property_id"/>
-    <input type="hidden" value="${requestScope.property.property_category.category_id}" id="details_category_id"/>
     <div class="frm_div">
         <label class="frm_label text_info" id="lbl_property_id">属性编号</label>
         <span class="details_value" id="span_property_id">系统指定</span>
@@ -117,10 +127,14 @@
         <input class="frm_input" id="input_property_name" type="text" maxlength="50"
                value="${requestScope.property.property_name}"/>
     </div>
-    <div class="frm_div">
-        <label class="frm_label text_info" id="lbl_category_name" for="input_property_name">分类名称</label>
-        <input disabled class="frm_input" id="input_category_name" type="text" maxlength="50"
-               value="${requestScope.property.property_category.category_name}"/>
+    <div class="frm_div text_info">
+        <label class="frm_label" id="lbl_product_category_id" for="select_product_category">产品类型</label>
+        <select class="selectpicker" id="select_product_category" data-size="8">
+            <option value="0">全部</option>
+            <c:forEach items="${requestScope.categoryList}" var="category">
+                <option value="${category.category_id}" <c:if test="${category.category_id == requestScope.property.property_category.category_id}">selected="selected"</c:if>>${category.category_name}</option>
+            </c:forEach>
+        </select>
     </div>
 </div>
 <div class="details_tools_div">

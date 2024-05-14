@@ -28,7 +28,8 @@
     <update id="updateOne" parameterType="com.xq.tmall.entity.Property">
         UPDATE property
         <set>
-            <if test="property.property_name != null">property_name = #{property.property_name}</if>
+            <if test="property.property_name != null">property_name = #{property.property_name},</if>
+            <if test="property.property_category.category_id != null">property_category_id = #{property.property_category.category_id},</if>
         </set>
         <where>
             property_id = #{property.property_id}

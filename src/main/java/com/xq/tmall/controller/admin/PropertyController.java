@@ -16,16 +16,12 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 
 /**
@@ -73,6 +69,9 @@ public class PropertyController extends BaseController {
         }
         // 获取属性子信息-属性列表
         map.put("property", propertyService.get(cid));
+        // 获取分类列表
+        List<Category> categoryList = categoryService.getList(null, null);
+        map.put(Constants.CATEGORY_LIST, categoryList);
         // 转到后台管理-属性详情页-ajax方式
         return "admin/include/propertyDetails";
     }
@@ -86,6 +85,9 @@ public class PropertyController extends BaseController {
         if (adminId == null) {
             return "admin/include/loginMessage";
         }
+        // 获取分类列表
+        List<Category> categoryList = categoryService.getList(null, null);
+        map.put(Constants.CATEGORY_LIST, categoryList);
         // 转到后台管理-属性添加页-ajax方式
         return "admin/include/propertyDetails";
     }
@@ -99,7 +101,7 @@ public class PropertyController extends BaseController {
         // 整合属性信息
         Property property = new Property();
         property.setProperty_name(property_name);
-        Category category=new Category();
+        Category category = new Category();
         category.setCategory_id(category_id);
         property.setProperty_category(category);
         // 添加属性信息
@@ -120,14 +122,18 @@ public class PropertyController extends BaseController {
     // 更新属性信息-ajax
     @ApiOperation(value = "更新属性信息", notes = "更新属性信息")
     @ResponseBody
-    @PutMapping(value = "admin/property/{property_id}", produces = "application/json;charset=utf-8")
+    @PutMapping(value = "admin/property/{property_id}/{category_id}", produces = "application/json;charset=utf-8")
     public String updateCategory(@RequestParam String property_name/* 属性名称 */,
-                                 @PathVariable("property_id") Integer property_id/* 属性ID */) {
+                                 @PathVariable("property_id") Integer property_id,/* 属性ID */
+                                 @PathVariable("category_id") Integer category_id/* 分类ID */) {
         JSONObject jsonObject = new JSONObject();
         // 整合属性信息
         Property property = new Property();
         property.setProperty_id(property_id);
         property.setProperty_name(property_name);
+        Category category = new Category();
+        category.setCategory_id(category_id);
+        property.setProperty_category(category);
         // 更新属性信息，属性ID值为：{}, category_id
         boolean yn = propertyService.update(property);
         if (yn) {
@@ -139,7 +145,6 @@ public class PropertyController extends BaseController {
             // 更新失败！事务回滚
             throw new RuntimeException();
         }
-
         return String.valueOf(jsonObject);
     }
 
