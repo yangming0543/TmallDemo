@@ -51,6 +51,9 @@ public class PropertyController extends BaseController {
         // 获取属性总数量
         Integer propertyCount = propertyService.getTotal(null);
         map.put("propertyCount", propertyCount);
+        // 获取分类列表
+        List<Category> categoryList = categoryService.getList(null, null);
+        map.put(Constants.CATEGORY_LIST, categoryList);
         // 获取分页信息
         pageUtil.setTotal(propertyCount);
         map.put("pageUtil", pageUtil);
@@ -153,6 +156,7 @@ public class PropertyController extends BaseController {
     @ResponseBody
     @GetMapping(value = "admin/property/{index}/{count}", produces = "application/json;charset=utf-8")
     public String getCategoryBySearch(@RequestParam(required = false) String property_name/* 属性名称 */,
+                                      @RequestParam(required = false) Integer category_id/* 分类id */,
                                       @PathVariable Integer index/* 页数 */,
                                       @PathVariable Integer count/* 行数 */) throws UnsupportedEncodingException {
         // 移除不必要条件
@@ -165,6 +169,9 @@ public class PropertyController extends BaseController {
         PageUtil pageUtil = new PageUtil(index, count);
         Property property = new Property();
         property.setProperty_name(property_name);
+        Category category = new Category();
+        category.setCategory_id(category_id);
+        property.setProperty_category(category);
         List<Property> propertyList = propertyService.getList(property, pageUtil);
         object.put("propertyList", JSONArray.parseArray(JSON.toJSONString(propertyList)));
         // 按条件获取属性总数量

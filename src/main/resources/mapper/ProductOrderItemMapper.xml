@@ -122,12 +122,7 @@
             productOrderItem_user_id = #{user_id} AND productOrderItem_order_id is null
         </where>
     </select>
-    <select id="selectTotalByProductId" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
-        SELECT COUNT(*) FROM productOrderItem
-        <where>
-            productOrderItem_product_id = #{product_id}
-        </where>
-    </select>
+
     <select id="selectSaleCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         SELECT IFNULL(SUM(productOrderItem_number), 0) FROM productOrderItem WHERE productOrderItem_product_id = #{product_id}
     </select>

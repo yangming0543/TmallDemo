@@ -5,21 +5,26 @@
     <script>
         //检索数据集
         var dataList = {
-            "property_name": null
+            "property_name": null,
+            "category_id": null
         };
         $(function () {
+            //刷新下拉框
+            $('#select_product_category').selectpicker('refresh');
             //点击查询按钮时
             $("#btn_property_submit").click(function () {
                 const property_name = $.trim($("#input_property_name").val());
+                const category_id = parseInt($("#select_product_category").val());
                 //封装数据
                 dataList.property_name = encodeURI(property_name);
-
+                dataList.category_id = category_id;
                 getData($(this), "admin/property/0/10", dataList);
             });
             //点击刷新按钮时
             $("#btn_property_refresh").click(function () {
                 //清除数据
                 dataList.property_name = null;
+                dataList.category_id = null;
                 //获取数据
                 getData($(this), "admin/property/0/10", null);
             });
@@ -114,6 +119,7 @@
                             $('#modalDiv').modal("hide");
                             //清除数据
                             dataList.property_name = null;
+                            dataList.category_id = null;
                             //获取数据
                             getData($(this), "admin/property/0/10", null);
                         } else {
@@ -135,6 +141,13 @@
     <div class="frm_group">
         <label class="frm_label" id="lbl_property_name" for="input_property_name">属性名称</label>
         <input class="frm_input" id="input_property_name" type="text" maxlength="50"/>
+        <label class="frm_label" id="lbl_product_category_id" for="select_product_category">产品类型</label>
+        <select class="selectpicker" id="select_product_category" data-size="8">
+            <option value="0">全部</option>
+            <c:forEach items="${requestScope.categoryList}" var="category">
+                <option value="${category.category_id}">${category.category_name}</option>
+            </c:forEach>
+        </select>
         <input class="frm_btn" id="btn_property_submit" type="button" value="查询"/>
         <input class="frm_btn frm_clear" id="btn_clear" type="button" value="重置"/>
     </div>
@@ -165,7 +178,7 @@
             <th><input type="checkbox" class="cbx_select" id="cbx_select_all"><label for="cbx_select_all"></label></th>
             <th>编号</th>
             <th>属性名称</th>
-            <th>分类名称</th>
+            <th>产品类型</th>
             <th>操作</th>
             <th hidden class="property_id">属性ID</th>
         </tr>

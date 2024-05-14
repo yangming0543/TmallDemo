@@ -57,12 +57,12 @@
         SELECT propertyValue_id,propertyValue_value,propertyValue_property_id,propertyValue_product_id FROM propertyValue
         <if test="propertyValue != null">
             <where>
-                <if test="propertyValue.propertyValue_value">propertyValue_value = #{propertyValue.propertyValue_value}</if>
+                <if test="propertyValue.propertyValue_value">and propertyValue_value = #{propertyValue.propertyValue_value}</if>
                 <if test="propertyValue.propertyValue_property != null">
-                    <if test="propertyValue.propertyValue_property.property_id">propertyValue_property_id = #{propertyValue.propertyValue_property.property_id}</if>
+                    <if test="propertyValue.propertyValue_property.property_id">and propertyValue_property_id = #{propertyValue.propertyValue_property.property_id}</if>
                 </if>
                 <if test="propertyValue.propertyValue_product != null">
-                    <if test="propertyValue.propertyValue_product.product_id">propertyValue_product_id = #{propertyValue.propertyValue_product.product_id}</if>
+                    <if test="propertyValue.propertyValue_product.product_id">and propertyValue_product_id = #{propertyValue.propertyValue_product.product_id}</if>
                 </if>
             </where>
         </if>
@@ -77,12 +77,12 @@
         SELECT COUNT(*) FROM propertyValue
         <if test="propertyValue != null">
             <where>
-                <if test="propertyValue.propertyValue_value">propertyValue_value = #{propertyValue.propertyValue_value}</if>
+                <if test="propertyValue.propertyValue_value">and propertyValue_value = #{propertyValue.propertyValue_value}</if>
                 <if test="propertyValue.propertyValue_property != null">
-                    <if test="propertyValue.propertyValue_property.property_id">propertyValue_property_id = #{propertyValue.propertyValue_property.property_id}</if>
+                    <if test="propertyValue.propertyValue_property.property_id">and propertyValue_property_id = #{propertyValue.propertyValue_property.property_id}</if>
                 </if>
                 <if test="propertyValue.propertyValue_product != null">
-                    <if test="propertyValue.propertyValue_product.product_id">propertyValue_product_id = #{propertyValue.propertyValue_product.product_id}</if>
+                    <if test="propertyValue.propertyValue_product.product_id">and propertyValue_product_id = #{propertyValue.propertyValue_product.product_id}</if>
                 </if>
             </where>
         </if>

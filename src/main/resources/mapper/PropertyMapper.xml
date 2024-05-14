@@ -52,9 +52,9 @@
         left join category ca on pr.property_category_id=ca.category_id
         <if test="property != null">
             <where>
-                <if test="property.property_name != null">pr.property_name LIKE concat('%',#{property.property_name},'%')</if>
+                <if test="property.property_name != null">and pr.property_name LIKE concat('%',#{property.property_name},'%')</if>
                 <if test="property.property_category != null">
-                    <if test="property.property_category.category_id != null">pr.property_category_id = #{property.property_category.category_id}</if>
+                    <if test="property.property_category.category_id != null and property.property_category.category_id!=0">and pr.property_category_id = #{property.property_category.category_id}</if>
                 </if>
             </where>
         </if>
@@ -73,9 +73,9 @@
         SELECT COUNT(*) FROM property
         <if test="property != null">
             <where>
-                <if test="property.property_name != null">property_name LIKE concat('%',#{property.property_name},'%')</if>
+                <if test="property.property_name != null">and property_name LIKE concat('%',#{property.property_name},'%')</if>
                 <if test="property.property_category != null">
-                    <if test="property.property_category.category_id != null">property_category_id = #{property.property_category.category_id}</if>
+                    <if test="property.property_category.category_id != null and property.property_category.category_id!=0">and property_category_id = #{property.property_category.category_id}</if>
                 </if>
             </where>
         </if>

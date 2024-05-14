@@ -136,7 +136,7 @@
         SELECT COUNT(*) FROM productOrder
         <where>
             <if test="productOrder != null">
-                <if test="productOrder.productOrder_code">productOrder_code LIKE concat('%',#{productOrder.productOrder_code},'%')</if>
+                <if test="productOrder.productOrder_code">and productOrder_code LIKE concat('%',#{productOrder.productOrder_code},'%')</if>
                 <if test="productOrder.productOrder_post">and productOrder_post LIKE concat('%',#{productOrder.productOrder_post},'%')</if>
                 <if test="productOrder.productOrder_receiver != null">and productOrder_receiver LIKE
                     concat('%',#{productOrder.productOrder_receiver},'%')
