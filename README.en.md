@@ -22,12 +22,14 @@ The backend page is compatible with modern browsers such as IE10 and above, and 
 Attention: It is normal for the order chart in the backend management interface to have no data. The chart displays the transaction volume for the past 7 days.
 
 ---Background interface (partial) - Access address: http://localhost:8082/tmall/admin/login (The account name and password are in the admin table)
-![登录界面](images/img_2.png)
-![首页](images/img_3.png)
-![产品列表](images/img.png)
-![添加产品](images/img_1.png)
+![登录界面](images/img.png)
+![首页](images/img_1.png)
+![产品列表](images/img_2.png)
+![添加产品](images/img_3.png)
 ![产品详情](images/img_4.png)
 ![产品类别列表](images/img_5.png)
+![属性分类列表](images/img_12.png)
+![添加属性](images/img_13.png)
 ![评论管理](images/img_6.png)
 ![用户列表](images/img_7.png)
 ![用户详情](images/img_8.png)
