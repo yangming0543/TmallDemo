@@ -1,7 +1,6 @@
 package com.xq.tmall.controller.fore;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Address;
 import com.xq.tmall.entity.User;
@@ -10,6 +9,7 @@ import com.xq.tmall.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

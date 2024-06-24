@@ -8,8 +8,6 @@ import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -19,19 +17,16 @@ import java.util.List;
 public class ProductOrderServiceImpl implements ProductOrderService {
     private final ProductOrderMapper productOrderMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean add(ProductOrder productOrder) {
         return productOrderMapper.insertOne(productOrder) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean update(ProductOrder productOrder) {
         return productOrderMapper.updateOne(productOrder) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean deleteList(Integer[] productOrder_id_list) {
         return productOrderMapper.deleteList(productOrder_id_list) > 0;

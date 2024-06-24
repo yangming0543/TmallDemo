@@ -1,7 +1,7 @@
 package com.xq.tmall.controller.fore;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
 import com.xq.tmall.service.*;
@@ -146,7 +146,7 @@ public class ForeReviewController extends BaseController {
                                 @RequestParam("count") Integer count/* 行数*/) {
         // 获取产品评论信息
         List<Review> reviewList = reviewService.getListByProductId(product_id, new PageUtil(index, 10));
-        if (CollectionUtils.isNotEmpty(reviewList)) {
+        if (CollectionUtil.isNotEmpty(reviewList)) {
             for (Review review : reviewList) {
                 review.setReview_user(userService.get(review.getReview_user().getUser_id()));
             }

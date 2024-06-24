@@ -1,5 +1,6 @@
 package com.xq.tmall.controller.admin;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -111,7 +112,7 @@ public class UserController extends BaseController {
         user.setUser_homeplace(add);
         // 获取用户详情-购物车订单项信息
         List<ProductOrderItem> productOrderItemList = productOrderItemService.getListByUserId(user.getUser_id(), null);
-        if (productOrderItemList != null) {
+        if (CollectionUtil.isNotEmpty(productOrderItemList)) {
             // 获取用户详情-购物车订单项对应的产品信息
             for (ProductOrderItem productOrderItem : productOrderItemList) {
                 Integer productId = productOrderItem.getProductOrderItem_product().getProduct_id();

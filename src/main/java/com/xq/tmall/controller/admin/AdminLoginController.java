@@ -4,7 +4,6 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Admin;
 import com.xq.tmall.entity.ApiVerCodeResp;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 /**
  * 后台管理-登录页
@@ -81,6 +81,6 @@ public class AdminLoginController extends BaseController {
     @GetMapping(value = "admin/login/code")
     public ApiVerCodeResp getVerCode() {
         CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(260, 40, 6, 20);
-        return new ApiVerCodeResp(String.valueOf(IdWorker.getId()), captcha.getImageBase64Data(), captcha.getCode().toLowerCase());
+        return new ApiVerCodeResp(String.valueOf(UUID.randomUUID()), captcha.getImageBase64Data(), captcha.getCode().toLowerCase());
     }
 }

@@ -7,8 +7,6 @@ import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,25 +15,21 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
     private final ReviewMapper reviewMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean add(Review review) {
         return reviewMapper.insertOne(review) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean update(Review review) {
         return reviewMapper.updateOne(review) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean deleteList(Integer[] review_id_list) {
         return reviewMapper.deleteList(review_id_list) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean deleteData(Integer id) {
         return reviewMapper.deleteData(id) > 0;

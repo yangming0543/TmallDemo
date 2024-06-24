@@ -34,6 +34,7 @@
             </c:otherwise>
         </c:choose>
         <div class="order_price">
+          <%--  <img src="${pageContext.request.contextPath}/res/images/支付码.jpg">--%>
             <span class="price_value">${requestScope.orderTotalPrice}</span>
             <span class="price_unit">元</span>
         </div>

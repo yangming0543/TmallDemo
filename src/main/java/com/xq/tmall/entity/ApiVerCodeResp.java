@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -16,7 +15,6 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Accessors(chain = true)
 @ApiModel(value = "ApiVerCodeResp", description = "验证码")
 public class ApiVerCodeResp implements Serializable {
 

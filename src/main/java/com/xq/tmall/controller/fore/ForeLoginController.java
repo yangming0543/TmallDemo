@@ -3,7 +3,6 @@ package com.xq.tmall.controller.fore;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.ApiVerCodeResp;
 import com.xq.tmall.entity.User;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 前台天猫-登陆页
@@ -45,7 +45,6 @@ public class ForeLoginController extends BaseController {
     public String checkLogin(HttpSession session, @RequestParam String username, @RequestParam String password) {
         // 用户验证登录
         User user = userService.login(username, password);
-
         JSONObject jsonObject = new JSONObject();
         if (user == null) {
             // 登录验证失败
@@ -76,6 +75,6 @@ public class ForeLoginController extends BaseController {
     @GetMapping(value = "login/code")
     public ApiVerCodeResp getVerCode() {
         CircleCaptcha captcha = CaptchaUtil.createCircleCaptcha(140, 38, 4, 20);
-        return new ApiVerCodeResp(String.valueOf(IdWorker.getId()), captcha.getImageBase64Data(), captcha.getCode().toLowerCase());
+        return new ApiVerCodeResp(String.valueOf(UUID.randomUUID()), captcha.getImageBase64Data(), captcha.getCode().toLowerCase());
     }
 }

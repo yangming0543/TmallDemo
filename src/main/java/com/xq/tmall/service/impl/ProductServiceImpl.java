@@ -7,8 +7,6 @@ import com.xq.tmall.util.OrderUtil;
 import com.xq.tmall.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,19 +15,16 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean add(Product product) {
         return productMapper.insertOne(product) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean update(Product product) {
         return productMapper.updateOne(product) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean delete(Integer id) {
         return productMapper.deleteOne(id) > 0;

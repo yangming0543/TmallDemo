@@ -1,7 +1,7 @@
 package com.xq.tmall.controller.fore;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Category;
 import com.xq.tmall.entity.Product;
@@ -52,13 +52,13 @@ public class ForeHomeController extends BaseController {
         // 获取产品分类列表
         List<Category> categoryList = categoryService.getList(null, null);
         // 获取每个分类下的产品列表
-        if (CollectionUtils.isNotEmpty(categoryList)) {
+        if (CollectionUtil.isNotEmpty(categoryList)) {
             for (Category category : categoryList) {
                 // 获取分类id为{}的产品集合，按产品ID倒序排序, category.getCategory_id()
                 Product product1 = new Product();
                 product1.setProduct_category(category);
                 List<Product> productList = productService.getList(product1, new Byte[]{0, 2}, new OrderUtil("product_id", true), new PageUtil(0, 8));
-                if (CollectionUtils.isNotEmpty(productList)) {
+                if (CollectionUtil.isNotEmpty(productList)) {
                     for (Product product : productList) {
                         // 获取产品id为{}的产品预览图片信息, product_id
                         product.setSingleProductImageList(productImageService.getList(product.getProduct_id(), (byte) 0, new PageUtil(0, 1)));
@@ -101,7 +101,7 @@ public class ForeHomeController extends BaseController {
         List<Product> productList = productService.getTitle(product, new PageUtil(0, 40));
         List<List<Product>> complexProductList = new ArrayList<>(8);
         List<Product> products = new ArrayList<>(5);
-        if (CollectionUtils.isNotEmpty(productList)) {
+        if (CollectionUtil.isNotEmpty(productList)) {
             for (int i = 0; i < productList.size(); i++) {
                 // 如果临时集合中产品数达到5个，加入到产品二维集合中，并重新实例化临时集合
                 if (i % 5 == 0) {

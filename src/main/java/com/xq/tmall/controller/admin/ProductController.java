@@ -1,10 +1,9 @@
 package com.xq.tmall.controller.admin;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.google.common.collect.Lists;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
@@ -18,6 +17,7 @@ import com.xq.tmall.util.excel.ImportExcel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -185,7 +185,7 @@ public class ProductController extends BaseController {
         // 添加成功！,新增产品的ID值为：{}, product_id
         JSONObject object = JSON.parseObject(propertyJson);
         Set<String> propertyIdSet = object.keySet();
-        if (CollectionUtils.isNotEmpty(propertyIdSet)) {
+        if (CollectionUtil.isNotEmpty(propertyIdSet)) {
             // 整合产品子信息-产品属性
             List<PropertyValue> propertyValueList = new ArrayList<>(5);
             for (String key : propertyIdSet) {
@@ -300,7 +300,7 @@ public class ProductController extends BaseController {
         // 产品信息更新成功！
         JSONObject object = JSON.parseObject(propertyAddJson);
         Set<String> propertyIdSet = object.keySet();
-        if (CollectionUtils.isNotEmpty(propertyIdSet)) {
+        if (CollectionUtil.isNotEmpty(propertyIdSet)) {
             // 整合产品子信息-需要添加的产品属性
             List<PropertyValue> propertyValueList = new ArrayList<>(5);
             for (String key : propertyIdSet) {
@@ -323,7 +323,7 @@ public class ProductController extends BaseController {
         }
         object = JSON.parseObject(propertyUpdateJson);
         propertyIdSet = object.keySet();
-        if (CollectionUtils.isNotEmpty(propertyIdSet)) {
+        if (CollectionUtil.isNotEmpty(propertyIdSet)) {
             // 整合产品子信息-需要更新的产品属性
             List<PropertyValue> propertyValueList = new ArrayList<>(5);
             for (String key : propertyIdSet) {

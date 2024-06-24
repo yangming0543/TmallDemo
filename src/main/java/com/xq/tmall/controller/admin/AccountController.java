@@ -1,7 +1,6 @@
 package com.xq.tmall.controller.admin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.Admin;
 import com.xq.tmall.service.AdminService;
@@ -9,9 +8,8 @@ import com.xq.tmall.util.Constants;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -91,7 +89,6 @@ public class AccountController extends BaseController {
 
     // 更新管理员信息
     @ApiOperation(value = "更新管理员信息", notes = "更新管理员信息")
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @ResponseBody
     @PutMapping(value = "/admin/account/{admin_id}", produces = "application/json;charset=UTF-8")
     public String updateAdmin(HttpSession session, @RequestParam String admin_nickname/*管理员昵称*/,

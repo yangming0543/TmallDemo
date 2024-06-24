@@ -6,8 +6,6 @@ import com.xq.tmall.service.ProductImageService;
 import com.xq.tmall.util.PageUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,25 +15,21 @@ public class ProductImageServiceImpl implements ProductImageService {
 
     private final ProductImageMapper productImageMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean add(ProductImage productImage) {
         return productImageMapper.insertOne(productImage) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean addList(List<ProductImage> productImageList) {
         return productImageMapper.insertList(productImageList) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean update(ProductImage productImage) {
         return productImageMapper.updateOne(productImage) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean deleteList(Integer[] productImage_id_list) {
         return productImageMapper.deleteList(productImage_id_list) > 0;

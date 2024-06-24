@@ -13,7 +13,6 @@ import com.xq.tmall.util.PageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,12 +76,11 @@ public class ReviewController extends BaseController {
         return "admin/include/reviewDetails";
     }
 
-
     //按条件查询评论-ajax
     @ApiOperation(value = "按条件查询评论", notes = "按条件查询评论")
     @ResponseBody
     @GetMapping(value = "admin/review/{index}/{count}", produces = "application/json;charset=utf-8")
-    public String getreviewBySearch(@RequestParam(required = false) String review_name/* 评论产品 */,
+    public String getReviewBySearch(@RequestParam(required = false) String review_name/* 评论产品 */,
                                     @RequestParam(required = false) String review_content/* 评论内容 */,
                                     @RequestParam(required = false) String review_userName/* 评论人 */,
                                     @RequestParam(required = false) String review_createDate/* 评论时间 */,

@@ -1,12 +1,14 @@
 package com.xq.tmall.controller.fore;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.toolkit.CollectionUtils;
 import com.xq.tmall.controller.BaseController;
 import com.xq.tmall.entity.*;
 import com.xq.tmall.pay.PayFace;
+import com.xq.tmall.pay.req.TradeCloseReq;
+import com.xq.tmall.pay.req.TradeNotifyReq;
 import com.xq.tmall.pay.req.TradeOrderReq;
 import com.xq.tmall.pay.resp.TradeOrderResp;
 import com.xq.tmall.pay.util.PayModelEnum;
@@ -98,7 +100,6 @@ public class ForeOrderController extends BaseController {
         if (status != null) {
             status_array = new Byte[]{status};
         }
-
         PageUtil pageUtil = new PageUtil(index, count);
         // 根据用户ID:{}获取订单列表, userId
         User user1 = new User();
@@ -109,13 +110,13 @@ public class ForeOrderController extends BaseController {
 
         // 订单总数量
         Integer orderCount = 0;
-        if (CollectionUtils.isNotEmpty(productOrderList)) {
+        if (CollectionUtil.isNotEmpty(productOrderList)) {
             orderCount = productOrderService.getTotal(productOrder, status_array);
             // 获取订单项信息及对应的产品信息
-            if (CollectionUtils.isNotEmpty(productOrderList)) {
+            if (CollectionUtil.isNotEmpty(productOrderList)) {
                 for (ProductOrder order : productOrderList) {
                     List<ProductOrderItem> productOrderItemList = productOrderItemService.getListByOrderId(order.getProductOrder_id(), null);
-                    if (CollectionUtils.isNotEmpty(productOrderItemList)) {
+                    if (CollectionUtil.isNotEmpty(productOrderItemList)) {
                         for (ProductOrderItem productOrderItem : productOrderItemList) {
                             Integer product_id = productOrderItem.getProductOrderItem_product().getProduct_id();
                             Product product = productService.get(product_id);
@@ -406,10 +407,27 @@ public class ForeOrderController extends BaseController {
         }
         // 订单总金额为：{}元, orderTotalPrice
         // 创建支付
-       /* TradeOrderResp orderResp = createPay(1, "", order,orderTotalPrice);
+        /*TradeOrderResp orderResp = this.createPay(1, "order/confirm/", order,orderTotalPrice);
         if (orderResp.isSuccess()) {
-        map.put("productOrder", order);
-        map.put("orderTotalPrice", orderTotalPrice);
+            //交易成功
+            map.put("productOrder", order);
+            map.put("orderTotalPrice", orderTotalPrice);
+            String impl = PayTypeEnum.byCode(1).getImpl();
+            PayFace payFace = payFaceMap.get(impl);
+            TradeNotifyReq notifyReq = new TradeNotifyReq();
+            notifyReq.setPayModel(1);
+            notifyReq.setBodyParam("支付成功");
+            payFace.tradeNotify(notifyReq);
+        }else{
+            //交易失败
+            String impl = PayTypeEnum.byCode(1).getImpl();
+            PayFace payFace = payFaceMap.get(impl);
+            TradeCloseReq closeReq = new TradeCloseReq();
+            closeReq.setOrderNo(order.getProductOrder_code());
+            closeReq.setPayModel(1);
+            payFace.tradeClose(closeReq);
+            // 支付失败
+            return URL;
         }*/
 
         map.put("productOrder", order);
@@ -432,10 +450,9 @@ public class ForeOrderController extends BaseController {
         orderReq.setTradeSerialNo(order.getProductOrder_code());
         orderReq.setAmount(BigDecimal.valueOf(orderTotalPrice));
         orderReq.setGoodsName("商品");
-        // orderReq.setUserClientIp(userClientIp);
-        orderReq.setNotifyUrl("fore/productPayPage");
-        if (StringUtils.hasText(quitUrl)) {
-            orderReq.setQuitUrl(quitUrl + "?tradeSerialNo=" + orderReq.getTradeSerialNo());
+        orderReq.setNotifyUrl("fore/productPaySuccessPage");
+        if (!StringUtils.isEmpty(quitUrl)) {
+            orderReq.setQuitUrl(quitUrl + orderReq.getTradeSerialNo());
         }
         return payFace.tradeOrder(orderReq);
     }
@@ -646,7 +663,7 @@ public class ForeOrderController extends BaseController {
         // 获取用户购物车信息
         List<ProductOrderItem> orderItemList = productOrderItemService.getListByUserId(Integer.valueOf(userId.toString()), null);
         Integer orderItemTotal = 0;
-        if (CollectionUtils.isNotEmpty(orderItemList)) {
+        if (CollectionUtil.isNotEmpty(orderItemList)) {
             // 获取用户购物车的商品总数
             orderItemTotal = productOrderItemService.getTotalByUserId(Integer.valueOf(userId.toString()));
             // 获取用户购物车内的商品信息
@@ -877,7 +894,7 @@ public class ForeOrderController extends BaseController {
         }
         JSONObject orderItemString = JSON.parseObject(orderItemMap);
         Set<String> orderItemIDSet = orderItemString.keySet();
-        if (CollectionUtils.isNotEmpty(orderItemIDSet)) {
+        if (CollectionUtil.isNotEmpty(orderItemIDSet)) {
             // 更新产品订单项数量
             for (String key : orderItemIDSet) {
                 ProductOrderItem productOrderItem = productOrderItemService.get(Integer.valueOf(key));
@@ -1039,7 +1056,7 @@ public class ForeOrderController extends BaseController {
         JSONObject orderItemMap = JSONObject.parseObject(orderItemJSON);
         Set<String> orderItem_id = orderItemMap.keySet();
         List<ProductOrderItem> productOrderItemList = new ArrayList<>(3);
-        if (CollectionUtils.isNotEmpty(orderItem_id)) {
+        if (CollectionUtil.isNotEmpty(orderItem_id)) {
             for (String id : orderItem_id) {
                 ProductOrderItem orderItem = productOrderItemService.get(Integer.valueOf(id));
                 if (orderItem == null || !orderItem.getProductOrderItem_user().getUser_id().equals(userId)) {
@@ -1162,7 +1179,7 @@ public class ForeOrderController extends BaseController {
         ProductOrderItem productOrderItem = new ProductOrderItem();
         // 检查用户的购物车项
         List<ProductOrderItem> orderItemList = productOrderItemService.getListByUserId(Integer.valueOf(userId.toString()), null);
-        if (CollectionUtils.isNotEmpty(orderItemList)) {
+        if (CollectionUtil.isNotEmpty(orderItemList)) {
             for (ProductOrderItem orderItem : orderItemList) {
                 if (orderItem.getProductOrderItem_product().getProduct_id().equals(product_id)) {
                     // 找到已有的产品，进行数量追加

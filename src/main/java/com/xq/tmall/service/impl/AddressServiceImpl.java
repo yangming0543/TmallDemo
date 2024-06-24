@@ -5,8 +5,6 @@ import com.xq.tmall.entity.Address;
 import com.xq.tmall.service.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,13 +13,11 @@ import java.util.List;
 public class AddressServiceImpl implements AddressService {
     private final AddressMapper addressMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean add(Address address) {
         return addressMapper.insertOne(address) > 0;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean update(Address address) {
         return addressMapper.updateOne(address) > 0;
