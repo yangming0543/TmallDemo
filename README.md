@@ -41,9 +41,7 @@ feature分支数据库sql如下：
 
 ---前台界面(部分)--- 访问地址 http://localhost:8082/tmall/login (账户名和密码在user表里)
 ![登录界面](shop/img.png)
-
 ![首页](shop/img_1.png)
-
 ![产品详情](shop/img_2.png)
 ![购物车结算](shop/img_3.png)
 ![下单界面](shop/img_4.png)
