@@ -161,6 +161,7 @@ public class AdminHomeController extends BaseController {
                             orderCloseArray[j] = orderGroup.getProductOrder_count();
                             break;
                         default:
+                            break;
                     }
                 }
             }
