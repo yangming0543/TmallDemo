@@ -18,6 +18,8 @@
     <div class="order_div">
         <img src="${pageContext.request.contextPath}/res/images/fore/WebsiteImage/payCode.png" width="100px"
              height="100px"/>
+          <%--  <img src="${pageContext.request.contextPath}/res/images/支付码.jpg" width="100px"
+                 height="100px"/>--%>
         <c:choose>
             <c:when test="${fn:length(requestScope.productOrder.productOrderItemList)==1}">
                 <div class="order_name">
@@ -34,7 +36,6 @@
             </c:otherwise>
         </c:choose>
         <div class="order_price">
-          <%--  <img src="${pageContext.request.contextPath}/res/images/支付码.jpg">--%>
             <span class="price_value">${requestScope.orderTotalPrice}</span>
             <span class="price_unit">元</span>
         </div>
