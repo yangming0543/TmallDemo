@@ -450,13 +450,9 @@ public class ForeOrderController extends BaseController {
         orderReq.setTradeSerialNo(order.getProductOrder_code());
         orderReq.setAmount(BigDecimal.valueOf(orderTotalPrice));
         orderReq.setGoodsName("商品");
-      /*  orderReq.setNotifyUrl("fore/productPaySuccessPage");
+        orderReq.setNotifyUrl("fore/productPaySuccessPage");
         if (!StringUtils.isEmpty(quitUrl)) {
             orderReq.setQuitUrl(quitUrl + orderReq.getTradeSerialNo());
-        }*/
-        orderReq.setNotifyUrl("fore/productPayPage");
-        if (StringUtils.hasText(quitUrl)) {
-            orderReq.setQuitUrl(quitUrl + "?tradeSerialNo=" + orderReq.getTradeSerialNo());
         }
         return payFace.tradeOrder(orderReq);
     }
